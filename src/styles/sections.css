@@ -1047,6 +1047,8 @@
   .profile-top {
     grid-template-columns: 1fr;
     align-items: start;
+    /* Stacked here, so the deep right inset that positions the divider is off. */
+    padding-right: clamp(1.25rem, 2.25vw, 3rem);
   }
 
   .profile-columns {
