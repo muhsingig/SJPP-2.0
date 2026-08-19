@@ -162,7 +162,7 @@ function onPointerMove(e: PointerEvent) {
   const dt = Math.min(0.1, now - lastPointerTime);
 
   // On touch, only let the page scroll through when the gesture is a decisive
-  // upward swipe — otherwise the canvas keeps the gesture and paints with it.
+  // upward swipe, otherwise the canvas keeps the gesture and paints with it.
   if (e.pointerType === 'touch' && dt > 0) {
     const dx = e.clientX - lastClientX;
     const dy = e.clientY - lastClientY;

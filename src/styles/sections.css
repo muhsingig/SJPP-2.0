@@ -337,7 +337,7 @@
 }
 
 /*
- * These are the real marks in their own colours, so no brightness filter — it
+ * These are the real marks in their own colours, so no brightness filter, it
  * only muddied the ones that aren't black. Each is pre-trimmed to its artwork so
  * the 74px height lines them up optically.
  */
@@ -471,7 +471,7 @@
   opacity: 0.72;
 }
 
-/* Awaiting real copy — visibly pending rather than looking like finished content. */
+/* Awaiting real copy, visibly pending rather than looking like finished content. */
 .rec-card[data-stub] {
   opacity: 0.3;
 }

@@ -38,7 +38,7 @@ function measure() {
 /**
  * Groups every word by the visual line it landed on, then hands each line an
  * ordering value. A single --reveal-progress variable then drives the whole
- * paragraph in CSS — no per-word JS animation.
+ * paragraph in CSS, no per-word JS animation.
  */
 export function initProfileScrollReveal() {
   profileSection = document.getElementById('profile');

@@ -3,7 +3,7 @@ export const clamp = (v: number, min: number, max: number) => Math.min(max, Math
 export const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/** The page scrolls inside .snap-stack, not the window — every ScrollTrigger needs this. */
+/** The page scrolls inside .snap-stack, not the window, every ScrollTrigger needs this. */
 export const getScroller = (): HTMLElement | undefined =>
   (document.querySelector('.snap-stack') as HTMLElement | null) ?? undefined;
 

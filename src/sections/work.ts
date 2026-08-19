@@ -97,7 +97,7 @@ function initWorkReveal() {
   cards.forEach((card) => observer.observe(card));
 }
 
-/** Hover is meaningless on touch — reveal the panel on intersection instead. */
+/** Hover is meaningless on touch, reveal the panel on intersection instead. */
 function initWorkTouchReveal() {
   if (!window.matchMedia('(hover: none)').matches) return;
   const cards = Array.from(document.querySelectorAll<HTMLElement>('.work-card'));

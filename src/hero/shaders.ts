@@ -1,9 +1,9 @@
 /**
  * GLSL for the hero. Four stages run per frame:
- *   1. fluid    — Navier-Stokes velocity field driven by the pointer
- *   2. trail    — soft accumulating blob under the cursor
- *   3. mask     — velocity + trail integrated into a decaying reveal mask
- *   4. composite— cover-fits both photographs and mixes A -> B through the mask
+ *   1. fluid   , Navier-Stokes velocity field driven by the pointer
+ *   2. trail   , soft accumulating blob under the cursor
+ *   3. mask    , velocity + trail integrated into a decaying reveal mask
+ *   4. composite- cover-fits both photographs and mixes A -> B through the mask
  */
 
 /* PlaneGeometry(2,2) already spans clip space, so the vertex stage is a pass-through. */
@@ -181,7 +181,7 @@ uniform float uCentreGapStrength;
 uniform float uAspect;
 uniform float uReset;
 
-/* 9-tap blur standing in for a wide box blur — cheap and visually equivalent here. */
+/* 9-tap blur standing in for a wide box blur, cheap and visually equivalent here. */
 float blurredPrev(vec2 uv, vec2 off) {
   float s = texture2D(uPrevMask, uv).r * 0.25;
   s += texture2D(uPrevMask, uv + vec2(off.x, 0.0)).r * 0.125;
@@ -210,7 +210,7 @@ void main() {
   float dc = distance(vUv, vec2(0.5)) / 0.7071;
   m -= uCentreGapStrength * smoothstep(uCentreGapRadius, 1.0, dc);
 
-  // Carve a soft hole a little way out from the cursor — this is what makes the
+  // Carve a soft hole a little way out from the cursor, this is what makes the
   // reveal read as liquid rather than as a solid painted blob.
   if (uMouseUV.x >= 0.0) {
     vec2 d = vUv - uMouseUV;

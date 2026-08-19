@@ -69,7 +69,7 @@ function initMasonry() {
   window.addEventListener('resize', relayout);
   document.fonts?.ready.then(layout);
 
-  // Scaling *down* on hover is deliberate — it reads as the tile stepping back
+  // Scaling *down* on hover is deliberate, it reads as the tile stepping back
   // rather than lunging at the cursor.
   if (!prefersReducedMotion() && window.matchMedia('(hover: hover)').matches) {
     for (const { el } of items) {
@@ -88,7 +88,7 @@ function initMasonry() {
 
   if (prefersReducedMotion()) return;
 
-  // The tiles are transform-positioned, so fade only — moving them would fight
+  // The tiles are transform-positioned, so fade only, moving them would fight
   // the layout transform.
   gsap.set(
     items.map((i) => i.el),

@@ -1,6 +1,6 @@
 /**
  * Generates placeholder imagery in /public so the site builds and runs before
- * Sanika's real photography lands. Everything here is disposable — drop real
+ * Sanika's real photography lands. Everything here is disposable, drop real
  * files in with the same names and delete this script.
  *
  * Writes real PNGs (minimal encoder over node:zlib) plus a few SVG wordmarks.
@@ -24,7 +24,7 @@ let kept = 0;
 function preserve(name) {
   if (FORCE || !existsSync(join(OUT, name))) return false;
   kept += 1;
-  process.stdout.write(`  ${name}  — kept (already exists)\n`);
+  process.stdout.write(`  ${name}  kept (already exists)\n`);
   return true;
 }
 
@@ -125,7 +125,7 @@ function write(name, width, height, shade) {
   process.stdout.write(`  ${name}  ${width}x${height}\n`);
 }
 
-/** soft radial blob field — gives the placeholders some organic structure */
+/** soft radial blob field, gives the placeholders some organic structure */
 function blobs(u, v, seeds) {
   let acc = 0;
   for (const [cx, cy, r, w] of seeds) {
@@ -168,7 +168,11 @@ write('back.png', 1600, 1000, (u, v, x, y) => {
 
 /* --------------------------------------------------------------- portrait */
 
-write('display-picture.png', 900, 1150, (u, v, x, y) => {
+// Sanika's real portrait is a .jpg, so check that before writing the .png stand-in.
+if (existsSync(join(OUT, 'display-picture.jpg'))) {
+  process.stdout.write('  display-picture  kept (real display-picture.jpg present)\n');
+  kept += 1;
+} else write('display-picture.png', 900, 1150, (u, v, x, y) => {
   const head = 1 - smooth(0.0, 0.20, Math.hypot((u - 0.5) * 1.15, v - 0.34));
   const body = 1 - smooth(0.0, 0.46, Math.hypot((u - 0.5) * 0.85, (v - 1.12) * 0.72));
   const figure = clamp01(head + body);
@@ -247,7 +251,7 @@ for (const [file, label] of LOGOS) {
   // The real marks are PNGs for most of these, so check both extensions before
   // writing a wordmark nothing references.
   if (existsSync(join(OUT, `${file}.png`))) {
-    process.stdout.write(`  ${file}  — kept (real ${file}.png present)\n`);
+    process.stdout.write(`  ${file}  kept (real ${file}.png present)\n`);
     kept += 1;
     continue;
   }
@@ -275,22 +279,22 @@ if (!preserve('favicon.svg')) {
   process.stdout.write('  favicon.svg\n');
 }
 
-/* ------------------------------------------------------------- placeholder CV */
+/* --------------------------------------------------------- placeholder resume */
 
-if (!preserve('CV.pdf')) {
+if (!preserve('Resume.pdf')) {
   writeFileSync(
-    join(OUT, 'CV.pdf'),
+    join(OUT, 'Resume.pdf'),
     Buffer.from(
       '%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n' +
         '2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj\n' +
         '3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]/Resources<</Font<</F1 4 0 R>>>>/Contents 5 0 R>>endobj\n' +
         '4 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>endobj\n' +
-        '5 0 obj<</Length 68>>stream\nBT /F1 24 Tf 72 740 Td (Sanika Joshi - CV placeholder) Tj ET\nendstream endobj\n' +
+        '5 0 obj<</Length 68>>stream\nBT /F1 24 Tf 72 740 Td (Sanika Joshi - resume placeholder) Tj ET\nendstream endobj\n' +
         'trailer<</Root 1 0 R>>\n',
       'latin1'
     )
   );
-  process.stdout.write('  CV.pdf (placeholder)\n');
+  process.stdout.write('  Resume.pdf (placeholder)\n');
 }
 
-console.log(kept ? `done — ${kept} existing file(s) kept. Use --force to overwrite.` : 'done');
+console.log(kept ? `done, ${kept} existing file(s) kept. Use --force to overwrite.` : 'done');

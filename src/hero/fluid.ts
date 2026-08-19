@@ -74,7 +74,7 @@ function makePingPong(width: number, height: number, filter: typeof LinearFilter
 /**
  * A compact Stam-style solver: advect, compute divergence, relax pressure with
  * Jacobi iterations, then subtract the pressure gradient to stay incompressible.
- * Only the velocity field is needed downstream — the hero mask reads it directly.
+ * Only the velocity field is needed downstream, the hero mask reads it directly.
  */
 export class FluidSimulation {
   private renderer: WebGLRenderer;

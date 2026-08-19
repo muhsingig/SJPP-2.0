@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 export function revealTitleByLetter(title: HTMLElement | null, section: HTMLElement, cls: string) {
   if (!title) return;
 
-  // Titles set on more than one line wrap each line in its own span — split those
+  // Titles set on more than one line wrap each line in its own span, split those
   // individually so the line breaks survive.
   const lines = Array.from(title.querySelectorAll<HTMLElement>(':scope > span'));
   const letters = lines.length
@@ -79,7 +79,7 @@ async function initSkillLotties() {
   );
 
   const usable = resolved.filter((r): r is { icon: HTMLElement; data: object } => r !== null);
-  // No animations shipped yet — the inline SVGs stay, and lottie-web is never fetched.
+  // No animations shipped yet, the inline SVGs stay, and lottie-web is never fetched.
   if (!usable.length) return;
 
   const lottie = (await import('lottie-web')).default;

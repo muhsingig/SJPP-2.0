@@ -1,4 +1,4 @@
-# Sanika Joshi — Portfolio
+# Sanika Joshi: Portfolio
 
 Single-page portfolio built to [BUILD-PROMPT.md](BUILD-PROMPT.md): Vite + vanilla TypeScript, a
 three.js fluid-reveal hero, GSAP/ScrollTrigger motion, in a cherry × matcha palette.
@@ -10,7 +10,7 @@ npm run build    # type-check + production build into dist/
 npm run preview  # serve the production build
 ```
 
-`dist/` is a static folder — deploy it to Netlify, Vercel or Cloudflare Pages as-is.
+`dist/` is a static folder: deploy it to Netlify, Vercel or Cloudflare Pages as-is.
 
 ---
 
@@ -22,8 +22,8 @@ npm run preview  # serve the production build
 | `src/main.ts` | Boot order for every section module |
 | `src/styles/base.css` | Tokens, reset, snap stack, preloader, nav, hero, about |
 | `src/styles/sections.css` | Work, skills, experience, writing, beyond, contact, footer, responsive |
-| `src/hero/shaders.ts` | All GLSL — fluid, trail, mask, composite |
-| `src/hero/fluid.ts` | Navier–Stokes solver (advect → divergence → Jacobi pressure → project) |
+| `src/hero/shaders.ts` | All GLSL: fluid, trail, mask, composite |
+| `src/hero/fluid.ts` | Navier-Stokes solver (advect → divergence → Jacobi pressure → project) |
 | `src/hero/index.ts` | Renderer, render targets, pointer, preloader, headline stroke |
 | `src/sections/snap.ts` | Hero↔About snap, `--reveal-progress` word scrub, about layout fitting |
 | `src/sections/nav.ts` | Menu open/close timelines, fit-to-viewport sizing, light/dark tone |
@@ -42,41 +42,41 @@ npm run preview  # serve the production build
 
 ### Done
 
-- **Contact** — `joshi.sanika3@gmail.com` on the mail button and the formsubmit endpoint;
+- **Contact**: `joshi.sanika3@gmail.com` on the mail button and the formsubmit endpoint;
   LinkedIn and Substack buttons live.
-- **Portrait** — `public/display-picture.png`, 1200×1600.
-- **CV** — `public/CV.pdf` is the real resume.
-- **Essays** — five real Substack pieces, linked, titled and dated.
-- **Employers** — Django, Amaha, The Kahani Tree, Myntmore, UAL, Humans of Bombay.
+- **Portrait**: `public/display-picture.jpg`, 1400×1400 (square, cherry background).
+- **Resume**: `public/Resume.pdf` is the real resume.
+- **Essays**: five real Substack pieces, linked, titled and dated.
+- **Employers**: Django, Amaha, The Kahani Tree, Myntmore, UAL, Humans of Bombay.
 
 ### Still outstanding
 
 Search for `TODO` in `index.html` to find the inline markers.
 
-1. **Recommendations** — `#recommendations` holds three `data-stub` cards. Replace each
+1. **Recommendations**: `#recommendations` holds three `data-stub` cards. Replace each
    blockquote with a real excerpt, fill in name and role, and delete the `data-stub` attribute
    to bring the card up to full opacity.
-2. **Four more essays** — tiles 6–9 in `#writing` are `data-stub` placeholders. Same deal: give
+2. **Four more essays**: tiles 6-9 in `#writing` are `data-stub` placeholders. Same deal: give
    one a real `href`, title and date, swap `<span>` for `<a>`, and drop `data-stub`.
-3. **Case studies** — all seven `.work-card`s still carry placeholder copy and
+3. **Case studies**: all seven `.work-card`s still carry placeholder copy and
    `data-desktop-url="#"` / `data-mobile-url="#"`. A card with `#` is inert.
-4. **Logos** — currently generated text wordmarks. Real marks for five of the six have been
+4. **Logos**: currently generated text wordmarks. Real marks for five of the six have been
    sourced from the companies' own sites; Django is still missing.
-5. **Hero headline** — currently option 4 of the seven in BUILD-PROMPT.md §9.
-6. **Hero and "beyond" imagery** — see below.
+5. **Hero headline**: currently option 4 of the seven in BUILD-PROMPT.md §9.
+6. **Hero and "beyond" imagery**: see below.
 
 ### Replacing the imagery
 
 `npm run placeholders` regenerates `public/`, but **it will not overwrite a file that already
-exists** — real assets are safe. Pass `--force` if you genuinely want the placeholder back.
+exists**: real assets are safe. Pass `--force` if you genuinely want the placeholder back.
 To use real assets, drop files in with the same names:
 
-- `front.png` / `back.png` — the two hero photographs. **Give them the same composition**; the fluid
+- `front.png` / `back.png`: the two hero photographs. **Give them the same composition**; the fluid
   reveal reads as one subject changing state, and unrelated images look like a glitch.
-- `display-picture.png` — portrait.
-- `case-study-1..7.png` and `case-study-N-hover.png` — one pair per card, portrait-ish crop.
-- `logo-*.svg` — organisation wordmarks.
-- `beyond1..6.png` — book/bookstore photography for the card stack, roughly 1.42:1.
+- `display-picture.jpg`: portrait.
+- `case-study-1..7.png` and `case-study-N-hover.png`: one pair per card, portrait-ish crop.
+- `logo-*.svg`: organisation wordmarks.
+- `beyond1..6.png`: book/bookstore photography for the card stack, roughly 1.42:1.
 
 The markup keeps `<picture>` wrappers, so adding a `<source srcset="…webp">` alongside each `<img>`
 is a drop-in change.
@@ -85,7 +85,7 @@ is a drop-in change.
 
 The eight icons are inline SVG. If you'd rather have animated ones, drop Bodymovin JSON into
 `public/` matching each `data-lottie` filename (`social-strategy.json`, `content-strategy.json`, …)
-and they'll be picked up automatically — the loader validates the JSON shape first and falls back to
+and they'll be picked up automatically: the loader validates the JSON shape first and falls back to
 the SVG, and `lottie-web` is only downloaded if at least one real animation is found.
 
 ---
@@ -95,7 +95,7 @@ the SVG, and `lottie-web` is only downloaded if at least one real animation is f
 **The hero.** Four passes per frame: a fluid velocity field driven by pointer splats, a decaying
 trail buffer, a mask that integrates both and fades at the frame edges, and a composite that
 cover-fits both photographs and mixes A→B through the mask. All tuning constants sit in `PARAMS` at
-the top of `src/hero/index.ts`. The mask's gap terms were tuned by eye — the spec named the
+the top of `src/hero/index.ts`. The mask's gap terms were tuned by eye: the spec named the
 parameters and their values but not the exact falloff curves.
 
 **The scroll container is `.snap-stack`, not the window.** Every ScrollTrigger passes
@@ -115,7 +115,7 @@ of a static hero, marquees and counters resolve instantly, and every reveal star
    them would mean duplicate links for screen readers and crawlers. The masonry layout, hover and
    stagger all match; only the endless repetition is gone.
 2. **`front.png`/`back.png` are generated abstracts, not photographs.** The reveal is tuned for two
-   images that share a composition — worth re-checking the `PARAMS` feel once real photos land.
+   images that share a composition: worth re-checking the `PARAMS` feel once real photos land.
 
 ### Known trade-off
 

@@ -40,7 +40,7 @@ async function initPhoneInput(): Promise<Iti | null> {
     return intlTelInput(input, {
       initialCountry: 'in',
       separateDialCode: true,
-      // Bundled with the package — avoids a runtime request to an external CDN.
+      // Bundled with the package, avoids a runtime request to an external CDN.
       loadUtilsOnInit: () => import('intl-tel-input/utils'),
     }) as unknown as Iti;
   } catch {
@@ -116,7 +116,7 @@ export async function initContactForm() {
       form.reset();
       if (message) {
         message.className = 'contact-form-message is-success';
-        message.textContent = "Thank you — I'll be in touch shortly.";
+        message.textContent = "Thank you, I'll be in touch shortly.";
       }
     } catch {
       if (message) {

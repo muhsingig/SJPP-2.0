@@ -582,7 +582,7 @@ a {
   /*
    * Matches the value JS writes (1 - --line-span). Keeping the two in step means
    * the portrait is still fully revealed at progress 1 if the measuring pass is
-   * delayed — a higher default leaves it stuck at partial opacity.
+   * delayed, a higher default leaves it stuck at partial opacity.
    */
   --line-order: 0.2;
   --line-local: clamp(0, calc((var(--reveal-progress, 0) - var(--line-order)) / var(--line-span, 1)), 1);
