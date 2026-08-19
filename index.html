@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Sanika Joshi — content, social media & brand strategy</title>
+    <meta
+      name="description"
+      content="Sanika Joshi is a content, social media and brand strategist with 5+ years across client servicing, publishing, ghostwriting and research."
+    />
+    <meta name="theme-color" content="#670626" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Sanika Joshi — content, social media & brand strategy" />
+    <meta
+      property="og:description"
+      content="5+ years across social media, content, brand strategy, client servicing, publishing and research."
+    />
+    <meta property="og:image" content="/front.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Bayon&display=swap" rel="stylesheet" />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- crossorigin matches three.js TextureLoader, which requests anonymously -->
+    <link rel="preload" as="image" href="/front.png" crossorigin="anonymous" />
+    <link rel="preload" as="image" href="/back.png" crossorigin="anonymous" />
+  </head>
+
+  <body>
+    <!-- ==================================================================== nav -->
+    <nav class="site-nav">
+      <button class="site-title site-title-btn" type="button" data-scroll-top aria-label="Back to top">
+        <span class="site-title-line">SANIKA</span>
+        <span class="site-title-line">JOSHI</span>
+      </button>
+
+      <div class="nav-actions">
+        <a class="nav-resume" href="/CV.pdf" target="_blank" rel="noreferrer">CV</a>
+        <button class="nav-hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M3 8h18M3 16h12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="nav-menu-backdrop" hidden></div>
+
+      <div id="nav-menu" class="nav-menu" hidden>
+        <div class="nav-menu-prelayers" aria-hidden="true">
+          <span class="nav-menu-prelayer nav-menu-prelayer-1"></span>
+          <span class="nav-menu-prelayer nav-menu-prelayer-2"></span>
+          <span class="nav-menu-prelayer nav-menu-prelayer-3"></span>
+        </div>
+        <div class="nav-menu-list">
+          <button class="nav-menu-item" type="button" data-scroll-target="#profile">About</button>
+          <button class="nav-menu-item" type="button" data-scroll-target="#work">Work</button>
+          <button class="nav-menu-item" type="button" data-scroll-target="#skills">Skills</button>
+          <button class="nav-menu-item" type="button" data-scroll-target="#experience">Experience</button>
+          <button class="nav-menu-item" type="button" data-scroll-target="#recommendations">Recommendations</button>
+          <button class="nav-menu-item" type="button" data-scroll-target="#writing">Writing</button>
+          <button class="nav-menu-item" type="button" data-scroll-target="#beyond">Beyond</button>
+          <button class="nav-menu-item" type="button" data-scroll-target="#contact">Contact</button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="snap-stack is-js-snapping">
+      <!-- ================================================================= hero -->
+      <section id="hero" class="hero snap-section">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-overlay" aria-hidden="true"></div>
+
+        <div id="loading" class="loading-screen">
+          <div class="loading-counter">0%</div>
+        </div>
+
+        <div class="cycling-stroke" aria-hidden="true"></div>
+
+        <div class="hero-headlines">
+          <!-- TODO: headline is option 4 of 7 in BUILD-PROMPT.md §9 — swap if Sanika prefers another -->
+          <h1 class="hero-heading">
+            <span class="hero-heading-line">Translating</span>
+            <span class="hero-heading-line hero-heading-second">
+              <span class="resilient-word">brands</span> into words
+            </span>
+          </h1>
+          <div class="hero-tagline">
+            <span class="tagline-line tagline-line-light">With the ear of a</span>
+            <span class="tagline-line tagline-line-medium">ghostwriter</span>
+            <span class="tagline-line tagline-line-light">and the discipline of an</span>
+            <span class="tagline-line tagline-line-medium">account lead</span>
+          </div>
+        </div>
+
+        <div class="hero-swipe-hint">
+          <svg class="hero-swipe-arrow" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 5v14M5 12l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="hero-swipe-text">Swipe up to scroll</span>
+        </div>
+      </section>
+
+      <!-- ============================================================== profile -->
+      <section id="profile" class="profile-section snap-section" data-nav-tone="dark">
+        <div class="profile-inner">
+          <div class="profile-top">
+            <div class="profile-intro">
+              <p class="profile-greeting" data-scroll-reveal>I'm Sanika 👋</p>
+              <h2 class="profile-heading" data-scroll-reveal>
+                A generalist defined by a stubborn interest in
+                <span class="weight-medium">how brands actually find their voice</span>
+              </h2>
+            </div>
+            <div class="profile-image-wrap" data-scroll-reveal>
+              <div class="profile-journal-lines" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <picture>
+                <img src="/display-picture.png" alt="Portrait of Sanika Joshi" class="profile-image" />
+              </picture>
+            </div>
+          </div>
+
+          <div class="profile-divider" aria-hidden="true">
+            <span class="profile-divider-segment"></span>
+            <span class="profile-divider-gap"></span>
+            <span class="profile-divider-segment"></span>
+          </div>
+
+          <div class="profile-columns">
+            <p class="profile-col" data-scroll-reveal>
+              I have <span class="bold-italic">5+ years</span> across social media, content, brand
+              strategy, client servicing, publishing and marketing — which is a long way of saying
+              I've never been very good at staying in one lane.
+            </p>
+            <p class="profile-col" data-scroll-reveal>
+              That range has taken me from managing a children's bookstore and working in publishing,
+              to social media strategy, content writing, LinkedIn ghostwriting, qualitative research,
+              and now client servicing and account management.
+            </p>
+            <p class="profile-col" data-scroll-reveal>
+              I sit somewhere between <span class="bold-italic">content, strategy and execution</span>.
+              I like understanding the bigger picture, working out what a brand is actually trying to
+              say, turning that into ideas — and then making sure the right people actually execute it.
+            </p>
+          </div>
+        </div>
+
+        <div id="profile-phone-journal-lines" class="profile-phone-journal-lines" aria-hidden="true">
+          <span class="profile-phone-journal-lines__line"></span>
+          <span class="profile-phone-journal-lines__line"></span>
+          <span class="profile-phone-journal-lines__line"></span>
+          <span class="profile-phone-journal-lines__line"></span>
+          <span class="profile-phone-journal-lines__line"></span>
+        </div>
+      </section>
+
+      <!-- ================================================================= work -->
+      <section id="work" class="work-section" data-nav-tone="dark">
+        <div class="work-journal-lines" aria-hidden="true"></div>
+        <h2 class="work-title">Selected Work</h2>
+
+        <div class="work-grid">
+          <div class="work-col work-col-left">
+            <!-- 1 -->
+            <div class="work-card work-reveal" data-reveal="left" data-desktop-url="#" data-mobile-url="#">
+              <div class="work-card-media">
+                <picture><img src="/case-study-1.png" alt="Django — client servicing and social media" /></picture>
+                <div class="work-card-hover" aria-hidden="true">
+                  <img src="/case-study-1-hover.png" alt="" class="work-card-hover-image" />
+                  <span class="work-card-hover-arrow is-white">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+                  </span>
+                </div>
+                <div class="work-card-text swap-black-white">
+                  <div class="work-card-text-layer work-card-text-base">
+                    <span class="work-card-text-line"><strong>Running accounts</strong> that</span>
+                    <span class="work-card-text-line">actually ship on time</span>
+                  </div>
+                  <div class="work-card-text-layer work-card-text-hover">
+                    <span class="work-card-text-line"><strong>Running accounts</strong> that</span>
+                    <span class="work-card-text-line">actually ship on time</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3 -->
+            <div class="work-card work-reveal" data-reveal="left" data-desktop-url="#" data-mobile-url="#">
+              <div class="work-card-media">
+                <picture><img src="/case-study-3.png" alt="LGBTQI+ Month campaign" /></picture>
+                <div class="work-card-hover" aria-hidden="true">
+                  <img src="/case-study-3-hover.png" alt="" class="work-card-hover-image" />
+                  <span class="work-card-hover-arrow">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+                  </span>
+                </div>
+                <div class="work-card-text swap-black-white">
+                  <div class="work-card-text-layer work-card-text-base">
+                    <span class="work-card-text-line"><strong>Building space</strong> for</span>
+                    <span class="work-card-text-line">queer voices on social</span>
+                  </div>
+                  <div class="work-card-text-layer work-card-text-hover">
+                    <span class="work-card-text-line"><strong>Building space</strong> for</span>
+                    <span class="work-card-text-line">queer voices on social</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5 -->
+            <div class="work-card work-reveal" data-reveal="left" data-desktop-url="#" data-mobile-url="#">
+              <div class="work-card-media">
+                <picture><img src="/case-study-5.png" alt="Humans of Bombay — published story" /></picture>
+                <div class="work-card-hover" aria-hidden="true">
+                  <img src="/case-study-5-hover.png" alt="" class="work-card-hover-image" />
+                  <span class="work-card-hover-arrow is-white">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+                  </span>
+                </div>
+                <div class="work-card-text swap-black-white">
+                  <div class="work-card-text-layer work-card-text-base">
+                    <span class="work-card-text-line"><strong>Turning conversations</strong></span>
+                    <span class="work-card-text-line">into published stories</span>
+                  </div>
+                  <div class="work-card-text-layer work-card-text-hover">
+                    <span class="work-card-text-line"><strong>Turning conversations</strong></span>
+                    <span class="work-card-text-line">into published stories</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 7 -->
+            <div class="work-card work-reveal" data-reveal="left" data-desktop-url="#" data-mobile-url="#">
+              <div class="work-card-media">
+                <picture><img src="/case-study-7.png" alt="University of the Arts London — Knowledge Exchange research" /></picture>
+                <div class="work-card-hover" aria-hidden="true">
+                  <img src="/case-study-7-hover.png" alt="" class="work-card-hover-image" />
+                  <span class="work-card-hover-arrow">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+                  </span>
+                </div>
+                <div class="work-card-text swap-black-white">
+                  <div class="work-card-text-layer work-card-text-base">
+                    <span class="work-card-text-line"><strong>Turning interviews</strong></span>
+                    <span class="work-card-text-line">into funding decisions</span>
+                  </div>
+                  <div class="work-card-text-layer work-card-text-hover">
+                    <span class="work-card-text-line"><strong>Turning interviews</strong></span>
+                    <span class="work-card-text-line">into funding decisions</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="work-col work-col-right">
+            <!-- 2 -->
+            <div class="work-card work-reveal" data-reveal="right" data-desktop-url="#" data-mobile-url="#">
+              <div class="work-card-media">
+                <picture><img src="/case-study-2.png" alt="Mental Health Awareness Month campaign" /></picture>
+                <div class="work-card-hover" aria-hidden="true">
+                  <img src="/case-study-2-hover.png" alt="" class="work-card-hover-image" />
+                  <span class="work-card-hover-arrow">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+                  </span>
+                </div>
+                <div class="work-card-text swap-white-black">
+                  <div class="work-card-text-layer work-card-text-base">
+                    <span class="work-card-text-line"><strong>Making mental health</strong></span>
+                    <span class="work-card-text-line">feel less alone online</span>
+                  </div>
+                  <div class="work-card-text-layer work-card-text-hover">
+                    <span class="work-card-text-line"><strong>Making mental health</strong></span>
+                    <span class="work-card-text-line">feel less alone online</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4 -->
+            <div class="work-card work-reveal" data-reveal="right" data-desktop-url="#" data-mobile-url="#">
+              <div class="work-card-media">
+                <picture><img src="/case-study-4.png" alt="LinkedIn ghostwriting for B2B SaaS founders" /></picture>
+                <div class="work-card-hover" aria-hidden="true">
+                  <img src="/case-study-4-hover.png" alt="" class="work-card-hover-image" />
+                  <span class="work-card-hover-arrow">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+                  </span>
+                </div>
+                <div class="work-card-text swap-white-black">
+                  <div class="work-card-text-layer work-card-text-base">
+                    <span class="work-card-text-line"><strong>Writing in someone</strong></span>
+                    <span class="work-card-text-line">else's voice, convincingly</span>
+                  </div>
+                  <div class="work-card-text-layer work-card-text-hover">
+                    <span class="work-card-text-line"><strong>Writing in someone</strong></span>
+                    <span class="work-card-text-line">else's voice, convincingly</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6 -->
+            <div class="work-card work-reveal" data-reveal="right" data-desktop-url="#" data-mobile-url="#">
+              <div class="work-card-media">
+                <picture><img src="/case-study-6.png" alt="Children's bookstore and school book fairs" /></picture>
+                <div class="work-card-hover" aria-hidden="true">
+                  <img src="/case-study-6-hover.png" alt="" class="work-card-hover-image" />
+                  <span class="work-card-hover-arrow is-white">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+                  </span>
+                </div>
+                <div class="work-card-text swap-white-black">
+                  <div class="work-card-text-layer work-card-text-base">
+                    <span class="work-card-text-line"><strong>Putting the right book</strong></span>
+                    <span class="work-card-text-line">in the right hands</span>
+                  </div>
+                  <div class="work-card-text-layer work-card-text-hover">
+                    <span class="work-card-text-line"><strong>Putting the right book</strong></span>
+                    <span class="work-card-text-line">in the right hands</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================== skills -->
+      <section id="skills" class="skills-section" data-nav-tone="dark">
+        <div class="skills-inner">
+          <h2 class="skills-title">What I Do</h2>
+          <div class="skills-grid">
+            <article class="skill-card">
+              <div class="skill-icon" data-lottie="social-strategy.json" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="6" cy="7" r="2.4"/><circle cx="18" cy="5.5" r="2"/><circle cx="17" cy="17" r="2.4"/><circle cx="6.5" cy="17.5" r="2"/><path d="M8.1 8.3 15 15.4M8 6.6l8-1M7.9 15.9 15.3 7M8.4 17.2h6.2"/></svg>
+              </div>
+              <h3 class="skill-title">Social Media Strategy &amp; Management</h3>
+              <p class="skill-desc">Turning brand objectives into calendars, formats and posts that hold up</p>
+            </article>
+
+            <article class="skill-card">
+              <div class="skill-icon" data-lottie="content-strategy.json" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M6 3.5h8.5L19 8v12.5H6z"/><path d="M14 3.5V8h5"/><path d="M9 12h7M9 15.5h7M9 19h4"/></svg>
+              </div>
+              <h3 class="skill-title">Content Strategy &amp; Writing</h3>
+              <p class="skill-desc">Deciding what's worth saying before working out how to say it</p>
+            </article>
+
+            <article class="skill-card">
+              <div class="skill-icon" data-lottie="coordination.json" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg>
+              </div>
+              <h3 class="skill-title">Brand &amp; Content Coordination</h3>
+              <p class="skill-desc">Keeping creative, content and client on the same page, on the same day</p>
+            </article>
+
+            <article class="skill-card">
+              <div class="skill-icon" data-lottie="client-servicing.json" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12.5" rx="2"/><path d="M9 7.5V5.5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 12.5h18"/></svg>
+              </div>
+              <h3 class="skill-title">Client Servicing &amp; Account Management</h3>
+              <p class="skill-desc">Owning accounts end to end, from brief to delivery</p>
+            </article>
+
+            <article class="skill-card">
+              <div class="skill-icon" data-lottie="personal-branding.json" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/><path d="M17.5 3.5 18.6 5.7l2.4.35-1.75 1.7.41 2.4-2.16-1.14-2.15 1.14.41-2.4-1.75-1.7 2.4-.35z"/></svg>
+              </div>
+              <h3 class="skill-title">LinkedIn Personal Branding</h3>
+              <p class="skill-desc">Building founder presence that sounds like the founder</p>
+            </article>
+
+            <article class="skill-card">
+              <div class="skill-icon" data-lottie="editorial.json" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M4 20s.6-4.2 2.6-7.4C8.8 9 12.5 5.8 19 4c-.6 6.3-3.2 10-6.5 12.2C9.2 18.4 4 20 4 20Z"/><path d="M4 20c2.5-2.8 5-5 8.5-7"/></svg>
+              </div>
+              <h3 class="skill-title">Long-form &amp; Editorial Writing</h3>
+              <p class="skill-desc">Essays, newsletters and narrative pieces that earn the read</p>
+            </article>
+
+            <article class="skill-card">
+              <div class="skill-icon" data-lottie="publishing.json" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 6.5C10.2 5 7.8 4.3 4 4.5v13c3.8-.2 6.2.5 8 2 1.8-1.5 4.2-2.2 8-2v-13c-3.8-.2-6.2.5-8 2Z"/><path d="M12 6.5v14"/></svg>
+              </div>
+              <h3 class="skill-title">Publishing &amp; Book Curation</h3>
+              <p class="skill-desc">Choosing the right books for the right readers and rooms</p>
+            </article>
+
+            <article class="skill-card">
+              <div class="skill-icon" data-lottie="research.json" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/><path d="M8 12v-2.5M10.5 12V8M13 12v-1.5"/></svg>
+              </div>
+              <h3 class="skill-title">Research &amp; Audience Understanding</h3>
+              <p class="skill-desc">Interviews and qualitative work that turn into usable decisions</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================== experience -->
+      <section id="experience" class="clients-section" data-nav-tone="dark">
+        <div class="clients-inner">
+          <h2 class="clients-title">Where I've worked</h2>
+
+          <div class="clients-marquee" aria-hidden="true">
+            <div class="clients-track">
+              <div class="clients-track-set">
+                <img src="/logo-django.png" alt="Django" />
+                <img src="/logo-amaha.svg" alt="Amaha" />
+                <img src="/logo-kahani-tree.png" alt="The Kahani Tree" />
+                <img src="/logo-myntmore.png" alt="Myntmore" />
+                <img src="/logo-ual.png" alt="UAL: London College of Communication" />
+                <img src="/logo-hob.png" alt="Humans of Bombay" />
+              </div>
+            </div>
+          </div>
+
+          <div class="clients-stats">
+            <article class="clients-card">
+              <div class="clients-number" data-target="5" data-suffix=" +">0 +</div>
+              <div class="clients-label">years of experience</div>
+            </article>
+            <article class="clients-card">
+              <div class="clients-number" data-target="6" data-suffix=" +">0 +</div>
+              <div class="clients-label">organisations</div>
+            </article>
+            <article class="clients-card">
+              <div class="clients-number" data-target="4" data-suffix=" +">0 +</div>
+              <div class="clients-label">industries</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================== recommendations -->
+      <!--
+        Excerpts from Sanika's received LinkedIn recommendations, quoted verbatim.
+        Ordered newest first.
+      -->
+      <!-- No data-nav-tone: this band is cherry, so the nav stays in its light treatment. -->
+      <section id="recommendations" class="recs-section">
+        <div class="recs-inner">
+          <h2 class="recs-title">What they said</h2>
+          <p class="recs-lede">
+            Unedited from LinkedIn, by the people I reported to and worked beside.
+          </p>
+
+          <div class="recs-grid">
+            <figure class="rec-card" data-simple-reveal>
+              <blockquote class="rec-quote">
+                Through her guidance, I gained a much deeper understanding of how social media
+                marketing works, from strategy and audience engagement to content planning and
+                brand positioning. What sets Sanika apart is not only her expertise but also her
+                dedication and commitment to her work.
+              </blockquote>
+              <figcaption class="rec-by">
+                <span class="rec-name">Snehleen Kaur</span>
+                <span class="rec-role">Founder, The Calm Compass</span>
+              </figcaption>
+            </figure>
+
+            <figure class="rec-card" data-simple-reveal>
+              <blockquote class="rec-quote">
+                Sanika made a fantastic contribution to our team, when she helped research and
+                write impact reports on our partnership working and collaboration activities.
+                It was a pleasure to work with her.
+              </blockquote>
+              <figcaption class="rec-by">
+                <span class="rec-name">Prof. Amanda Crawley Jackson</span>
+                <span class="rec-role">Dean of Research &amp; Knowledge Exchange, UAL: London College of Communication</span>
+              </figcaption>
+            </figure>
+
+            <!-- TODO: confirm Shwetha's job title and which organisation this was written from. -->
+            <figure class="rec-card" data-simple-reveal>
+              <blockquote class="rec-quote">
+                Sanika is extremely hard-working and comes in with a to do attitude. She has a lot
+                of new ideas and is very enthusiastic about incorporating them. I'd recommend her
+                for any opportunity that she is interested in.
+              </blockquote>
+              <figcaption class="rec-by">
+                <span class="rec-name">Shwetha Vasan</span>
+                <span class="rec-role">Senior colleague</span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <a class="recs-link" href="https://www.linkedin.com/in/sanikasjoshi/details/recommendations/"
+             target="_blank" rel="noreferrer">
+            Read them in full on LinkedIn →
+          </a>
+        </div>
+      </section>
+
+      <!-- ============================================================== writing -->
+      <section id="writing" class="art-section" data-nav-tone="dark">
+        <div class="art-inner">
+          <h2 class="art-title">Beyond the brief, I write</h2>
+          <p class="art-subtext">
+            I write on Substack — long-form pieces about culture, psychology, human behaviour and the
+            ordinary things I can't stop noticing. None of it is client work, which is exactly the point.
+          </p>
+          <!--
+            Five real essays, then four slots awaiting links. A stub carries
+            data-stub, which greys it out and stops it being focusable — swap in a
+            real href/title/date and delete the attribute to activate it.
+          -->
+          <div class="art-masonry">
+            <div class="art-masonry-list">
+              <a class="art-item" data-kind="text" data-col="0" data-width="309" data-height="330" data-theme="cherry" href="https://sanikajoshi.substack.com/p/the-room-that-made-room-for-more" target="_blank" rel="noreferrer">
+                <div class="art-item-img"><div class="art-item-text-content"><span class="art-item-title">The Room That Made Room for More</span><span class="art-item-date">April 2026</span></div></div>
+              </a>
+              <a class="art-item" data-kind="text" data-col="1" data-width="309" data-height="412" data-theme="matcha" href="https://sanikajoshi.substack.com/p/i-think-the-internet-is-making-me" target="_blank" rel="noreferrer">
+                <div class="art-item-img"><div class="art-item-text-content"><span class="art-item-title">I Think the Internet Is Making Me Dumber</span><span class="art-item-date">March 2026</span></div></div>
+              </a>
+              <a class="art-item" data-kind="text" data-col="2" data-width="309" data-height="290" data-theme="pale" href="https://sanikajoshi.substack.com/p/womens-day-marketing-and-the-364" target="_blank" rel="noreferrer">
+                <div class="art-item-img"><div class="art-item-text-content"><span class="art-item-title">Women's Day, Marketing, and the 364 Days in Between</span><span class="art-item-date">March 2026</span></div></div>
+              </a>
+              <a class="art-item" data-kind="text" data-col="3" data-width="309" data-height="368" data-theme="cream" href="https://sanikajoshi.substack.com/p/on-watching-my-mother-become-herself" target="_blank" rel="noreferrer">
+                <div class="art-item-img"><div class="art-item-text-content"><span class="art-item-title">On Watching My Mother Become Herself</span><span class="art-item-date">January 2026</span></div></div>
+              </a>
+              <a class="art-item" data-kind="text" data-col="0" data-width="309" data-height="392" data-theme="matcha" href="https://sanikajoshi.substack.com/p/what-happens-when-youre-forced-to" target="_blank" rel="noreferrer">
+                <div class="art-item-img"><div class="art-item-text-content"><span class="art-item-title">What Happens When You're Forced to Be Bored</span><span class="art-item-date">October 2025</span></div></div>
+              </a>
+              <span class="art-item" data-kind="text" data-stub data-col="1" data-width="309" data-height="300" data-theme="cherry" aria-hidden="true">
+                <div class="art-item-img"><div class="art-item-text-content"><span class="art-item-title">Essay six</span><span class="art-item-date">Coming soon</span></div></div>
+              </span>
+              <span class="art-item" data-kind="text" data-stub data-col="2" data-width="309" data-height="420" data-theme="cream" aria-hidden="true">
+                <div class="art-item-img"><div class="art-item-text-content"><span class="art-item-title">Essay seven</span><span class="art-item-date">Coming soon</span></div></div>
+              </span>
+              <span class="art-item" data-kind="text" data-stub data-col="3" data-width="309" data-height="286" data-theme="pale" aria-hidden="true">
+                <div class="art-item-img"><div class="art-item-text-content"><span class="art-item-title">Essay eight</span><span class="art-item-date">Coming soon</span></div></div>
+              </span>
+              <span class="art-item" data-kind="text" data-stub data-col="0" data-width="309" data-height="344" data-theme="matcha" aria-hidden="true">
+                <div class="art-item-img"><div class="art-item-text-content"><span class="art-item-title">Essay nine</span><span class="art-item-date">Coming soon</span></div></div>
+              </span>
+              <a class="art-item art-item-cta" data-kind="cta" data-col="1" data-width="309" data-height="240" href="https://sanikajoshi.substack.com" target="_blank" rel="noreferrer">
+                <div class="art-item-img"><div class="art-item-text-content"><span class="art-item-title">and more of it on Substack →</span></div></div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================== beyond -->
+      <section id="beyond" class="inspiration-section">
+        <div class="inspiration-inner">
+          <div class="inspiration-top">
+            <h2 class="inspiration-title">
+              <span>Beyond the work</span>
+              <span>comes the reading</span>
+            </h2>
+            <p class="inspiration-text">
+              Books are the through-line. I trained in publishing, ran a children's bookstore, curated
+              collections for school fairs, and I still think a well-chosen book does more for a person
+              than most campaigns do for a brand. I read widely and unsystematically — literary fiction,
+              psychology, essays, whatever the independent presses are doing. Most of my best ideas at
+              work started as something I read that had nothing to do with work.
+            </p>
+          </div>
+
+          <div class="inspiration-stack-area">
+            <div class="inspiration-velocity" aria-hidden="true">
+              <div
+                class="velocity-scroller"
+                data-text="Books . Publishing . Essays . Culture . Psychology . Independent Press . Bookstores . Reading . "
+              ></div>
+            </div>
+
+            <div class="inspiration-stack" data-autoplay="true" data-random-rotation="true" data-send-to-back="true">
+              <div class="stack-card"><picture><img src="/beyond1.png" alt="Books and reading" /></picture></div>
+              <div class="stack-card"><picture><img src="/beyond2.png" alt="Bookstore shelves" /></picture></div>
+              <div class="stack-card"><picture><img src="/beyond3.png" alt="School book fair" /></picture></div>
+              <div class="stack-card"><picture><img src="/beyond4.png" alt="Reading corner" /></picture></div>
+              <div class="stack-card"><picture><img src="/beyond5.png" alt="Curated collection" /></picture></div>
+              <div class="stack-card"><picture><img src="/beyond6.png" alt="Independent press titles" /></picture></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== contact -->
+      <section id="contact" class="contact-section" data-nav-tone="dark">
+        <div class="contact-inner">
+          <div class="contact-left" data-simple-reveal>
+            <h2 class="contact-title">Let's work together</h2>
+            <p class="contact-subtext">
+              I'm open to freelance work across strategy, content and everything in between.<br />
+              Tell me what you're trying to say — I'll help you say it.
+            </p>
+            <p class="contact-services">
+              Social media strategy · Content strategy · Content writing · LinkedIn personal branding ·
+              Ghostwriting · Brand &amp; content consulting · Publishing and editorial projects
+            </p>
+            <div class="contact-actions">
+              <a class="contact-icon-btn" href="https://www.linkedin.com/in/sanikasjoshi" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <svg viewBox="2.4 2.4 19.2 19.2" fill="none" aria-hidden="true">
+                  <path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 16v-5" />
+                  <path d="M16 16v-3a2 2 0 0 0-4 0" />
+                  <path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                </svg>
+              </a>
+              <a class="contact-icon-btn" href="https://sanikajoshi.substack.com" target="_blank" rel="noreferrer" aria-label="Substack">
+                <svg viewBox="2.4 2.4 19.2 19.2" fill="none" aria-hidden="true">
+                  <path d="M5 5h14" /><path d="M5 9.5h14" /><path d="M5 14v6l7-3.4L19 20v-6z" />
+                </svg>
+              </a>
+              <a class="contact-icon-btn" href="/CV.pdf" target="_blank" rel="noreferrer" aria-label="Download CV">
+                <svg viewBox="2.4 2.4 19.2 19.2" fill="none" aria-hidden="true">
+                  <path d="M12 4v10" /><path d="m8 10.5 4 4 4-4" /><path d="M5 18.5h14" />
+                </svg>
+              </a>
+              <a class="contact-mail-btn" href="mailto:joshi.sanika3@gmail.com">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="3" y="6" width="18" height="12" rx="2" /><path d="M3 8l9 6 9-6" />
+                </svg>
+                <span>Get in touch</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-right" data-simple-reveal>
+            <p class="contact-right-intro">Or leave your details and I'll come back to you.</p>
+
+            <form class="contact-form" action="https://formsubmit.co/ajax/joshi.sanika3@gmail.com" method="post" novalidate>
+              <input type="hidden" name="_subject" value="Portfolio contact form submission" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+
+              <label class="contact-field">
+                <span>Name*</span>
+                <input type="text" name="name" autocomplete="name" required />
+                <small class="contact-field-error" aria-live="polite"></small>
+              </label>
+
+              <label class="contact-field">
+                <span>Company / brand*</span>
+                <input type="text" name="company" autocomplete="organization" required />
+                <small class="contact-field-error" aria-live="polite"></small>
+              </label>
+
+              <label class="contact-field">
+                <span>Phone number*</span>
+                <input type="tel" name="phone" id="contact-phone" autocomplete="tel" required />
+                <small class="contact-field-error" aria-live="polite"></small>
+              </label>
+
+              <p class="contact-form-message" role="status"></p>
+
+              <button class="contact-mail-btn contact-submit-btn" type="submit">
+                <span>Submit</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= meta -->
+      <section id="meta" class="meta-section">
+        <div class="meta-inner">
+          <div class="meta-item">
+            <span class="meta-line" aria-hidden="true"></span>
+            <p>Designed by Sanika Joshi</p>
+          </div>
+          <div class="meta-item">
+            <span class="meta-line" aria-hidden="true"></span>
+            <p>Last updated in 2026</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

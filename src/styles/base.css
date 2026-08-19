@@ -1,0 +1,666 @@
+/* ============================================================ design tokens */
+
+:root {
+  --cherry: #670626;
+  --cherry-deep: #4a0419;
+  --cherry-black: #1e0209;
+  --cherry-soft: #8a1839;
+  --matcha: #bad797;
+  --matcha-pale: #e8f0d8;
+  --matcha-deep: #8fa96a;
+  --cream: #fbf8f1;
+  --ink: #2e0710;
+  --alert: #9c3d0e;
+  --alert-soft: #c4692f;
+
+  --ui-radius: 4px;
+  --font-display: 'General Sans', system-ui, sans-serif;
+  --font-logo: 'Bayon', 'General Sans', system-ui, sans-serif;
+}
+
+/* ==================================================================== reset */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--cherry-black);
+  color: var(--cream);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow: hidden;
+}
+
+img,
+picture,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--matcha);
+  color: var(--cherry);
+}
+
+.weight-medium {
+  font-weight: 500;
+}
+
+.bold-italic {
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* ============================================================== snap stack */
+
+.snap-stack {
+  height: 100vh;
+  height: var(--vvh, 100svh);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.snap-stack.is-js-snapping {
+  scroll-snap-type: none;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-height: 100vh;
+  min-height: var(--vvh, 100svh);
+}
+
+/* ================================================================ preloader */
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--cherry-deep);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(2rem, 5vw, 4rem);
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
+  pointer-events: all;
+}
+
+.loading-screen.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loading-counter {
+  font-family: var(--font-display);
+  font-size: clamp(80px, 20vw, 240px);
+  font-weight: 500;
+  line-height: 0.9;
+  color: var(--matcha);
+  letter-spacing: -0.04em;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: loading-counter-entry 0.8s ease forwards;
+}
+
+@keyframes loading-counter-entry {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ====================================================================== nav */
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem clamp(1.25rem, 4vw, 2.5rem);
+  background: transparent;
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.site-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-family: var(--font-logo);
+  font-size: 28px;
+  line-height: 1;
+  color: var(--cream);
+  letter-spacing: 0.04em;
+  font-weight: 400;
+}
+
+.site-title-btn {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.site-title-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 4px;
+}
+
+.site-title-line {
+  display: block;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.9rem, 2vw, 1.4rem);
+}
+
+.nav-resume {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cream);
+}
+
+.nav-hamburger {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.24);
+  color: #fff;
+  cursor: pointer;
+}
+
+.nav-hamburger svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  transform: scaleX(-1);
+  transform-origin: center;
+}
+
+.site-nav.on-light .site-title,
+.site-nav.on-light .nav-resume {
+  color: var(--cherry);
+}
+
+.site-nav.on-light .site-title-btn:focus-visible {
+  outline-color: rgba(103, 6, 38, 0.75);
+}
+
+.site-nav.on-light .nav-hamburger {
+  color: var(--cherry);
+  border-color: var(--cherry);
+  background: rgba(103, 6, 38, 0.06);
+}
+
+/* ------------------------------------------------------------- nav menu */
+
+.nav-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 2, 9, 0.46);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 105;
+}
+
+.nav-menu {
+  position: fixed;
+  top: 4.8rem;
+  right: clamp(1.25rem, 4vw, 2.5rem);
+  width: min(560px, calc(100vw - 2.5rem));
+  border-radius: 16px;
+  box-shadow: 0 24px 52px rgba(30, 2, 9, 0.42);
+  background: transparent;
+  overflow: hidden;
+  transform-origin: right top;
+  z-index: 110;
+
+  --nav-menu-pad: clamp(0.95rem, 2.2vw, 1.4rem);
+  --nav-menu-gap: 0.42rem;
+  --nav-item-size: clamp(30px, min(4.4vw, 5.4vh), 52px);
+  --nav-item-pad-y: clamp(0.72rem, 1.7vh, 0.82rem);
+  --nav-item-pad-x: 1rem;
+  --nav-item-left-pad: 4.05rem;
+  --nav-marker-left: 1rem;
+  --nav-rule-inset: 1rem;
+  --nav-marker-size: 13px;
+  --nav-marker-letter: 0.12em;
+}
+
+.nav-menu[hidden],
+.nav-menu-backdrop[hidden] {
+  display: none;
+}
+
+.nav-menu-prelayers {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/*
+ * No resting transform here on purpose. GSAP parses an existing translateX(%)
+ * into pixels and then *adds* xPercent on top, which parked the prelayers at
+ * 204% and left them 102% off-screen at the end of the open tween. The menu is
+ * [hidden] until it opens, so GSAP can own this transform outright.
+ */
+.nav-menu-prelayer {
+  position: absolute;
+  inset: 0;
+}
+
+.nav-menu-prelayer-1 {
+  background: var(--matcha);
+}
+.nav-menu-prelayer-2 {
+  background: var(--matcha-deep);
+}
+.nav-menu-prelayer-3 {
+  background: var(--cherry);
+}
+
+.nav-menu-list {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--nav-menu-gap);
+  padding: var(--nav-menu-pad);
+  background: linear-gradient(155deg, rgba(74, 4, 25, 0.97), rgba(30, 2, 9, 0.98));
+  counter-reset: nav-item 0;
+}
+
+.nav-menu-item {
+  position: relative;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--cream);
+  text-align: left;
+  padding: var(--nav-item-pad-y) var(--nav-item-pad-x) var(--nav-item-pad-y) var(--nav-item-left-pad);
+  font-family: var(--font-display);
+  font-size: var(--nav-item-size);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+}
+
+.nav-menu-item::before {
+  counter-increment: nav-item 1;
+  content: '0' counter(nav-item);
+  position: absolute;
+  left: var(--nav-marker-left);
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(186, 215, 151, 0.94);
+  font-family: var(--font-display);
+  font-size: var(--nav-marker-size);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--nav-marker-letter);
+}
+
+.nav-menu-item::after {
+  content: '';
+  position: absolute;
+  left: var(--nav-rule-inset);
+  right: var(--nav-rule-inset);
+  bottom: 0;
+  height: 1px;
+  background: rgba(251, 248, 241, 0.16);
+}
+
+.nav-menu-item:last-child::after {
+  display: none;
+}
+
+.nav-menu-item:hover,
+.nav-menu-item:focus-visible {
+  background: rgba(186, 215, 151, 0.17);
+  color: var(--matcha);
+  outline: none;
+}
+
+/* ===================================================================== hero */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: var(--vvh, 100svh);
+  overflow: hidden;
+  background: var(--cherry-black);
+}
+
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hero-static-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to right, rgba(30, 2, 9, 0.72), rgba(30, 2, 9, 0.22), transparent);
+}
+
+.hero-headlines {
+  position: absolute;
+  top: clamp(6rem, 18vh, 10rem);
+  left: clamp(2rem, 5vw, 4rem);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-heading {
+  font-family: var(--font-display);
+  color: #fff;
+  text-align: left;
+  line-height: 1.1;
+  font-weight: 500;
+}
+
+.hero-heading-line {
+  display: block;
+  font-size: clamp(32px, 5.5vw, 80px);
+  letter-spacing: -0.01em;
+  font-weight: 300;
+}
+
+.hero-heading-line.hero-heading-second {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25em;
+  position: relative;
+}
+
+.cycling-stroke {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    rgba(186, 215, 151, 0) 0%,
+    rgba(186, 215, 151, 0.42) 12%,
+    rgba(186, 215, 151, 0.72) 50%,
+    rgba(186, 215, 151, 0.4) 88%,
+    rgba(186, 215, 151, 0) 100%
+  );
+  border-radius: 40% 60% 55% 45% / 60% 40% 60% 40%;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+
+.hero-tagline {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  font-family: var(--font-display);
+  font-size: clamp(20px, 4.5vw, 36px);
+  color: #fff;
+  text-align: left;
+  letter-spacing: 0.02em;
+  opacity: 0.95;
+  line-height: 1.4;
+}
+
+.hero-tagline .tagline-line {
+  display: block;
+}
+.hero-tagline .tagline-line-light {
+  font-weight: 300;
+}
+.hero-tagline .tagline-line-medium {
+  font-weight: 500;
+}
+
+.hero-swipe-hint {
+  display: flex;
+  position: absolute;
+  bottom: clamp(1.8rem, 5vh, 3rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  pointer-events: none;
+  opacity: 0.7;
+  transition: opacity 0.5s ease;
+}
+
+.hero-swipe-hint.is-hidden {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.hero-swipe-arrow {
+  width: 22px;
+  height: 22px;
+  color: #fff;
+  animation: hero-swipe-bounce 2s ease-in-out infinite;
+}
+
+@keyframes hero-swipe-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.hero-swipe-text {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+/* ================================================================== profile */
+
+.profile-section {
+  position: relative;
+  background: var(--matcha);
+  color: var(--cherry-deep);
+  padding: clamp(4rem, 9vh, 96px) 0 clamp(4rem, 12vh, 128px);
+  font-family: var(--font-display);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  /* Same default JS writes, so the reveal still resolves to 1 before it measures. */
+  --line-span: 0.8;
+}
+
+/*
+ * The snap jumps hero -> about, so about has to be exactly one viewport tall.
+ * transform: scale() on the inner doesn't reflow, so the section is pinned to
+ * the viewport here and --profile-scale shrinks the content to fit inside it.
+ */
+@media (min-width: 901px) {
+  .profile-section {
+    height: 100vh;
+    height: var(--vvh, 100svh);
+  }
+}
+
+.profile-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  transform: scale(var(--profile-scale, 1));
+  transform-origin: center center;
+}
+
+.profile-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.62fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: end;
+  padding: 0 clamp(1.5rem, 6vw, 6rem);
+}
+
+.profile-greeting {
+  font-size: clamp(18px, 1.6vw, 23px);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  margin-bottom: clamp(1rem, 2vw, 1.6rem);
+}
+
+.profile-heading {
+  font-size: clamp(26px, 3.1vw, 44px);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  max-width: 20ch;
+}
+
+.profile-image-wrap {
+  position: relative;
+  /*
+   * Matches the value JS writes (1 - --line-span). Keeping the two in step means
+   * the portrait is still fully revealed at progress 1 if the measuring pass is
+   * delayed — a higher default leaves it stuck at partial opacity.
+   */
+  --line-order: 0.2;
+  --line-local: clamp(0, calc((var(--reveal-progress, 0) - var(--line-order)) / var(--line-span, 1)), 1);
+  opacity: var(--line-local);
+  transform: translateY(calc((1 - var(--line-local)) * 24px));
+  will-change: opacity, transform;
+}
+
+.profile-image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--ui-radius);
+  position: relative;
+  z-index: 1;
+}
+
+.profile-journal-lines {
+  position: absolute;
+  bottom: 50%;
+  left: calc(-1 * var(--lines-gap, 40px));
+  height: 200vh;
+  display: flex;
+  justify-content: flex-start;
+  --lines-gap: calc((var(--profile-image-width, 400px) / 4) - 1px);
+  gap: var(--lines-gap);
+  width: calc(6 * var(--lines-gap) + 7px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.profile-journal-lines span {
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(74, 4, 25, 0.3), rgba(74, 4, 25, 0.2) 85%, transparent);
+}
+
+.profile-phone-journal-lines {
+  display: none;
+}
+
+.profile-divider {
+  display: grid;
+  grid-template-columns: var(--divider-left, 1fr) var(--divider-gap, 30%) var(--divider-right, 1fr);
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: clamp(4rem, 8vw, 6rem);
+}
+
+.profile-divider-segment {
+  height: 1px;
+  background: rgba(74, 4, 25, 0.35);
+}
+
+.profile-divider-gap {
+  height: 1px;
+}
+
+.profile-columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3.5vw, 3.5rem);
+  padding: 0 clamp(1.5rem, 6vw, 6rem);
+}
+
+.profile-col {
+  font-size: clamp(14px, 1.12vw, 17px);
+  font-weight: 400;
+  line-height: 1.62;
+}
+
+/* word-by-word scrub reveal, driven entirely by --reveal-progress */
+#profile [data-scroll-reveal] .reveal-word {
+  display: inline-block;
+  --line-order: 0;
+  --line-local: clamp(0, calc((var(--reveal-progress, 0) - var(--line-order)) / var(--line-span, 1)), 1);
+  opacity: var(--line-local);
+  transform: translateY(calc((1 - var(--line-local)) * 24px));
+  will-change: opacity, transform;
+}
