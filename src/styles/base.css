@@ -160,14 +160,33 @@ a {
 
 .site-title {
   display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.55rem;
   font-family: var(--font-logo);
   font-size: 28px;
   line-height: 1;
   color: var(--cream);
   letter-spacing: 0.04em;
   font-weight: 400;
+}
+
+.site-title-words {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+/* Books and shelf ride on currentColor, so the tone flip needs no second file. */
+.site-mark {
+  height: 1.85em;
+  width: auto;
+  flex: 0 0 auto;
+  fill: currentColor;
+}
+
+.site-mark-accent {
+  fill: var(--matcha);
 }
 
 .site-title-btn {
@@ -228,6 +247,15 @@ a {
 .site-nav.on-light .site-title,
 .site-nav.on-light .nav-resume {
   color: var(--cherry);
+}
+
+/*
+ * Matcha would disappear against the matcha and cream sections, so the accent
+ * book drops to a lighter weight of the ink colour instead of a fourth hue.
+ */
+.site-nav.on-light .site-mark-accent {
+  fill: currentColor;
+  opacity: 0.55;
 }
 
 .site-nav.on-light .site-title-btn:focus-visible {

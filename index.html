@@ -37,8 +37,22 @@
     <!-- ==================================================================== nav -->
     <nav class="site-nav">
       <button class="site-title site-title-btn" type="button" data-scroll-top aria-label="Back to top">
-        <span class="site-title-line">SANIKA</span>
-        <span class="site-title-line">JOSHI</span>
+        <!--
+          Bare shapes, no background tile: the books and shelf inherit the nav's
+          colour so .site-nav.on-light flips the whole mark to cherry for free.
+          The favicon is the only place this sits on a solid tile.
+        -->
+        <!-- viewBox is cropped to the artwork so the mark optically matches the name block -->
+        <svg class="site-mark" viewBox="10 11 52 44" aria-hidden="true" focusable="false">
+          <rect x="17" y="16" width="11" height="34" />
+          <rect class="site-mark-accent" x="30" y="12" width="11" height="38" />
+          <g transform="rotate(14 54 50)"><rect x="43" y="20" width="11" height="30" /></g>
+          <rect x="11" y="50" width="43" height="4" />
+        </svg>
+        <span class="site-title-words">
+          <span class="site-title-line">SANIKA</span>
+          <span class="site-title-line">JOSHI</span>
+        </span>
       </button>
 
       <div class="nav-actions">

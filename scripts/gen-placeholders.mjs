@@ -272,8 +272,13 @@ if (!preserve('favicon.svg')) {
   writeFileSync(
     join(OUT, 'favicon.svg'),
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="32" fill="#670626"/>
-  <rect y="32" width="64" height="32" fill="#BAD797"/>
+  <rect width="64" height="64" fill="#670626"/>
+  <g transform="translate(6.4 6.4) scale(0.8)">
+    <rect x="17" y="16" width="11" height="34" fill="#FBF8F1"/>
+    <rect x="30" y="12" width="11" height="38" fill="#BAD797"/>
+    <g transform="rotate(14 54 50)"><rect x="43" y="20" width="11" height="30" fill="#FBF8F1"/></g>
+    <rect x="11" y="50" width="43" height="4" fill="#FBF8F1"/>
+  </g>
 </svg>`
   );
   process.stdout.write('  favicon.svg\n');
