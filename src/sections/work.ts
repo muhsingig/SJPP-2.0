@@ -46,11 +46,22 @@ function fitWorkCardText() {
     let size = window.innerWidth <= 700 ? 24 : 36;
     text.style.fontSize = `${size}px`;
 
+    /*
+     * The lines are block-level, so scrollWidth reports the container width and
+     * stays put as the font shrinks. That made the loop below run to its floor
+     * every time and pin every caption at 11px. A Range measures the actual
+     * inline extent of the text instead.
+     */
+    const lines = Array.from(
+      text.querySelectorAll<HTMLElement>('.work-card-text-base .work-card-text-line')
+    );
     const widest = () =>
       Math.max(
-        ...Array.from(text.querySelectorAll<HTMLElement>('.work-card-text-base .work-card-text-line')).map(
-          (line) => line.scrollWidth
-        )
+        ...lines.map((line) => {
+          const range = document.createRange();
+          range.selectNodeContents(line);
+          return range.getBoundingClientRect().width;
+        })
       );
 
     let guard = 0;

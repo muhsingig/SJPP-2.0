@@ -1030,6 +1030,16 @@
     gap: clamp(2rem, 5vw, 4rem);
   }
 
+  /*
+   * Cards are full-width in this single column, so the ±40px horizontal reveal
+   * slide pushed them past both edges and gave the section a wider scrollWidth
+   * than the viewport. Slide them up instead.
+   */
+  .work-reveal[data-reveal='left'],
+  .work-reveal[data-reveal='right'] {
+    transform: translateY(28px);
+  }
+
   .work-col-right {
     margin-top: clamp(2rem, 5vw, 4rem);
   }
@@ -1179,6 +1189,35 @@
 
   .contact-actions {
     gap: 10px;
+  }
+}
+
+/* --------------------------------------------------- touch ergonomics */
+
+/*
+ * Every control below measured under the ~44px minimum hit area on a phone.
+ * These pad the target out without moving where the ink actually sits.
+ */
+@media (max-width: 900px) {
+  .nav-resume {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .nav-hamburger {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .recs-link {
+    padding-block: 12px;
+  }
+
+  .contact-field input,
+  .contact-field .iti input,
+  .iti__selected-country {
+    min-height: 44px;
   }
 }
 

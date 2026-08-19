@@ -76,7 +76,9 @@ let running = false;
 let heroInView = true;
 let externallyPaused = false;
 
-const getPixelRatio = () => Math.min(2, window.devicePixelRatio || 1);
+/* Phones pay for the fluid sim in battery and heat, so cap them below desktop. */
+const getPixelRatio = () =>
+  Math.min(window.innerWidth <= 900 ? 1.5 : 2, window.devicePixelRatio || 1);
 
 /* ------------------------------------------------------------------ setup */
 
