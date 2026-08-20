@@ -306,10 +306,12 @@
 }
 
 .clients-title {
-  font-size: clamp(28px, 3vw, 40px);
+  font-size: clamp(26px, 2.3vw, 36px);
   font-weight: 400;
   letter-spacing: -0.01em;
   line-height: 1.2;
+  /* Centred over the logo row and the stat cards, as on the reference. */
+  text-align: center;
   margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
 }
 
@@ -356,24 +358,25 @@
 .clients-card {
   background: var(--cherry);
   color: var(--matcha);
-  border-radius: 16px;
+  border-radius: 18px;
   padding: clamp(2rem, 4vw, 2.75rem);
-  min-height: 180px;
+  /* Reference cards run ~13.7vw tall with the number and label bottom-weighted. */
+  min-height: clamp(170px, 13.7vw, 210px);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 0.6rem;
+  justify-content: flex-end;
+  gap: 0.75rem;
 }
 
 .clients-number {
-  font-size: clamp(48px, 5vw, 70px);
+  font-size: clamp(40px, 3.2vw, 52px);
   font-weight: 300;
   line-height: 1;
   letter-spacing: -0.02em;
 }
 
 .clients-label {
-  font-size: clamp(18px, 1.7vw, 24px);
+  font-size: clamp(16px, 1.4vw, 20px);
   font-weight: 400;
   line-height: 1.35;
 }
@@ -627,7 +630,8 @@
   position: relative;
   background: var(--cherry);
   color: var(--matcha);
-  padding: 72px 10vw 128px;
+  /* 72px sat under the 78px nav and the title collided with the logo. */
+  padding: 104px 10vw 128px;
   font-family: var(--font-display);
   overflow: hidden;
 }
@@ -1208,6 +1212,15 @@
   .nav-hamburger {
     min-width: 44px;
     min-height: 44px;
+  }
+
+  /* The pill left only 6px beside the logotype on a 320px screen. */
+  @media (max-width: 380px) {
+    .nav-resume {
+      padding-inline: 0.7rem;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
   }
 
   .recs-link {

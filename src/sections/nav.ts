@@ -162,6 +162,12 @@ export function initNavToneObserver() {
       if (rect.bottom > navRect.top && rect.top < navRect.bottom) onLight = true;
     });
     nav.classList.toggle('on-light', onLight);
+    /*
+     * The bar is transparent so it can float over the hero canvas. Once the page
+     * scrolls, content passes visibly underneath the logo, so give it a frosted
+     * backing from that point on.
+     */
+    nav.classList.toggle('is-stuck', (scroller?.scrollTop ?? window.scrollY) > 40);
   });
 
   (scroller ?? window).addEventListener('scroll', update, { passive: true });

@@ -154,6 +154,7 @@ a {
   align-items: flex-start;
   padding: 1rem clamp(1.25rem, 4vw, 2.5rem);
   background: transparent;
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
   font-family: var(--font-display);
   font-weight: 600;
 }
@@ -212,6 +213,20 @@ a {
   gap: clamp(0.9rem, 2vw, 1.4rem);
 }
 
+/*
+ * Frosted rather than a solid colour: the sections behind it run cream, matcha
+ * and cherry, so one opaque fill could never sit right on all three.
+ */
+.site-nav.is-stuck {
+  background: rgba(74, 4, 25, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.site-nav.is-stuck.on-light {
+  background: rgba(251, 248, 241, 0.72);
+}
+
 .nav-resume {
   font-family: var(--font-display);
   font-size: 15px;
@@ -219,7 +234,12 @@ a {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   text-decoration: none;
-  color: var(--cream);
+  /* Solid pill, as on the reference: it stays readable over any section. */
+  background: var(--matcha);
+  color: var(--cherry);
+  padding: 0.6rem 1.05rem;
+  border-radius: 8px;
+  line-height: 1;
 }
 
 .nav-hamburger {
@@ -553,7 +573,8 @@ a {
   position: relative;
   background: var(--matcha);
   color: var(--cherry-deep);
-  padding: clamp(4rem, 9vh, 96px) 0 clamp(4rem, 12vh, 128px);
+  /* Floor raised to 5.75rem so the greeting always clears the fixed nav. */
+  padding: clamp(5.75rem, 9vh, 96px) 0 clamp(4rem, 12vh, 128px);
   font-family: var(--font-display);
   overflow: hidden;
   display: flex;
