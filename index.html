@@ -476,7 +476,7 @@
             Unedited from LinkedIn, by the people I reported to and worked beside.
           </p>
 
-          <div class="recs-grid">
+          <div class="recs-grid" data-recs-track>
             <figure class="rec-card" data-simple-reveal>
               <blockquote class="rec-quote">Through her guidance, I gained a much deeper understanding of how social media
                 marketing works, from strategy and audience engagement to content planning and
@@ -484,8 +484,11 @@
                 dedication and commitment to her work.
               </blockquote>
               <figcaption class="rec-by">
-                <span class="rec-name">Snehleen Kaur</span>
-                <span class="rec-role">Founder, The Calm Compass</span>
+                <span class="rec-avatar" data-tone="1" aria-hidden="true">SK</span>
+                <span class="rec-by-text">
+                  <span class="rec-name">Snehleen Kaur</span>
+                  <span class="rec-role">Founder, The Calm Compass</span>
+                </span>
               </figcaption>
             </figure>
 
@@ -495,8 +498,11 @@
                 It was a pleasure to work with her.
               </blockquote>
               <figcaption class="rec-by">
-                <span class="rec-name">Prof. Amanda Crawley Jackson</span>
-                <span class="rec-role">Dean of Research &amp; Knowledge Exchange, UAL: London College of Communication</span>
+                <span class="rec-avatar" data-tone="2" aria-hidden="true">AJ</span>
+                <span class="rec-by-text">
+                  <span class="rec-name">Prof. Amanda Crawley Jackson</span>
+                  <span class="rec-role">Dean of Research &amp; Knowledge Exchange, UAL: London College of Communication</span>
+                </span>
               </figcaption>
             </figure>
 
@@ -507,11 +513,17 @@
                 for any opportunity that she is interested in.
               </blockquote>
               <figcaption class="rec-by">
-                <span class="rec-name">Shwetha Vasan</span>
-                <span class="rec-role">Senior colleague</span>
+                <span class="rec-avatar" data-tone="3" aria-hidden="true">SV</span>
+                <span class="rec-by-text">
+                  <span class="rec-name">Shwetha Vasan</span>
+                  <span class="rec-role">Senior colleague</span>
+                </span>
               </figcaption>
             </figure>
           </div>
+
+          <!-- Populated by initRecsCarousel; stays hidden when nothing overflows. -->
+          <div class="recs-dots" role="tablist" aria-label="Testimonials" hidden></div>
 
           <a class="recs-link" href="https://www.linkedin.com/in/sanikasjoshi/details/recommendations/"
              target="_blank" rel="noreferrer">

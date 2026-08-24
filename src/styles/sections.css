@@ -417,11 +417,75 @@
   margin-top: 0.75rem;
 }
 
+/*
+ * A scroll-snap track rather than a plain grid, so swiping is native: real
+ * momentum, trackpad and keyboard support for free, and no drag physics to
+ * reimplement. At desktop the three cards fill the row exactly and nothing
+ * overflows, so it only actually scrolls on narrow screens, or later if a
+ * fourth testimonial is added.
+ */
 .recs-grid {
+  --recs-gap: clamp(1.25rem, 2.5vw, 2rem);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.25rem, 2.5vw, 2rem);
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 2 * var(--recs-gap)) / 3);
+  gap: var(--recs-gap);
   margin: clamp(2.5rem, 5vw, 3.5rem) 0 clamp(2rem, 4vw, 2.75rem);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  /* room for the cards' inset ring and shadow, which the overflow would clip */
+  padding-bottom: 4px;
+}
+
+.recs-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.rec-card {
+  scroll-snap-align: start;
+}
+
+/* ---------------------------------------------------------- carousel dots */
+
+.recs-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: -0.5rem 0 clamp(1.75rem, 3vw, 2.25rem);
+}
+
+.recs-dots[hidden] {
+  display: none;
+}
+
+.recs-dot {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+/* The 44px button is the hit area; the visible dot is the small span inside. */
+.recs-dot::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--matcha);
+  opacity: 0.34;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.recs-dot[aria-selected='true']::after {
+  opacity: 1;
+  transform: scale(1.5);
 }
 
 .rec-card {
@@ -461,11 +525,48 @@
 
 .rec-by {
   display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.8rem;
   margin-top: auto;
   padding-top: 1.1rem;
   border-top: 1px solid rgba(186, 215, 151, 0.28);
+}
+
+.rec-by-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+/*
+ * Initials rather than a photograph. These are real people who have not sent
+ * portraits, and an invented face would misrepresent them; a monogram reads as
+ * a stand-in, and swapping in a real headshot later is a background-image away.
+ */
+.rec-avatar {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--cherry);
+  background: var(--matcha);
+  box-shadow: 0 0 0 3px rgba(186, 215, 151, 0.18);
+  user-select: none;
+}
+
+.rec-avatar[data-tone='2'] {
+  background: var(--matcha-pale);
+}
+
+.rec-avatar[data-tone='3'] {
+  background: var(--cream);
 }
 
 .rec-name {
@@ -1083,8 +1184,12 @@
 }
 
 @media (max-width: 900px) {
+  /*
+   * One card at a time, with the next one peeking so the swipe is discoverable
+   * without needing an arrow or a hint.
+   */
   .recs-grid {
-    grid-template-columns: 1fr;
+    grid-auto-columns: 86%;
   }
 
   .recs-section {
