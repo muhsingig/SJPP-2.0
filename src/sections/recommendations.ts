@@ -13,29 +13,36 @@ function initRecsCarousel(section: HTMLElement) {
   const cards = Array.from(track.querySelectorAll<HTMLElement>('.rec-card'));
   if (cards.length < 2) return;
 
-  const buttons = cards.map((card, i) => {
+  const arrows = Array.from(section.querySelectorAll<HTMLButtonElement>('.recs-arrow'));
+  let index = 0;
+
+  const goTo = (i: number) => {
+    const target = cards[Math.max(0, Math.min(cards.length - 1, i))];
+    if (!target) return;
+    track.scrollTo({
+      left: target.offsetLeft - track.offsetLeft,
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+    });
+  };
+
+  const buttons = cards.map((_card, i) => {
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'recs-dot';
     b.setAttribute('role', 'tab');
     b.setAttribute('aria-label', `Testimonial ${i + 1} of ${cards.length}`);
-    b.addEventListener('click', () => {
-      track.scrollTo({
-        left: card.offsetLeft - track.offsetLeft,
-        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
-      });
-    });
+    b.addEventListener('click', () => goTo(i));
     dots.appendChild(b);
     return b;
   });
 
-  /* Nothing overflows at desktop, where all three fit, so hide the control. */
-  const syncVisibility = () => {
-    dots.hidden = track.scrollWidth <= track.clientWidth + 1;
-  };
+  arrows.forEach((arrow) => {
+    const dir = Number(arrow.dataset.dir ?? '1');
+    arrow.addEventListener('click', () => goTo(index + dir));
+  });
 
   const syncActive = () => {
-    // Nearest card to the track's left edge wins.
+    // Whichever card sits nearest the track's left edge is the current one.
     const x = track.scrollLeft;
     let nearest = 0;
     let best = Infinity;
@@ -46,17 +53,17 @@ function initRecsCarousel(section: HTMLElement) {
         nearest = i;
       }
     });
+    index = nearest;
     buttons.forEach((b, i) => b.setAttribute('aria-selected', String(i === nearest)));
+    arrows.forEach((arrow) => {
+      const dir = Number(arrow.dataset.dir ?? '1');
+      arrow.disabled = dir < 0 ? nearest === 0 : nearest === cards.length - 1;
+    });
   };
 
-  const update = rafThrottle(() => {
-    syncVisibility();
-    syncActive();
-  });
-
+  const update = rafThrottle(syncActive);
   track.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', update);
-  syncVisibility();
   syncActive();
 }
 

@@ -428,9 +428,12 @@
   --recs-gap: clamp(1.25rem, 2.5vw, 2rem);
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: calc((100% - 2 * var(--recs-gap)) / 3);
+  /* One testimonial at a time; swiping brings the next. */
+  grid-auto-columns: 100%;
   gap: var(--recs-gap);
-  margin: clamp(2.5rem, 5vw, 3.5rem) 0 clamp(2rem, 4vw, 2.75rem);
+  /* A single quote reads badly at full desktop width, so cap and centre it. */
+  max-width: 760px;
+  margin: clamp(2.5rem, 5vw, 3.5rem) auto clamp(1.5rem, 3vw, 2rem);
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
@@ -448,13 +451,50 @@
   scroll-snap-align: start;
 }
 
-/* ---------------------------------------------------------- carousel dots */
+/* ------------------------------------------------------ carousel controls */
+
+.recs-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-bottom: clamp(1.75rem, 3vw, 2.25rem);
+}
+
+.recs-arrow {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(186, 215, 151, 0.34);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--matcha);
+  cursor: pointer;
+  transition: background-color 0.22s ease, opacity 0.22s ease, border-color 0.22s ease;
+}
+
+.recs-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.recs-arrow:hover:not(:disabled) {
+  background: rgba(186, 215, 151, 0.14);
+  border-color: rgba(186, 215, 151, 0.6);
+}
+
+/* Kept in place rather than hidden, so the row does not shift at the ends. */
+.recs-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
 
 .recs-dots {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
-  margin: -0.5rem 0 clamp(1.75rem, 3vw, 2.25rem);
+  gap: 0.25rem;
 }
 
 .recs-dots[hidden] {
@@ -541,32 +581,18 @@
 }
 
 /*
- * Initials rather than a photograph. These are real people who have not sent
- * portraits, and an invented face would misrepresent them; a monogram reads as
- * a stand-in, and swapping in a real headshot later is a background-image away.
+ * Drawn characters, deliberately stylised so they read as decoration rather
+ * than as portraits: these are real people, and an invented likeness beside a
+ * real name and real words would misrepresent them. Swap in a real headshot by
+ * replacing the <svg> with an <img> of the same size.
  */
 .rec-avatar {
   flex: 0 0 auto;
-  width: 42px;
-  height: 42px;
+  display: block;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--cherry);
-  background: var(--matcha);
   box-shadow: 0 0 0 3px rgba(186, 215, 151, 0.18);
-  user-select: none;
-}
-
-.rec-avatar[data-tone='2'] {
-  background: var(--matcha-pale);
-}
-
-.rec-avatar[data-tone='3'] {
-  background: var(--cream);
 }
 
 .rec-name {
@@ -1184,10 +1210,7 @@
 }
 
 @media (max-width: 900px) {
-  /*
-   * One card at a time, with the next one peeking so the swipe is discoverable
-   * without needing an arrow or a hint.
-   */
+  /* Let the next card peek in, so the swipe is discoverable without a hint. */
   .recs-grid {
     grid-auto-columns: 86%;
   }
