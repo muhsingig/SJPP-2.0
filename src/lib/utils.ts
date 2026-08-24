@@ -64,11 +64,29 @@ export function splitLetters(el: HTMLElement, className: string): HTMLSpanElemen
   el.textContent = '';
   const frag = document.createDocumentFragment();
   const letters: HTMLSpanElement[] = [];
+  /*
+   * Letters must be inline-block to animate, and inline-block boxes are each
+   * breakable. The separator used to be a non-breaking space, so the browser
+   * could not break between words at all and broke between letters instead
+   * ("Beyond the wor / k"). Keep a word's letters in one nowrap box, and put
+   * a real space between words so that is the only place a line can break.
+   */
+  let word: HTMLSpanElement | null = null;
   for (const ch of Array.from(source)) {
+    if (ch === ' ' || ch === ' ') {
+      word = null;
+      frag.appendChild(document.createTextNode(' '));
+      continue;
+    }
+    if (!word) {
+      word = document.createElement('span');
+      word.className = 'split-word';
+      frag.appendChild(word);
+    }
     const span = document.createElement('span');
     span.className = className;
-    span.textContent = ch === ' ' ? ' ' : ch;
-    frag.appendChild(span);
+    span.textContent = ch;
+    word.appendChild(span);
     letters.push(span);
   }
   el.appendChild(frag);

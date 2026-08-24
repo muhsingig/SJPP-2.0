@@ -227,6 +227,12 @@ const BEYOND = [
 ];
 
 BEYOND.forEach(([a, b, accent], i) => {
+  // Sanika's real photographs landed as .jpg; never write a stand-in over them.
+  if (existsSync(join(OUT, `beyond${i + 1}.jpg`))) {
+    process.stdout.write(`  beyond${i + 1}  kept (real beyond${i + 1}.jpg present)\n`);
+    kept += 1;
+    return;
+  }
   write(`beyond${i + 1}.png`, 1284, 902, (u, v, x, y) => {
     const g = mix(a, b, smooth(0, 1, u * 0.6 + v * 0.4));
     // stacked horizontal bands, loosely "shelf of books"

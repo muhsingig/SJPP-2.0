@@ -10,9 +10,13 @@ interface Item {
   ratio: number;
 }
 
+/*
+ * Three at desktop, not four: with the placeholder tiles gone there are only
+ * six items, and four columns left the section short and sparsely filled.
+ */
 const BREAKPOINTS: Array<[string, number]> = [
-  ['(min-width: 1500px)', 4],
-  ['(min-width: 1100px)', 4],
+  ['(min-width: 1500px)', 3],
+  ['(min-width: 1100px)', 3],
   ['(min-width: 700px)', 3],
   ['(min-width: 520px)', 2],
 ];

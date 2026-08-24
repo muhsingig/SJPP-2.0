@@ -3,7 +3,11 @@ import { getScroller, prefersReducedMotion } from '../lib/utils';
 import { revealTitleByLetter } from './skills';
 
 const VELOCITY_SPEED = 72; // px per second
-const STACK_BASE = { width: 642, height: 451 };
+/*
+ * Portrait 3:4, matching the phone photographs that fill the stack. Landscape
+ * cards would have kept only the middle third of them and cut off heads.
+ */
+const STACK_BASE = { width: 480, height: 640 };
 const AUTOPLAY_MS = 4000;
 
 /* --------------------------------------------------------------- marquee */

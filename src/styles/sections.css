@@ -249,6 +249,12 @@
   display: inline-block;
 }
 
+/* Holds one word's letters together so lines can only break on spaces. */
+.split-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
