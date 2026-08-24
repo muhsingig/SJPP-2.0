@@ -148,7 +148,14 @@ const HERO_SEEDS = [
 
 console.log('generating placeholders in /public');
 
-write('front.png', 1600, 1000, (u, v, x, y) => {
+/* Sanika's hero illustrations are .jpg; never write a stand-in over them. */
+const heroArtPresent =
+  existsSync(join(OUT, 'front.jpg')) && existsSync(join(OUT, 'back.jpg'));
+
+if (heroArtPresent) {
+  process.stdout.write('  front  kept (real front.jpg present)\n');
+  kept += 1;
+} else write('front.png', 1600, 1000, (u, v, x, y) => {
   const b = blobs(u, v, HERO_SEEDS);
   const base = mix(C.cherryBlack, C.cherryDeep, smooth(0, 1, v * 0.7 + u * 0.3));
   const lit = mix(base, C.cherry, b * 0.9);
@@ -157,7 +164,10 @@ write('front.png', 1600, 1000, (u, v, x, y) => {
   return lit.map((c) => c * vign + grain);
 });
 
-write('back.png', 1600, 1000, (u, v, x, y) => {
+if (heroArtPresent) {
+  process.stdout.write('  back  kept (real back.jpg present)\n');
+  kept += 1;
+} else write('back.png', 1600, 1000, (u, v, x, y) => {
   const b = blobs(u, v, HERO_SEEDS);
   const base = mix(C.matchaDeep, C.matchaPale, smooth(0, 1, v * 0.7 + u * 0.3));
   const lit = mix(base, C.matcha, b * 0.85);

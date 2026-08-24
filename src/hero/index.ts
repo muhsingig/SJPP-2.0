@@ -190,7 +190,7 @@ function showStaticHeroFallback() {
   running = false;
   if (!canvas) return;
   const img = document.createElement('img');
-  img.src = '/front.png';
+  img.src = '/front.jpg';
   img.alt = '';
   img.className = 'hero-static-fallback';
   canvas.replaceWith(img);
@@ -346,7 +346,7 @@ export async function initHero() {
 
   let texA: Texture, texB: Texture;
   try {
-    [texA, texB] = await Promise.all([load('/front.png'), load('/back.png')]);
+    [texA, texB] = await Promise.all([load('/front.jpg'), load('/back.jpg')]);
   } catch {
     showStaticHeroFallback();
     hideLoader(loading);
