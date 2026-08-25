@@ -10,6 +10,7 @@ import { initExperience } from './sections/experience';
 import { initRecommendations } from './sections/recommendations';
 import { initWriting } from './sections/writing';
 import { initTravel } from './sections/travel';
+import { initElectricBorder } from './sections/electric-border';
 import { initContactForm, initSimpleReveal } from './sections/contact';
 import { getScroller, initViewportHeight } from './lib/utils';
 import gsap from 'gsap';
@@ -57,6 +58,18 @@ function boot() {
   initSnapScroll();
   initProfileScrollReveal();
   initProfileLayout();
+
+  /*
+   * Reference settings, with cherry standing in for its electric cyan. chaos at
+   * 0.01 rather than 0.12 is the one that matters: it keeps the line hugging the
+   * edge as a crisp filament instead of throwing it out into a loose scribble.
+   */
+  initElectricBorder(document.querySelector('.profile-image-wrap'), {
+    color: '#670626',
+    speed: 1.2,
+    chaos: 0.01,
+    borderRadius: 0,
+  });
   initNav();
   initNavToneObserver();
 

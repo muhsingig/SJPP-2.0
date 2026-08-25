@@ -668,6 +668,99 @@ a {
   z-index: 1;
 }
 
+/* ------------------------------------------------------- electric border */
+
+/*
+ * Cherry rather than the original's electric purple. The portrait sits on the
+ * matcha panel, so the outline needs to read as ink on a light ground: the glow
+ * layers are kept low, since a bright halo on a pale background just muddies
+ * into a shadow instead of looking charged.
+ */
+.electric-border {
+  position: relative;
+  isolation: isolate;
+}
+
+/*
+ * The canvas is deliberately larger than the portrait and centred by the
+ * negative inset, because the noise pushes the line up to 60px outward and a
+ * tight box would clip every spike.
+ */
+.eb-canvas-container {
+  position: absolute;
+  inset: -60px;
+  z-index: 0;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+}
+
+.eb-canvas {
+  display: block;
+  /* Near-solid: at chaos 0.01 this is a fine filament, not a broad scribble. */
+  opacity: 0.95;
+}
+
+.eb-layers {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.eb-layers > div {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--ui-radius);
+}
+
+.eb-glow-1 {
+  box-shadow:
+    0 0 4px -1px var(--electric-border-color, #670626),
+    inset 0 0 4px -1px var(--electric-border-color, #670626);
+  opacity: 0.55;
+}
+
+.eb-glow-2 {
+  box-shadow: 0 0 18px -4px var(--electric-border-color, #670626);
+  opacity: 0.35;
+}
+
+.eb-background-glow {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--electric-border-color, #670626) 22%, transparent),
+    transparent 72%
+  );
+  filter: blur(14px);
+  opacity: 0.42;
+  transform: scale(1.03);
+}
+
+/* The portrait itself must sit above all of it. */
+.electric-border > picture {
+  position: relative;
+  z-index: 1;
+}
+
+/*
+ * z-index only, no position. The journal lines are already absolute and 1440px
+ * tall; forcing position: relative put that height back into flow and stretched
+ * the portrait's wrapper to 1315px, which the canvas then sized itself against.
+ */
+.electric-border > .profile-journal-lines {
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eb-glow-1,
+  .eb-glow-2,
+  .eb-background-glow {
+    opacity: 0.2;
+  }
+}
+
 .profile-journal-lines {
   position: absolute;
   bottom: 50%;
