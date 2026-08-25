@@ -65,13 +65,24 @@ function initMasonry() {
       heights[shortest] += h + gap;
     }
 
-    list.style.height = `${Math.max(...heights) - gap}px`;
+    const height = `${Math.max(...heights) - gap}px`;
+    if (list.style.height === height) return;
+    list.style.height = height;
+
+    /*
+     * The tiles are absolutely positioned, so this height is the only thing
+     * holding the section open, and it is set from JS after the triggers below
+     * were created. Everything further down the page, the travel scatter above
+     * all, would keep firing at offsets from before this ran.
+     */
+    ScrollTrigger.refresh();
   };
 
   const relayout = rafThrottle(layout);
   layout();
   window.addEventListener('resize', relayout);
   document.fonts?.ready.then(layout);
+  window.addEventListener('load', layout);
 
   // Scaling *down* on hover is deliberate, it reads as the tile stepping back
   // rather than lunging at the cursor.
