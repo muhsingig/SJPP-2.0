@@ -9,7 +9,7 @@ import { initSkills } from './sections/skills';
 import { initExperience } from './sections/experience';
 import { initRecommendations } from './sections/recommendations';
 import { initWriting } from './sections/writing';
-import { initBeyond } from './sections/beyond';
+import { initTravel } from './sections/travel';
 import { initContactForm, initSimpleReveal } from './sections/contact';
 import { initViewportHeight } from './lib/utils';
 import gsap from 'gsap';
@@ -36,7 +36,7 @@ function boot() {
   initExperience();
   initRecommendations();
   initWriting();
-  initBeyond();
+  initTravel();
   initSimpleReveal();
   void initContactForm();
 

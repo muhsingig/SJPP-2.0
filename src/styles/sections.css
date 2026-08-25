@@ -788,118 +788,164 @@
   justify-content: center;
 }
 
-/* =================================================================== beyond */
+/* =================================================================== travel */
 
-.inspiration-section {
+.travel-section {
   position: relative;
   background: var(--cherry);
   color: var(--matcha);
-  /* 72px sat under the 78px nav and the title collided with the logo. */
-  padding: 104px 10vw 128px;
+  padding: 104px 8vw 128px;
   font-family: var(--font-display);
   overflow: hidden;
 }
 
-.inspiration-top {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(2rem, 5vw, 4rem);
-  align-items: start;
-  margin-bottom: clamp(3rem, 6vw, 5rem);
+.travel-top {
+  max-width: 46rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
-.inspiration-title {
-  font-size: clamp(36px, 5.2vw, 75px);
+.travel-title {
+  font-size: clamp(34px, 5vw, 72px);
   font-weight: 300;
   letter-spacing: -0.02em;
   line-height: 1.05;
 }
 
-.inspiration-title > span {
+.travel-title > span {
   display: block;
 }
 
-.inspiration-text {
+.travel-text {
+  margin-top: clamp(1.25rem, 2.5vw, 1.75rem);
   font-size: clamp(15px, 1.2vw, 18px);
   font-weight: 300;
   line-height: 1.65;
   opacity: 0.92;
+  text-wrap: pretty;
 }
 
-.inspiration-stack-area {
+/* ------------------------------------------------------------ the scatter */
+
+/*
+ * The stage is the coordinate space the pieces fly out into. Everything starts
+ * stacked over the film strip and travels to its own --tx/--ty as --spread runs
+ * 0 to 1, so the collage opens outward on scroll.
+ */
+.travel-stage {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: clamp(360px, 52vh, 560px);
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  --spread: 0;
+  /*
+   * Makes cqw/cqh below resolve against the stage. A translate percentage would
+   * resolve against each piece's own width instead, which capped the scatter at
+   * about 50px however large the numbers were.
+   */
+  container-type: size;
 }
 
-.inspiration-velocity {
+.travel-scatter {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 100vw;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  overflow: hidden;
+  inset: 0;
   pointer-events: none;
-  z-index: 0;
-  margin: 0;
-  padding: 0;
 }
 
-.velocity-scroller {
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  width: max-content;
-  will-change: transform;
-  margin: 0;
-  padding: 0;
-}
-
-.velocity-group {
-  display: flex;
-}
-
-.velocity-text {
-  font-size: clamp(52px, 9vw, 128px);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  opacity: 0.25;
-  color: var(--matcha);
-  display: inline-block;
-  white-space: pre;
-  flex-shrink: 0;
-  text-transform: uppercase;
-  margin: 0;
-  padding: 0;
-}
-
-.inspiration-stack {
-  position: relative;
-  z-index: 1;
-}
-
-.inspiration-stack .stack-card {
+.travel-piece {
   position: absolute;
   top: 50%;
   left: 50%;
-  border-radius: 18px;
-  overflow: hidden;
-  background: transparent;
-  will-change: transform;
-  cursor: pointer;
+  width: clamp(78px, 9vw, 132px);
+  margin: 0;
+  padding: 5px 5px 16px;
+  background: var(--cream);
+  border-radius: 2px;
+  box-shadow: 0 14px 30px -14px rgba(30, 2, 9, 0.65);
+  transform:
+    translate3d(
+      calc(-50% + var(--tx) * 1cqw * var(--spread)),
+      calc(-50% + var(--ty) * 1cqh * var(--spread)),
+      0
+    )
+    rotate(calc(var(--tr) * var(--spread)))
+    scale(calc(0.42 + (var(--ts) - 0.42) * var(--spread)));
+  opacity: calc(0.15 + 0.85 * var(--spread));
+  will-change: transform, opacity;
 }
 
-.inspiration-stack .stack-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.travel-piece img {
   display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 1px;
+}
+
+/* --------------------------------------------------------- the film strip */
+
+.travel-strip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  width: min(58%, 620px);
+  transform: translate(-50%, -50%) scale(calc(0.82 + 0.18 * var(--spread)));
+  background: var(--cherry-deep);
+  padding: 14px 10px;
+  border-radius: 3px;
+  box-shadow: 0 22px 48px -20px rgba(30, 2, 9, 0.8);
+}
+
+/* The sprocket holes, drawn rather than shipped as an image. */
+.travel-strip::before,
+.travel-strip::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  height: 8px;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--cream) 0 9px,
+    transparent 9px 20px
+  );
+  opacity: 0.9;
+}
+
+.travel-strip::before {
+  top: 3px;
+}
+
+.travel-strip::after {
+  bottom: 3px;
+}
+
+.travel-strip-frames {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.travel-strip-frames img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.travel-link {
+  display: inline-block;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: var(--matcha);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(186, 215, 151, 0.45);
+  padding-bottom: 2px;
+  transition: border-color 0.25s ease;
+}
+
+.travel-link:hover {
+  border-color: var(--matcha);
 }
 
 /* ================================================================== contact */
@@ -1217,6 +1263,16 @@
   /* Let the next card peek in, so the swipe is discoverable without a hint. */
   .recs-grid {
     grid-auto-columns: 86%;
+  }
+
+  .travel-section {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  /* 16:9 left the scatter barely 180px of height here, so go portrait. */
+  .travel-stage {
+    aspect-ratio: 3 / 4;
   }
 
   .recs-section {

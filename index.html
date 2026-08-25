@@ -79,7 +79,7 @@
           <button class="nav-menu-item" type="button" data-scroll-target="#experience">Experience</button>
           <button class="nav-menu-item" type="button" data-scroll-target="#recommendations">Recommendations</button>
           <button class="nav-menu-item" type="button" data-scroll-target="#writing">Writing</button>
-          <button class="nav-menu-item" type="button" data-scroll-target="#beyond">Beyond</button>
+          <button class="nav-menu-item" type="button" data-scroll-target="#travel">Travel</button>
           <button class="nav-menu-item" type="button" data-scroll-target="#contact">Contact</button>
         </div>
       </div>
@@ -590,40 +590,81 @@
         </div>
       </section>
 
-      <!-- =============================================================== beyond -->
-      <section id="beyond" class="inspiration-section">
-        <div class="inspiration-inner">
-          <div class="inspiration-top">
-            <h2 class="inspiration-title">
-              <span>Beyond the work</span>
-              <span>comes the reading</span>
+      <!-- =============================================================== travel -->
+      <section id="travel" class="travel-section" data-nav-tone="dark">
+        <div class="travel-inner">
+          <div class="travel-top">
+            <h2 class="travel-title">
+              <span>The other half of</span>
+              <span>the job is going</span>
             </h2>
-            <p class="inspiration-text">
-              Books are the through-line. I trained in publishing, ran a children's bookstore, curated
-              collections for school fairs, and I still think a well-chosen book does more for a person
-              than most campaigns do for a brand. I read widely and unsystematically: literary fiction,
-              psychology, essays, whatever the independent presses are doing. Most of my best ideas at
-              work started as something I read that had nothing to do with work.
+            <p class="travel-text">
+              I write about places for a living, which is a convenient excuse to keep leaving.
+              I take freelance travel commissions: destination features, city guides, hotel and
+              restaurant write-ups, and the kind of essay that is really about a place but is
+              also about something else. I am interested in what a place is actually like once
+              the itinerary runs out.
             </p>
           </div>
 
-          <div class="inspiration-stack-area">
-            <div class="inspiration-velocity" aria-hidden="true">
-              <div
-                class="velocity-scroller"
-                data-text="Books · Publishing · Essays · Culture · Psychology · Independent Press · Bookstores · Reading · "
-              ></div>
+          <!--
+            Scroll-driven scatter. Every piece starts stacked on the film strip and
+            travels to its own --tx/--ty at full progress, so the collage opens out as
+            you scroll. Driven by initTravelScatter.
+          -->
+          <div class="travel-stage" data-travel-stage>
+            <div class="travel-scatter" aria-hidden="true">
+            <figure class="travel-piece" style="--tx: -42; --ty: -30; --tr: -9deg; --ts: 0.92;">
+              <img src="/travel-1.jpg" alt="" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="travel-piece" style="--tx: -30; --ty: 12; --tr: 6deg; --ts: 1.0;">
+              <img src="/travel-2.jpg" alt="" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="travel-piece" style="--tx: -44; --ty: 30; --tr: -5deg; --ts: 0.86;">
+              <img src="/travel-3.jpg" alt="" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="travel-piece" style="--tx: -18; --ty: -34; --tr: 8deg; --ts: 0.8;">
+              <img src="/travel-4.jpg" alt="" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="travel-piece" style="--tx: -16; --ty: 34; --tr: -7deg; --ts: 0.88;">
+              <img src="/travel-5.jpg" alt="" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="travel-piece" style="--tx: 44; --ty: -28; --tr: 7deg; --ts: 0.94;">
+              <img src="/travel-6.jpg" alt="" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="travel-piece" style="--tx: 31; --ty: 10; --tr: -6deg; --ts: 1.0;">
+              <img src="/travel-7.jpg" alt="" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="travel-piece" style="--tx: 45; --ty: 31; --tr: 5deg; --ts: 0.86;">
+              <img src="/travel-8.jpg" alt="" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="travel-piece" style="--tx: 19; --ty: -35; --tr: -8deg; --ts: 0.82;">
+              <img src="/travel-9.jpg" alt="" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="travel-piece" style="--tx: 17; --ty: 35; --tr: 6deg; --ts: 0.9;">
+              <img src="/travel-10.jpg" alt="" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="travel-piece" style="--tx: -37; --ty: -6; --tr: 4deg; --ts: 0.78;">
+              <img src="/travel-11.jpg" alt="" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="travel-piece" style="--tx: 38; --ty: -6; --tr: -4deg; --ts: 0.78;">
+              <img src="/travel-12.jpg" alt="" loading="lazy" decoding="async" />
+            </figure>
             </div>
 
-            <div class="inspiration-stack" data-autoplay="true" data-random-rotation="true" data-send-to-back="true">
-              <div class="stack-card"><picture><img src="/beyond1.jpg" alt="Books and reading" loading="lazy" decoding="async" /></picture></div>
-              <div class="stack-card"><picture><img src="/beyond2.jpg" alt="Bookstore shelves" loading="lazy" decoding="async" /></picture></div>
-              <div class="stack-card"><picture><img src="/beyond3.jpg" alt="School book fair" loading="lazy" decoding="async" /></picture></div>
-              <div class="stack-card"><picture><img src="/beyond4.jpg" alt="Reading corner" loading="lazy" decoding="async" /></picture></div>
-              <div class="stack-card"><picture><img src="/beyond5.jpg" alt="Curated collection" loading="lazy" decoding="async" /></picture></div>
-              <div class="stack-card"><picture><img src="/beyond6.jpg" alt="Independent press titles" loading="lazy" decoding="async" /></picture></div>
+            <div class="travel-strip">
+              <div class="travel-strip-frames">
+                <img src="/travel-1.jpg" alt="" loading="lazy" decoding="async" />
+                <img src="/travel-2.jpg" alt="" loading="lazy" decoding="async" />
+                <img src="/travel-3.jpg" alt="" loading="lazy" decoding="async" />
+                <img src="/travel-4.jpg" alt="" loading="lazy" decoding="async" />
+              </div>
             </div>
           </div>
+
+          <a class="travel-link" href="mailto:joshi.sanika3@gmail.com?subject=Travel%20writing%20commission">
+            Commission a travel piece &rarr;
+          </a>
         </div>
       </section>
 
