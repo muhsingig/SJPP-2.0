@@ -128,9 +128,14 @@ function resize() {
   maskMaterial.uniforms.uAspect.value = width / height;
   trailMaterial.uniforms.uAspect.value = width / height;
 
-  // Nudge the framing so the subject stays out of the headline's way on narrow screens.
-  if (width <= 700) compositeMaterial.uniforms.uPan.value.set(-0.085, 0.08);
-  else if (width <= 1200) compositeMaterial.uniforms.uPan.value.set(-0.03, 0.04);
+  /*
+   * The figure sits at about 66% across the frame, leaving the left clear for the
+   * headline. Cover-fit crops toward the centre, so the narrower the viewport the
+   * further right the sampling window has to pan to keep her in shot: at 375px it
+   * only shows 37-63% of the image width, which would miss her entirely.
+   */
+  if (width <= 700) compositeMaterial.uniforms.uPan.value.set(0.16, 0);
+  else if (width <= 1200) compositeMaterial.uniforms.uPan.value.set(0.1, 0);
   else compositeMaterial.uniforms.uPan.value.set(0, 0);
 
   fluid.resize(maskA.width, maskA.height);
