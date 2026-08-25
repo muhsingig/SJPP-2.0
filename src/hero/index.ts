@@ -37,10 +37,10 @@ const PARAMS = {
   centreGapStrength: 0.96,
   revealThresholdLow: 0.02,
   revealThresholdHigh: 0.08,
-  mouseGapRadius: 0.18,
+  mouseGapRadius: 0.07,
   mouseGapStrength: 0.88,
   trailDecay: 0.91,
-  trailRadius: 0.14,
+  trailRadius: 0.055,
   trailStrength: 0.85,
   trailMaskStrength: 0.88,
   maskRTScale: 0.75,
@@ -218,15 +218,32 @@ function frame(now: number) {
   const dt = lastTime ? Math.min(0.05, time - lastTime) : 0.016;
   lastTime = time;
 
-  // ease the pointer so fast flicks still trace a continuous line
+  /*
+   * Ease toward the pointer, but normalised against dt. A fixed per-frame lerp
+   * ran twice as fast on a 120Hz screen as on a 60Hz one, so the brush lagged
+   * by a different amount depending on the display.
+   */
   if (pointerTarget.x >= 0) {
-    pointerSmoothed.x += (pointerTarget.x - pointerSmoothed.x) * 0.35;
-    pointerSmoothed.y += (pointerTarget.y - pointerSmoothed.y) * 0.35;
+    const ease = 1 - Math.pow(0.001, dt);
+    pointerSmoothed.x += (pointerTarget.x - pointerSmoothed.x) * ease;
+    pointerSmoothed.y += (pointerTarget.y - pointerSmoothed.y) * ease;
 
     const dx = (pointerSmoothed.x - lastPointer.x) * 900;
     const dy = (pointerSmoothed.y - lastPointer.y) * 900;
     if (Math.abs(dx) > 0.01 || Math.abs(dy) > 0.01) {
-      fluid.splat(pointerSmoothed.x, pointerSmoothed.y, dx, dy, 0.0006);
+      // Splat along the step rather than only at its end, so a fast drag pushes
+      // a continuous line of momentum instead of a row of separate dabs.
+      const steps = Math.min(6, 1 + Math.floor(Math.hypot(dx, dy) / 12));
+      for (let i = 1; i <= steps; i++) {
+        const t = i / steps;
+        fluid.splat(
+          lastPointer.x + (pointerSmoothed.x - lastPointer.x) * t,
+          lastPointer.y + (pointerSmoothed.y - lastPointer.y) * t,
+          dx / steps,
+          dy / steps,
+          0.00028
+        );
+      }
     }
     lastPointer = { ...pointerSmoothed };
   }
@@ -237,6 +254,8 @@ function frame(now: number) {
 
   // trail pass
   trailMaterial.uniforms.uPrevTrail.value = trailA.texture;
+  // Last frame's point first: the shader strokes the segment between the two.
+  trailMaterial.uniforms.uMousePrevUV.value.copy(trailMaterial.uniforms.uMouseUV.value);
   trailMaterial.uniforms.uMouseUV.value.set(
     pointerOver ? pointerSmoothed.x : -1,
     pointerOver ? pointerSmoothed.y : -1
@@ -373,6 +392,7 @@ export async function initHero() {
     uniforms: {
       uPrevTrail: { value: trailA.texture },
       uMouseUV: { value: new Vector2(-1, -1) },
+      uMousePrevUV: { value: new Vector2(-1, -1) },
       uTrailDecay: { value: PARAMS.trailDecay },
       uTrailRadius: { value: PARAMS.trailRadius },
       uTrailStrength: { value: PARAMS.trailStrength },

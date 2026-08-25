@@ -138,20 +138,36 @@ precision highp float;
 varying vec2 vUv;
 uniform sampler2D uPrevTrail;
 uniform vec2 uMouseUV;
+uniform vec2 uMousePrevUV;
 uniform float uTrailDecay;
 uniform float uTrailRadius;
 uniform float uTrailStrength;
 uniform float uAspect;
 uniform float uReset;
 
+/*
+ * Distance to the segment the pointer covered this frame, not to a single point.
+ * A per-frame dot leaves a gap every time the pointer moves further than its own
+ * radius between frames, which is what made fast strokes read as beads rather
+ * than a line.
+ */
+float segmentDistance(vec2 p, vec2 a, vec2 b, float aspect) {
+  vec2 pa = p - a;
+  vec2 ba = b - a;
+  pa.x *= aspect;
+  ba.x *= aspect;
+  float h = clamp(dot(pa, ba) / max(dot(ba, ba), 1e-6), 0.0, 1.0);
+  return length(pa - ba * h);
+}
+
 void main() {
   float prev = texture2D(uPrevTrail, vUv).r * uTrailDecay;
 
   float add = 0.0;
   if (uMouseUV.x >= 0.0) {
-    vec2 d = vUv - uMouseUV;
-    d.x *= uAspect;
-    add = exp(-dot(d, d) / (uTrailRadius * uTrailRadius)) * uTrailStrength;
+    vec2 from = uMousePrevUV.x >= 0.0 ? uMousePrevUV : uMouseUV;
+    float d = segmentDistance(vUv, from, uMouseUV, uAspect);
+    add = exp(-(d * d) / (uTrailRadius * uTrailRadius)) * uTrailStrength;
   }
 
   float v = clamp(prev + add, 0.0, 1.0) * (1.0 - uReset);
