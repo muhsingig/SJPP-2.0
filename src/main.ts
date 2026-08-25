@@ -11,6 +11,9 @@ import { initRecommendations } from './sections/recommendations';
 import { initWriting } from './sections/writing';
 import { initTravel } from './sections/travel';
 import { initElectricBorder } from './sections/electric-border';
+import { initStrands } from './sections/strands';
+import { initMagicBento } from './sections/magic-bento';
+import { initGradientWaves } from './sections/gradient-waves';
 import { initContactForm, initSimpleReveal } from './sections/contact';
 import { getScroller, initViewportHeight } from './lib/utils';
 import gsap from 'gsap';
@@ -76,12 +79,47 @@ function boot() {
   initHeadingStroke();
   initWork();
   initSkills();
+
+  /*
+   * Ambient rather than a feature: this sits behind body copy, so the glow and
+   * intensity come down from the component defaults and a scrim in the CSS
+   * knocks it back further. Loud enough to notice, quiet enough to read over.
+   */
+  initStrands(document.querySelector('.skills-section'), {
+    colors: ['#BAD797', '#FBF8F1', '#8FA96A', '#8A1839'],
+    count: 3,
+    glow: 1.9,
+    intensity: 0.5,
+    opacity: 0.9,
+    scale: 1.9,
+  });
   initExperience();
   initRecommendations();
   initWriting();
+  initMagicBento('.art-masonry-list', '.art-item');
   initTravel();
   initSimpleReveal();
   void initContactForm();
+
+  /*
+   * The wave body must not be the section's own colour. It was matcha on a
+   * matcha ground, so the mid-tone vanished and only the crests showed at all.
+   * Now the troughs run darker than the ground and the crests lighter, which is
+   * what makes the swell read, while cherry type still passes on both.
+   */
+  initGradientWaves(document.querySelector('.contact-section'), {
+    horizonColor: '#670626',
+    waveColor: '#8FA96A',
+    crestColor: '#FBF8F1',
+    speed: 0.32,
+    /*
+     * Blended toward the ground rather than veiled over. At full strength the
+     * troughs dropped cherry type to 3.43 contrast, under the 4.5 minimum; a
+     * scrim on top fixed that by erasing the waves entirely. Scaling the shader's
+     * own alpha keeps the swell shapes and lifts the darkest trough instead.
+     */
+    opacity: 0.5,
+  });
 
   // The hero owns the preloader, so it goes last and is never awaited.
   void initHero();

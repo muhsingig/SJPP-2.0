@@ -229,11 +229,63 @@
 
 /* =================================================================== skills */
 
+/*
+ * Dark, so the strands behind it can actually glow. The shader is additive, so
+ * on the cream this section used to be it could only tint the background: the
+ * filaments went milky and the glow could not exist at all.
+ */
 .skills-section {
-  background: var(--cream);
-  color: var(--cherry);
+  position: relative;
+  isolation: isolate;
+  background: var(--cherry-black);
+  color: var(--cream);
   padding: 96px 12vw 112px;
   font-family: var(--font-display);
+  overflow: hidden;
+}
+
+.strands-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  /*
+   * Softened, because sharp filaments crossing a letterform read as damage to
+   * the glyph. Blurred they become moving light instead of lines.
+   */
+  filter: blur(2px);
+  opacity: 0.75;
+}
+
+/*
+ * A scrim between the strands and the words. Without it the filaments run at
+ * full strength straight through the copy and the text has to compete with a
+ * moving highlight. Three stops rather than a flat fill: heaviest through the
+ * middle where the cards sit, lighter top and bottom so the strands still show
+ * at the edges of the section.
+ */
+.skills-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(30, 2, 9, 0.55),
+    rgba(30, 2, 9, 0.82) 38%,
+    rgba(30, 2, 9, 0.82) 72%,
+    rgba(30, 2, 9, 0.55)
+  );
+}
+
+/* Above both the canvas and the scrim. */
+.skills-inner {
+  position: relative;
+  z-index: 2;
 }
 
 .skills-title {
@@ -256,13 +308,29 @@
 }
 
 /*
- * Three, not four: there are five cards now and the descriptions are full
- * sentences rather than the old short lines, so they need the wider column.
+ * Six columns so five cards can fill two complete rows: three cards spanning two
+ * each, then two spanning three each. A plain three-column grid left the second
+ * row 35% empty, because five items never divide into it.
  */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.skill-card {
+  grid-column: span 2;
+}
+
+/*
+ * Only when there are exactly five. nth-child(4):nth-last-child(2) can only
+ * match the fourth of five, so adding a sixth card drops this rule and the grid
+ * falls back to three even columns per row on its own.
+ */
+.skill-card:nth-child(4):nth-last-child(2),
+.skill-card:nth-child(5):nth-last-child(1) {
+  grid-column: span 3;
 }
 
 .skill-card {
@@ -279,7 +347,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 0.4rem;
-  color: var(--cherry);
+  color: var(--matcha);
 }
 
 .skill-icon svg {
@@ -303,7 +371,8 @@
   font-size: clamp(14px, 1.05vw, 16px);
   font-weight: 300;
   line-height: 1.5;
-  opacity: 0.8;
+  /* Cream at 0.8 on near-black is thinner than cherry at 0.8 on cream was. */
+  opacity: 0.72;
 }
 
 /* =============================================================== experience */
@@ -392,6 +461,89 @@
 }
 
 /* ================================================================== writing */
+
+/* ------------------------------------------------- essay tile spotlight */
+
+/*
+ * The cursor halo. The original blends this with mix-blend-mode: screen, which
+ * needs a near-black page to show at all; this section is cream, so it paints
+ * with plain alpha in cherry and reads as light pooling on paper.
+ */
+.bento-spotlight {
+  position: fixed;
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(103, 6, 38, 0.22) 0%,
+    rgba(103, 6, 38, 0.14) 15%,
+    rgba(103, 6, 38, 0.08) 25%,
+    rgba(103, 6, 38, 0.04) 40%,
+    transparent 70%
+  );
+}
+
+/*
+ * Border glow, driven by --glow-intensity from the pointer distance. Painted as
+ * a masked ring so it lights the tile's edge rather than washing the artwork,
+ * which matters now the real essays carry photographs.
+ */
+.art-item-img {
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --glow-intensity: 0;
+  --glow-radius: 320px;
+  /*
+   * drop-shadow rather than box-shadow: the themed and thumbnail rules already
+   * own box-shadow, and this needs to compose with them rather than replace one.
+   */
+  filter: drop-shadow(
+    0 0 calc(var(--glow-intensity) * 22px)
+    rgba(103, 6, 38, calc(var(--glow-intensity) * 0.5))
+  );
+  transition: filter 0.25s ease;
+}
+
+.art-item-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--glow-intensity);
+  transition: opacity 0.25s ease;
+  padding: 2.5px;
+  background: radial-gradient(
+    var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+    rgba(103, 6, 38, 1) 0%,
+    rgba(103, 6, 38, 0.5) 35%,
+    transparent 70%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bento-spotlight {
+    display: none;
+  }
+
+  .art-item-img::after {
+    opacity: 0;
+  }
+}
 
 /* ============================================================ recommendations */
 
@@ -1058,11 +1210,30 @@
 /* ================================================================== contact */
 
 .contact-section {
+  /* position/isolation/overflow only, so the wave canvas can sit behind. The
+     matcha and cherry scheme is unchanged. */
+  position: relative;
+  isolation: isolate;
   background: var(--matcha);
   color: var(--cherry);
   padding: 112px 9vw;
   font-family: var(--font-display);
+  overflow: hidden;
   --contact-control-size: 46px;
+}
+
+.waves-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.contact-inner {
+  position: relative;
+  z-index: 2;
 }
 
 .contact-inner {
@@ -1470,6 +1641,13 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  /* Fewer columns here than the span rules assume, so let the cards flow. */
+  .skill-card,
+  .skill-card:nth-child(4):nth-last-child(2),
+  .skill-card:nth-child(5):nth-last-child(1) {
+    grid-column: auto;
+  }
+
   .clients-stats {
     grid-template-columns: 1fr;
   }
@@ -1566,6 +1744,13 @@
 
   .skills-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Fewer columns here than the span rules assume, so let the cards flow. */
+  .skill-card,
+  .skill-card:nth-child(4):nth-last-child(2),
+  .skill-card:nth-child(5):nth-last-child(1) {
+    grid-column: auto;
   }
 
   .work-card-text {
