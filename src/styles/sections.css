@@ -255,10 +255,14 @@
   white-space: nowrap;
 }
 
+/*
+ * Three, not four: there are five cards now and the descriptions are full
+ * sentences rather than the old short lines, so they need the wider column.
+ */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(2.5rem, 6vw, 4.5rem) clamp(2rem, 6vw, 5rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 5vw, 4rem);
 }
 
 .skill-card {
