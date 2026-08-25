@@ -426,8 +426,7 @@ a {
   height: 100vh;
   height: var(--vvh, 100svh);
   overflow: hidden;
-  /* Matches the illustration's own paper, so any letterboxing is invisible. */
-  background: #f3eee3;
+  background: var(--cherry-black);
 }
 
 #hero-canvas {
@@ -451,17 +450,8 @@ a {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  /*
-   * The artwork is printed on cream paper, so the scrim lifts the left side
-   * toward that paper rather than darkening it. Keeps the headline readable
-   * without dulling the illustration.
-   */
-  background: linear-gradient(
-    to right,
-    rgba(243, 238, 227, 0.88),
-    rgba(243, 238, 227, 0.45) 38%,
-    rgba(243, 238, 227, 0) 70%
-  );
+  /* Same shape as the reference's scrim, in cherry-black rather than pure black. */
+  background: linear-gradient(to right, rgba(30, 2, 9, 0.72), rgba(30, 2, 9, 0.22), transparent);
 }
 
 .hero-headlines {
@@ -474,7 +464,7 @@ a {
 
 .hero-heading {
   font-family: var(--font-display);
-  color: var(--cherry);
+  color: #fff;
   text-align: left;
   line-height: 1.1;
   font-weight: 500;
@@ -507,8 +497,7 @@ a {
     rgba(186, 215, 151, 0) 100%
   );
   border-radius: 40% 60% 55% 45% / 60% 40% 60% 40%;
-  /* screen vanished against pale paper; multiply keeps the highlighter look. */
-  mix-blend-mode: multiply;
+  mix-blend-mode: screen;
   opacity: 0.85;
 }
 
@@ -516,7 +505,7 @@ a {
   margin-top: clamp(2rem, 4vw, 3rem);
   font-family: var(--font-display);
   font-size: clamp(20px, 4.5vw, 36px);
-  color: var(--cherry);
+  color: #fff;
   text-align: left;
   letter-spacing: 0.02em;
   opacity: 0.95;
@@ -544,8 +533,6 @@ a {
   align-items: center;
   gap: 0.55rem;
   pointer-events: none;
-  /* Cherry, since the hero ground is now the illustration's cream paper. */
-  color: var(--cherry);
   opacity: 0.7;
   transition: opacity 0.5s ease;
 }
