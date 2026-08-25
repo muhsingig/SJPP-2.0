@@ -612,53 +612,57 @@
             travels to its own --tx/--ty at full progress, so the collage opens out as
             you scroll. Driven by initTravelScatter.
           -->
-          <div class="travel-stage" data-travel-stage>
-            <div class="travel-scatter" aria-hidden="true">
-            <figure class="travel-piece" style="--tx: -42; --ty: -30; --tr: -9deg; --ts: 0.92;">
-              <img src="/travel-1.jpg" alt="" loading="lazy" decoding="async" />
-            </figure>
-            <figure class="travel-piece" style="--tx: -30; --ty: 12; --tr: 6deg; --ts: 1.0;">
-              <img src="/travel-2.jpg" alt="" loading="lazy" decoding="async" />
-            </figure>
-            <figure class="travel-piece" style="--tx: -44; --ty: 30; --tr: -5deg; --ts: 0.86;">
-              <img src="/travel-3.jpg" alt="" loading="lazy" decoding="async" />
-            </figure>
-            <figure class="travel-piece" style="--tx: -18; --ty: -34; --tr: 8deg; --ts: 0.8;">
-              <img src="/travel-4.jpg" alt="" loading="lazy" decoding="async" />
-            </figure>
-            <figure class="travel-piece" style="--tx: -16; --ty: 34; --tr: -7deg; --ts: 0.88;">
-              <img src="/travel-5.jpg" alt="" loading="lazy" decoding="async" />
-            </figure>
-            <figure class="travel-piece" style="--tx: 44; --ty: -28; --tr: 7deg; --ts: 0.94;">
-              <img src="/travel-6.jpg" alt="" loading="lazy" decoding="async" />
-            </figure>
-            <figure class="travel-piece" style="--tx: 31; --ty: 10; --tr: -6deg; --ts: 1.0;">
-              <img src="/travel-7.jpg" alt="" loading="lazy" decoding="async" />
-            </figure>
-            <figure class="travel-piece" style="--tx: 45; --ty: 31; --tr: 5deg; --ts: 0.86;">
-              <img src="/travel-8.jpg" alt="" loading="lazy" decoding="async" />
-            </figure>
-            <figure class="travel-piece" style="--tx: 19; --ty: -35; --tr: -8deg; --ts: 0.82;">
-              <img src="/travel-9.jpg" alt="" loading="lazy" decoding="async" />
-            </figure>
-            <figure class="travel-piece" style="--tx: 17; --ty: 35; --tr: 6deg; --ts: 0.9;">
-              <img src="/travel-10.jpg" alt="" loading="lazy" decoding="async" />
-            </figure>
-            <figure class="travel-piece" style="--tx: -37; --ty: -6; --tr: 4deg; --ts: 0.78;">
-              <img src="/travel-11.jpg" alt="" loading="lazy" decoding="async" />
-            </figure>
-            <figure class="travel-piece" style="--tx: 38; --ty: -6; --tr: -4deg; --ts: 0.78;">
-              <img src="/travel-12.jpg" alt="" loading="lazy" decoding="async" />
-            </figure>
-            </div>
+          <!-- Tall runway + sticky band: the section holds still while the
+               collage opens, instead of drifting past as it scrolls. -->
+          <div class="travel-runway">
+            <div class="travel-band" data-travel-stage>
+                <div class="travel-scatter" aria-hidden="true">
+                <figure class="travel-piece" style="--tx: -42; --ty: -30; --tr: -9deg; --ts: 0.92;">
+                  <img src="/travel-1.jpg" alt="" loading="lazy" decoding="async" />
+                </figure>
+                <figure class="travel-piece" style="--tx: -30; --ty: 12; --tr: 6deg; --ts: 1.0;">
+                  <img src="/travel-2.jpg" alt="" loading="lazy" decoding="async" />
+                </figure>
+                <figure class="travel-piece" style="--tx: -44; --ty: 30; --tr: -5deg; --ts: 0.86;">
+                  <img src="/travel-3.jpg" alt="" loading="lazy" decoding="async" />
+                </figure>
+                <figure class="travel-piece" style="--tx: -18; --ty: -34; --tr: 8deg; --ts: 0.8;">
+                  <img src="/travel-4.jpg" alt="" loading="lazy" decoding="async" />
+                </figure>
+                <figure class="travel-piece" style="--tx: -16; --ty: 34; --tr: -7deg; --ts: 0.88;">
+                  <img src="/travel-5.jpg" alt="" loading="lazy" decoding="async" />
+                </figure>
+                <figure class="travel-piece" style="--tx: 44; --ty: -28; --tr: 7deg; --ts: 0.94;">
+                  <img src="/travel-6.jpg" alt="" loading="lazy" decoding="async" />
+                </figure>
+                <figure class="travel-piece" style="--tx: 31; --ty: 10; --tr: -6deg; --ts: 1.0;">
+                  <img src="/travel-7.jpg" alt="" loading="lazy" decoding="async" />
+                </figure>
+                <figure class="travel-piece" style="--tx: 45; --ty: 31; --tr: 5deg; --ts: 0.86;">
+                  <img src="/travel-8.jpg" alt="" loading="lazy" decoding="async" />
+                </figure>
+                <figure class="travel-piece" style="--tx: 19; --ty: -35; --tr: -8deg; --ts: 0.82;">
+                  <img src="/travel-9.jpg" alt="" loading="lazy" decoding="async" />
+                </figure>
+                <figure class="travel-piece" style="--tx: 17; --ty: 35; --tr: 6deg; --ts: 0.9;">
+                  <img src="/travel-10.jpg" alt="" loading="lazy" decoding="async" />
+                </figure>
+                <figure class="travel-piece" style="--tx: -37; --ty: -6; --tr: 4deg; --ts: 0.78;">
+                  <img src="/travel-11.jpg" alt="" loading="lazy" decoding="async" />
+                </figure>
+                <figure class="travel-piece" style="--tx: 38; --ty: -6; --tr: -4deg; --ts: 0.78;">
+                  <img src="/travel-12.jpg" alt="" loading="lazy" decoding="async" />
+                </figure>
+                </div>
 
-            <div class="travel-strip">
-              <div class="travel-strip-frames">
-                <img src="/travel-1.jpg" alt="" loading="lazy" decoding="async" />
-                <img src="/travel-2.jpg" alt="" loading="lazy" decoding="async" />
-                <img src="/travel-3.jpg" alt="" loading="lazy" decoding="async" />
-                <img src="/travel-4.jpg" alt="" loading="lazy" decoding="async" />
-              </div>
+                <div class="travel-strip">
+                  <div class="travel-strip-frames">
+                    <img src="/travel-1.jpg" alt="" loading="lazy" decoding="async" />
+                    <img src="/travel-2.jpg" alt="" loading="lazy" decoding="async" />
+                    <img src="/travel-3.jpg" alt="" loading="lazy" decoding="async" />
+                    <img src="/travel-4.jpg" alt="" loading="lazy" decoding="async" />
+                  </div>
+                </div>
             </div>
           </div>
 

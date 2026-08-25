@@ -796,7 +796,12 @@
   color: var(--matcha);
   padding: 104px 8vw 128px;
   font-family: var(--font-display);
-  overflow: hidden;
+  /*
+   * Deliberately not overflow: hidden. Any clipping ancestor between the sticky
+   * band and the scroller silently disables the stick, and the band just scrolls
+   * away. The band does its own clipping instead.
+   */
+  overflow: clip visible;
 }
 
 .travel-top {
@@ -831,13 +836,27 @@
  * stacked over the film strip and travels to its own --tx/--ty as --spread runs
  * 0 to 1, so the collage opens outward on scroll.
  */
-.travel-stage {
+/*
+ * The runway is the scroll distance the collage gets; the band inside it sticks
+ * to the top for that whole distance, so the section holds still on screen while
+ * the pieces fly out. Without the runway the section simply scrolls past and the
+ * scatter never gets a chance to play.
+ */
+.travel-runway {
   position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 200vh;
+  margin: 0 calc(-1 * clamp(1.5rem, 4vw, 4rem));
+}
+
+.travel-band {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: var(--vvh, 100svh);
+  overflow: hidden;
   --spread: 0;
   /*
-   * Makes cqw/cqh below resolve against the stage. A translate percentage would
+   * Makes cqw/cqh below resolve against the band. A translate percentage would
    * resolve against each piece's own width instead, which capped the scatter at
    * about 50px however large the numbers were.
    */
@@ -1270,9 +1289,10 @@
     padding-right: 1.5rem;
   }
 
-  /* 16:9 left the scatter barely 180px of height here, so go portrait. */
-  .travel-stage {
-    aspect-ratio: 3 / 4;
+  /* Shorter hold on phones: 200vh is a long way to thumb through. */
+  .travel-runway {
+    height: 170vh;
+    margin-inline: -1.5rem;
   }
 
   .recs-section {
