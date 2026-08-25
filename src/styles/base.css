@@ -450,8 +450,19 @@ a {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  /* Same shape as the reference's scrim, in cherry-black rather than pure black. */
-  background: linear-gradient(to right, rgba(30, 2, 9, 0.72), rgba(30, 2, 9, 0.22), transparent);
+  /*
+   * The reference gets its dark left from foliage in the photograph. This
+   * artwork is on pale paper, so the gradient supplies it: a cherry column
+   * that fades into the illustration by 58% across. Cherry rather than black,
+   * which just greyed the paper.
+   */
+  background: linear-gradient(
+    to right,
+    rgba(74, 4, 25, 0.95),
+    rgba(74, 4, 25, 0.56) 20%,
+    rgba(74, 4, 25, 0.22) 40%,
+    transparent 58%
+  );
 }
 
 .hero-headlines {
