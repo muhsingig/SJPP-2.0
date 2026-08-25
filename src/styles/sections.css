@@ -881,8 +881,8 @@
   box-shadow: 0 14px 30px -14px rgba(30, 2, 9, 0.65);
   transform:
     translate3d(
-      calc(-50% + var(--tx) * 1cqw * var(--spread)),
-      calc(-50% + var(--ty) * 1cqh * var(--spread)),
+      calc(-50% + var(--tx) * 1cqw * var(--spread) * var(--fly, 1)),
+      calc(-50% + var(--ty) * 1cqh * var(--spread) * var(--fly, 1)),
       0
     )
     rotate(calc(var(--tr) * var(--spread)))
@@ -1398,8 +1398,34 @@
     margin-inline: -1.5rem;
   }
 
+  /*
+   * Pull the scatter in on phones. The pieces are a much larger share of a
+   * narrow stage, so the full desktop throw carried them off both edges.
+   */
+  .travel-band {
+    --fly: 0.62;
+  }
+
+  /* Both were under the 44px minimum: 43x40 and 203x23. */
+  .travel-frame {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .travel-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /* Every other section sits at 24px here; the footer was alone at 56px. */
+  .meta-section {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
   .recs-section {
-    padding: 88px 7vw;
+    padding: 88px 1.5rem;
   }
 
   .profile-top {
@@ -1487,8 +1513,9 @@
   }
 
   .hero-heading-line {
-    font-size: clamp(38px, 10vw, 52px);
-    line-height: 1.03;
+    /* 32px at 375, matching the reference, rather than the 38px it was. */
+    font-size: clamp(32px, 8.6vw, 52px);
+    line-height: 1.05;
   }
 
   .hero-tagline {

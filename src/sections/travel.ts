@@ -79,10 +79,16 @@ export function initTravel() {
     end: 'bottom bottom',
     scrub: 0.5,
     onUpdate: (self) => {
-      const eased = gsap.parseEase('power2.out')(self.progress);
-      if (Math.abs(eased - spread.value) < 0.001) return;
-      spread.value = eased;
-      band.style.setProperty('--spread', eased.toFixed(4));
+      /*
+       * Linear, deliberately. power2.out put the collage 87% open by the halfway
+       * point, so it snapped apart at the top of the hold and then sat still for
+       * the rest of it, which read as the effect not running at all. Scrubbed
+       * motion wants to track the scroll one to one.
+       */
+      const p = self.progress;
+      if (Math.abs(p - spread.value) < 0.001) return;
+      spread.value = p;
+      band.style.setProperty('--spread', p.toFixed(4));
     },
   });
 }
