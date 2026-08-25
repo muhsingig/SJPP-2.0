@@ -134,8 +134,8 @@ function resize() {
    * further right the sampling window has to pan to keep her in shot: at 375px it
    * only shows 37-63% of the image width, which would miss her entirely.
    */
-  if (width <= 700) compositeMaterial.uniforms.uPan.value.set(0.16, 0);
-  else if (width <= 1200) compositeMaterial.uniforms.uPan.value.set(0.1, 0);
+  if (width <= 700) compositeMaterial.uniforms.uPan.value.set(0.19, 0);
+  else if (width <= 1200) compositeMaterial.uniforms.uPan.value.set(0.11, 0);
   else compositeMaterial.uniforms.uPan.value.set(0, 0);
 
   fluid.resize(maskA.width, maskA.height);

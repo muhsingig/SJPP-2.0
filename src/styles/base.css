@@ -451,17 +451,15 @@ a {
   z-index: 1;
   pointer-events: none;
   /*
-   * The reference gets its dark left from foliage in the photograph. This
-   * artwork is on pale paper, so the gradient supplies it: a cherry column
-   * that fades into the illustration by 58% across. Cherry rather than black,
-   * which just greyed the paper.
+   * The photographs carry their own dark left column, so this only has to
+   * deepen it a little rather than manufacture it. Same left-to-right shape as
+   * the reference, at a fraction of the strength.
    */
   background: linear-gradient(
     to right,
-    rgba(74, 4, 25, 0.95),
-    rgba(74, 4, 25, 0.56) 20%,
-    rgba(74, 4, 25, 0.22) 40%,
-    transparent 58%
+    rgba(30, 2, 9, 0.5),
+    rgba(30, 2, 9, 0.18) 34%,
+    transparent 56%
   );
 }
 

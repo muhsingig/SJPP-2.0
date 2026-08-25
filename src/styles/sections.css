@@ -1377,6 +1377,21 @@
     padding-right: 1.5rem;
   }
 
+  /*
+   * Cover-fit crops a 16:9 hero down to a narrow middle band on a phone, and
+   * that band is the bright half of the picture. The photograph's own dark
+   * left column is off-screen here, so the scrim has to run top-down instead,
+   * under the headline.
+   */
+  .hero-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(30, 2, 9, 0.82),
+      rgba(30, 2, 9, 0.45) 46%,
+      rgba(30, 2, 9, 0.58)
+    );
+  }
+
   /* Shorter hold on phones: 200vh is a long way to thumb through. */
   .travel-runway {
     height: 170vh;
@@ -1450,8 +1465,18 @@
 }
 
 @media (max-width: 700px) {
+  /*
+   * Deeper than it used to be, and it no longer fades to transparent: the hero
+   * photographs are bright through the middle band a phone actually shows, so
+   * the old gradient left the tagline sitting on a lit background.
+   */
   .hero-overlay {
-    background: linear-gradient(to bottom, rgba(30, 2, 9, 0.72), rgba(30, 2, 9, 0.22), transparent);
+    background: linear-gradient(
+      to bottom,
+      rgba(30, 2, 9, 0.82),
+      rgba(30, 2, 9, 0.45) 46%,
+      rgba(30, 2, 9, 0.58)
+    );
   }
 
   .hero-headlines {
