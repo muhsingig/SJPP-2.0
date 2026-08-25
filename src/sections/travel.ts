@@ -13,11 +13,47 @@ gsap.registerPlugin(ScrollTrigger);
  * variable rather than tweening twelve transforms keeps the whole collage in step
  * and leaves the geometry in CSS where it is easy to retune.
  */
+/**
+ * Opens the story panel for whichever photograph was clicked. Uses a native
+ * <dialog>, so focus trapping, Escape and the backdrop come from the platform
+ * rather than being reimplemented.
+ */
+function initTravelStories(section: HTMLElement) {
+  const dialog = document.querySelector<HTMLDialogElement>('.travel-story');
+  if (!dialog || typeof dialog.showModal !== 'function') return;
+
+  const img = dialog.querySelector<HTMLImageElement>('.travel-story-img');
+  const place = dialog.querySelector<HTMLElement>('.travel-story-place');
+  const body = dialog.querySelector<HTMLElement>('.travel-story-body');
+  const close = dialog.querySelector<HTMLButtonElement>('.travel-story-close');
+  if (!img || !place || !body) return;
+
+  section.querySelectorAll<HTMLElement>('.travel-piece, .travel-frame').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const full = btn.dataset.full ?? '';
+      const name = btn.dataset.place ?? '';
+      img.src = full;
+      img.alt = name;
+      place.textContent = name;
+      body.textContent = btn.dataset.story ?? '';
+      dialog.showModal();
+    });
+  });
+
+  close?.addEventListener('click', () => dialog.close());
+
+  // Clicking the backdrop closes it; clicks on the panel itself must not.
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+}
+
 export function initTravel() {
   const section = document.querySelector<HTMLElement>('.travel-section');
   if (!section) return;
 
   revealTitleByLetter(section.querySelector('.travel-title'), section, 'art-title-letter');
+  initTravelStories(section);
 
   const band = section.querySelector<HTMLElement>('[data-travel-stage]');
   const runway = section.querySelector<HTMLElement>('.travel-runway');
