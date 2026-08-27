@@ -128,14 +128,45 @@ function resize() {
   trailMaterial.uniforms.uAspect.value = width / height;
 
   /*
-   * The figure sits at about 66% across the frame, leaving the left clear for the
-   * headline. Cover-fit crops toward the centre, so the narrower the viewport the
-   * further right the sampling window has to pan to keep her in shot: at 375px it
-   * only shows 37-63% of the image width, which would miss her entirely.
+   * The figure sits about 66% across the frame, leaving the left clear for the
+   * headline, so the narrower the viewport the further right the sampling window
+   * has to pan to keep her in shot.
+   *
+   * Vertically, cover-fit on a portrait viewport matches the image's height: the
+   * whole frame is visible top to bottom and only the width is cropped. That
+   * fixes her face at about 24% down the screen, which is exactly where the
+   * tagline sits. Panning cannot help, because at zoom 1 there is nothing above
+   * or below to pan into. Zooming past cover and pinning the sample window to
+   * the image's top edge is what moves her clear of the type; panY below is the
+   * offset that puts that window's top at 0, so it never samples past the image
+   * and smears the edge.
    */
-  if (width <= 700) compositeMaterial.uniforms.uPan.value.set(0.19, 0);
-  else if (width <= 1200) compositeMaterial.uniforms.uPan.value.set(0.11, 0);
-  else compositeMaterial.uniforms.uPan.value.set(0, 0);
+  if (width <= 700) {
+    /*
+     * 1.4 puts her eyes at 339px with the tagline ending at 306, so the type
+     * sits on hair and sky rather than on her face. Going further clears more
+     * but crops to a head-and-shoulders portrait and loses the terrace behind
+     * her, which is the half of the photograph that carries the place.
+     */
+    const zoom = 1.4;
+    compositeMaterial.uniforms.uZoom.value = zoom;
+    compositeMaterial.uniforms.uPan.value.set(0.19, 0.5 / zoom - 0.5);
+  } else if (width <= 1200) {
+    compositeMaterial.uniforms.uZoom.value = 1;
+    compositeMaterial.uniforms.uPan.value.set(0.11, 0);
+  } else {
+    compositeMaterial.uniforms.uZoom.value = 1;
+    compositeMaterial.uniforms.uPan.value.set(0, 0);
+  }
+
+  /*
+   * A finger is not a cursor. The stroke is tuned to a mouse pointer, and at
+   * 4% of the screen it reads on a phone as a smudge under your thumb rather
+   * than as a brush, which is why the effect looked like it was not running.
+   */
+  const touch = width <= 700 ? 2.1 : 1;
+  trailMaterial.uniforms.uTrailRadius.value = PARAMS.trailRadius * touch;
+  maskMaterial.uniforms.uMouseGapRadius.value = PARAMS.mouseGapRadius * touch;
 
   fluid.resize(maskA.width, maskA.height);
   resetRequested = true;
@@ -428,6 +459,7 @@ export async function initHero() {
       uImageSizeA: { value: new Vector2(texA.image.width, texA.image.height) },
       uImageSizeB: { value: new Vector2(texB.image.width, texB.image.height) },
       uPan: { value: new Vector2(0, 0) },
+      uZoom: { value: 1 },
       uRevealThresholdLow: { value: PARAMS.revealThresholdLow },
       uRevealThresholdHigh: { value: PARAMS.revealThresholdHigh },
     },

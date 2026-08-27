@@ -2111,6 +2111,57 @@ button.pass:focus-visible {
     padding: 56px 20px 52px;
   }
 
+  /* ------------------------------------------------- where I've worked */
+
+  .clients-section {
+    padding: 50px 16px 67px;
+  }
+
+  .clients-title {
+    font-size: 28px;
+  }
+
+  /*
+   * 74px tall with width: auto turned a wide wordmark into a 360px logo, so a
+   * single client filled the screen and the row read as a broken image rather
+   * than a marquee. The reference runs these at 52px and none wider than about
+   * 100px; capping the width lets the tall marks keep their height and pulls
+   * the long ones down to fit.
+   */
+  .clients-track img {
+    height: 52px;
+    max-width: 108px;
+    object-fit: contain;
+  }
+
+  .clients-track {
+    --clients-gap: 2.25rem;
+  }
+
+  .clients-marquee {
+    margin-bottom: 2.25rem;
+  }
+
+  /*
+   * One card per row. Three columns on a 327px line gave each card 93px, and
+   * with the desktop's 32px padding that left a 29px box for a label needing
+   * 98px, so every one of them was clipped mid-word.
+   */
+  .clients-stats {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .clients-card {
+    min-height: 0;
+    padding: 18px 20px;
+    gap: 10px;
+  }
+
+  .clients-number {
+    font-size: 42px;
+  }
+
   .skills-section {
     padding: 56px 24px 64px;
   }
@@ -2166,7 +2217,25 @@ button.pass:focus-visible {
   }
 
   .contact-title {
-    font-size: 46px;
+    font-size: 52px;
     line-height: 0.98;
+  }
+
+  /*
+   * The about copy is set in three columns, which on a 375px screen gave each
+   * one 96px: about four words a line, running 538px deep. It reads as one
+   * column on a phone, at the reference's 19px rather than the 15px a third of
+   * a desktop column wants.
+   */
+  .profile-columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .profile-col {
+    font-size: 19px;
+    line-height: 1.5;
   }
 }

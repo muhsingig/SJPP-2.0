@@ -253,22 +253,32 @@ uniform vec2 uResolution;
 uniform vec2 uImageSizeA;
 uniform vec2 uImageSizeB;
 uniform vec2 uPan;
+uniform float uZoom;
 uniform float uRevealThresholdLow;
 uniform float uRevealThresholdHigh;
 
-/* object-fit: cover, in shader form */
-vec2 coverUv(vec2 uv, vec2 res, vec2 img, vec2 pan) {
+/*
+ * object-fit: cover, in shader form, with a zoom on top.
+ *
+ * On a phone the viewport is taller than it is wide, so cover matches the
+ * height and the whole image is visible top to bottom. The figure's face sits
+ * about a quarter of the way down the frame, which is exactly where the tagline
+ * lands. Zooming past cover and pinning the sample window to the top of the
+ * image is what pushes her below the type; panning alone cannot, because at
+ * zoom 1 there is nothing above or below to pan into.
+ */
+vec2 coverUv(vec2 uv, vec2 res, vec2 img, vec2 pan, float zoom) {
   float screenAspect = res.x / res.y;
   float imageAspect = img.x / img.y;
   vec2 scale = screenAspect > imageAspect
     ? vec2(1.0, imageAspect / screenAspect)
     : vec2(screenAspect / imageAspect, 1.0);
-  return (uv - 0.5) * scale + 0.5 + pan;
+  return (uv - 0.5) * scale / zoom + 0.5 + pan;
 }
 
 void main() {
-  vec2 uvA = coverUv(vUv, uResolution, uImageSizeA, uPan);
-  vec2 uvB = coverUv(vUv, uResolution, uImageSizeB, uPan);
+  vec2 uvA = coverUv(vUv, uResolution, uImageSizeA, uPan, uZoom);
+  vec2 uvB = coverUv(vUv, uResolution, uImageSizeB, uPan, uZoom);
 
   vec3 a = texture2D(uImageA, clamp(uvA, 0.0, 1.0)).rgb;
   vec3 b = texture2D(uImageB, clamp(uvB, 0.0, 1.0)).rgb;
