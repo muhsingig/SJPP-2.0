@@ -16,7 +16,14 @@ const GAIN = 0.7;
 const FREQUENCY = 10;
 const BASE_FLATNESS = 0;
 const DISPLACEMENT = 60;
-const BORDER_OFFSET = 60;
+/*
+ * 16, not the component's 60. That figure assumes the default chaos of 0.12,
+ * where the line is flung right out; at the 0.01 we run it strays 1-2px. The
+ * extra margin was rendering a band of empty canvas on all four sides, which on
+ * a phone made this the largest surface on the page, and pushed the profile
+ * section wider than the viewport.
+ */
+const BORDER_OFFSET = 16;
 
 type Options = {
   color?: string;
@@ -165,7 +172,8 @@ export function initElectricBorder(target: HTMLElement | null, opts: Options = {
     if (!rect.width || !rect.height) return false;
     width = rect.width + BORDER_OFFSET * 2;
     height = rect.height + BORDER_OFFSET * 2;
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Decorative: a phone gains nothing from rendering this at dpr 2.
+    dpr = window.innerWidth <= 900 ? 1 : Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(width * dpr);
     canvas.height = Math.round(height * dpr);
     canvas.style.width = `${width}px`;
@@ -235,9 +243,18 @@ export function initElectricBorder(target: HTMLElement | null, opts: Options = {
   draw(0);
   if (!still) start();
 
-  new ResizeObserver(() => {
+  /*
+   * The element's own box is not the only thing that changes what this should
+   * render at: crossing the 900px breakpoint changes the pixel ratio too, and a
+   * ResizeObserver on the target never sees that on its own.
+   */
+  const resize = () => {
     if (size()) draw(performance.now());
-  }).observe(target);
+  };
+
+  new ResizeObserver(resize).observe(target);
+  window.addEventListener('resize', resize);
+  window.addEventListener('load', resize);
 
   // Only burn frames while the portrait is actually on screen.
   new IntersectionObserver(

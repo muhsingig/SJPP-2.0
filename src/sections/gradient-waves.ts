@@ -201,13 +201,21 @@ export function initGradientWaves(host: HTMLElement | null, opts: Options = {}) 
   const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
   const size = () => {
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
     const w = host.clientWidth;
     const h = host.clientHeight;
-    if (!w || !h) return;
+    // Bail on a collapsed box: sizing can run before layout has settled, and a
+    // stale tiny value gets baked into the backing store and stretched.
+    if (w < 2 || h < 2) return false;
+    /*
+     * These are decorative and full-section. At dpr 2 a phone renders four times
+     * the pixels for no visible gain, so cap them at 1 there. The hero keeps its
+     * higher ratio; it is the thing people actually look at.
+     */
+    const ratio = window.innerWidth <= 900 ? 1 : Math.min(window.devicePixelRatio || 1, 2);
     renderer.setPixelRatio(ratio);
     renderer.setSize(w, h, false);
     uniforms.iResolution.value.set(w * ratio, h * ratio);
+    return true;
   };
   size();
 
@@ -258,10 +266,20 @@ export function initGradientWaves(host: HTMLElement | null, opts: Options = {}) 
 
   render(performance.now());
 
-  new ResizeObserver(() => {
-    size();
+  /*
+   * ResizeObserver alone was not enough: the first pass ran against a box that
+   * had not laid out, leaving the backing store at a fraction of the display
+   * size and the shader visibly stretched. Re-measure on resize and on load too.
+   */
+  const resize = () => {
+    if (!size()) return;
     if (!raf) render(performance.now());
-  }).observe(host);
+  };
+
+  new ResizeObserver(resize).observe(host);
+  window.addEventListener('resize', resize);
+  window.addEventListener('load', resize);
+  document.fonts?.ready.then(resize);
 
   new IntersectionObserver(
     (entries) => {

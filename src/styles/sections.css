@@ -1577,10 +1577,18 @@
     --fly: 0.62;
   }
 
-  /* Both were under the 44px minimum: 43x40 and 203x23. */
+  /*
+   * Both sit under the 44px minimum once the collage shrinks on a phone: the
+   * frames measured 36x36 and the scattered polaroids 33x44. Padding the hit
+   * area rather than the artwork keeps the collage's proportions.
+   */
   .travel-frame {
     min-width: 44px;
     min-height: 44px;
+  }
+
+  .travel-piece {
+    min-width: 44px;
   }
 
   .travel-link {

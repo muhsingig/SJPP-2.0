@@ -688,7 +688,7 @@ a {
  */
 .eb-canvas-container {
   position: absolute;
-  inset: -60px;
+  inset: -16px;
   z-index: 0;
   pointer-events: none;
   display: grid;
