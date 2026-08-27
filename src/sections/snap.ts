@@ -115,9 +115,16 @@ export function initProfileLayout() {
       const rect = image.getBoundingClientRect();
       section.style.setProperty('--profile-image-width', `${rect.width}px`);
       if (divider && rect.width > 0) {
-        divider.style.setProperty('--divider-left', `${Math.max(0, rect.left)}px`);
+        /*
+         * Measured against the divider's own box, not window.innerWidth. The
+         * scroll container carries the scrollbar, so innerWidth overstates the
+         * usable width by 15px and the right-hand segment ran that far past the
+         * end of the rule.
+         */
+        const track = divider.getBoundingClientRect();
+        divider.style.setProperty('--divider-left', `${Math.max(0, rect.left - track.left)}px`);
         divider.style.setProperty('--divider-gap', `${rect.width}px`);
-        divider.style.setProperty('--divider-right', `${Math.max(0, window.innerWidth - rect.right)}px`);
+        divider.style.setProperty('--divider-right', `${Math.max(0, track.right - rect.right)}px`);
       }
     }
 

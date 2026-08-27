@@ -794,9 +794,13 @@ a {
 .profile-divider {
   display: grid;
   grid-template-columns: var(--divider-left, 1fr) var(--divider-gap, 30%) var(--divider-right, 1fr);
-  width: 100vw;
-  margin-left: 50%;
-  transform: translateX(-50%);
+  /*
+   * 100% of .profile-inner, which is already the full content width and carries
+   * no horizontal padding. It used to bleed to 100vw and pull itself back by
+   * half, but 100vw counts the scroll container's scrollbar, so the rule came
+   * out 15px too wide and sat 7.5px off centre with both ends clipped.
+   */
+  width: 100%;
   /* The rule sits on the portrait's bottom edge, as in the reference. */
   margin-top: 0;
   margin-bottom: clamp(3rem, 6.5vw, 5rem);
