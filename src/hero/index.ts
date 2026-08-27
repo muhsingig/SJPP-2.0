@@ -112,6 +112,36 @@ function createRenderTargets(pixelWidth: number, pixelHeight: number) {
 }
 
 /*
+ * Where her eyes sit in the source frame, measured down from the top. Both hero
+ * photographs put her at very nearly the same height.
+ */
+const FACE_V = 0.30;
+
+/*
+ * Cover-fit on a portrait viewport matches the image's height, so the whole
+ * frame is visible and her face lands at FACE_V down the screen, which is where
+ * the tagline sits. Zooming past cover and pinning the window to the top of the
+ * image is what drops her below the type.
+ *
+ * The zoom is derived rather than fixed, because the hero's height is the
+ * visual viewport's and every phone reports a different one. A fixed 1.4 clears
+ * the type by 33px on an 812px viewport and by 1px on a 700px one, since the
+ * text block is laid out in pixels while the figure moves in proportion.
+ */
+function heroZoomForPhone(height: number) {
+  const tagline = document.querySelector<HTMLElement>('.hero-tagline');
+  const hero = document.querySelector<HTMLElement>('.hero');
+  if (!tagline || !hero || height < 1) return 1.4;
+
+  const gap = 28;
+  const textBottom = tagline.getBoundingClientRect().bottom - hero.getBoundingClientRect().top;
+  if (textBottom <= 0) return 1.4;
+
+  // Capped: past about 1.6 the crop loses the terrace and becomes a headshot.
+  return clamp((textBottom + gap) / (height * FACE_V), 1.15, 1.6);
+}
+
+/*
  * The hero is sized in --vvh, which tracks the visual viewport, so its height
  * changes the moment a mobile URL bar collapses. That fires visualViewport's
  * resize, not window's, which iOS never raises for chrome changes: the CSS box
@@ -164,15 +194,16 @@ function resize() {
    * and smears the edge.
    */
   if (width <= 700) {
-    /*
-     * 1.4 puts her eyes at 339px with the tagline ending at 306, so the type
-     * sits on hair and sky rather than on her face. Going further clears more
-     * but crops to a head-and-shoulders portrait and loses the terrace behind
-     * her, which is the half of the photograph that carries the place.
-     */
-    const zoom = 1.4;
+    const zoom = heroZoomForPhone(height);
     compositeMaterial.uniforms.uZoom.value = zoom;
-    compositeMaterial.uniforms.uPan.value.set(0.19, 0.5 / zoom - 0.5);
+    /*
+     * Positive, and that sign is the whole trick. three uploads textures with
+     * flipY, so v = 1 is the image's TOP row: pinning the sample window up
+     * there is +(0.5 - 0.5/zoom). Negating it pins the window to the bottom
+     * instead, which pushed her face up off the screen and filled the hero with
+     * her lap.
+     */
+    compositeMaterial.uniforms.uPan.value.set(0.19, 0.5 - 0.5 / zoom);
   } else if (width <= 1200) {
     compositeMaterial.uniforms.uZoom.value = 1;
     compositeMaterial.uniforms.uPan.value.set(0.11, 0);
