@@ -111,12 +111,34 @@ function createRenderTargets(pixelWidth: number, pixelHeight: number) {
   trailB = makeRT(w, h);
 }
 
+/*
+ * The hero is sized in --vvh, which tracks the visual viewport, so its height
+ * changes the moment a mobile URL bar collapses. That fires visualViewport's
+ * resize, not window's, which iOS never raises for chrome changes: the CSS box
+ * grew while the drawing buffer kept its old dimensions, so the composite
+ * stretched vertically and the mask stopped lining up with the canvas, which is
+ * what put horizontal smears down the side of the picture.
+ *
+ * Observing the canvas itself catches every cause at once. Guarding on the
+ * pixel size keeps that cheap: resize() reallocates four render targets and
+ * clears the mask, so it must not run on a no-op.
+ */
+let lastPixelW = 0;
+let lastPixelH = 0;
+
 function resize() {
   if (!canvas || !renderer || !compositeMaterial || !fluid) return;
 
   const ratio = getPixelRatio();
   const width = canvas.clientWidth || window.innerWidth;
   const height = canvas.clientHeight || window.innerHeight;
+  if (width < 1 || height < 1) return;
+
+  const pixelW = Math.round(width * ratio);
+  const pixelH = Math.round(height * ratio);
+  if (pixelW === lastPixelW && pixelH === lastPixelH) return;
+  lastPixelW = pixelW;
+  lastPixelH = pixelH;
 
   renderer.setPixelRatio(ratio);
   renderer.setSize(width, height, false);
@@ -468,7 +490,16 @@ export async function initHero() {
   });
 
   resize();
+
+  /*
+   * All three, because a URL bar sliding away raises a different one on each
+   * platform. They are called directly rather than deferred to a frame: the
+   * pixel-size guard already makes a duplicate free, and rAF does not run while
+   * the tab is throttled, which is exactly when a viewport change lands.
+   */
   window.addEventListener('resize', resize);
+  window.visualViewport?.addEventListener('resize', resize);
+  new ResizeObserver(() => resize()).observe(canvas);
 
   canvas.addEventListener('webglcontextlost', (e) => {
     e.preventDefault();
