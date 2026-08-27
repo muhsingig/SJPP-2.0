@@ -981,126 +981,278 @@
   text-wrap: pretty;
 }
 
-/* ------------------------------------------------------------ the scatter */
+/* ------------------------------------------------------- boarding passes */
+
+.pass-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+  grid-auto-rows: 1fr;
+  gap: clamp(0.85rem, 1.6vw, 1.15rem);
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+}
 
 /*
- * The stage is the coordinate space the pieces fly out into. Everything starts
- * stacked over the film strip and travels to its own --tx/--ty as --spread runs
- * 0 to 1, so the collage opens outward on scroll.
+ * Three rows: who and where at the top, the route in the middle taking the
+ * slack, and the stub torn off along the foot. The route is the only thing on
+ * the card set at size, because it is the only thing anyone reads from across
+ * the page.
  */
-/*
- * The runway is the scroll distance the collage gets; the band inside it sticks
- * to the top for that whole distance, so the section holds still on screen while
- * the pieces fly out. Without the runway the section simply scrolls past and the
- * scatter never gets a chance to play.
- */
-.travel-runway {
+.pass {
   position: relative;
-  height: 200vh;
-  margin: 0 calc(-1 * clamp(1.5rem, 4vw, 4rem));
-}
-
-.travel-band {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: var(--vvh, 100svh);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 172px;
+  padding: 1.15rem 1.15rem 0;
+  border: 0;
+  border-radius: 10px;
+  background: var(--pass-bg);
+  color: var(--pass-ink);
+  font-family: var(--font-display);
+  text-align: left;
   overflow: hidden;
-  --spread: 0;
-  /*
-   * Makes cqw/cqh below resolve against the band. A translate percentage would
-   * resolve against each piece's own width instead, which capped the scatter at
-   * about 50px however large the numbers were.
-   */
-  container-type: size;
+  container-type: inline-size;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  box-shadow: 0 10px 26px -18px rgba(30, 2, 9, 0.7);
 }
 
-.travel-scatter {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+/*
+ * Each pass is painted in its own country's flag. The fill is that flag's
+ * signature colour, deepened only as far as the type needs: Italy's green at
+ * its true #008C45 puts white at 4.3:1, which is under AA, so it sits at
+ * #006330 and reaches 7.4:1 instead. --flag-bar carries the rest of the flag
+ * into the ribbon across the top, so the colours the fill cannot show are
+ * still on the card.
+ *
+ * Where two neighbours in the grid would collide, the second takes its flag's
+ * light field rather than its dark one: China and Hong Kong are adjacent and
+ * both red, so Hong Kong runs red-on-white the way its bauhinia does.
+ */
+.pass[data-country='it'] {
+  --pass-bg: #006330;
+  --pass-ink: #ffffff;
+  --flag-bar: linear-gradient(90deg, #008c45 0 33.3%, #f4f5f0 33.3% 66.6%, #cd212a 66.6%);
 }
 
-.travel-piece {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: clamp(78px, 9vw, 132px);
-  margin: 0;
-  padding: 5px 5px 16px;
-  background: var(--cream);
-  border-radius: 2px;
-  box-shadow: 0 14px 30px -14px rgba(30, 2, 9, 0.65);
-  transform:
-    translate3d(
-      calc(-50% + var(--tx) * 1cqw * var(--spread) * var(--fly, 1)),
-      calc(-50% + var(--ty) * 1cqh * var(--spread) * var(--fly, 1)),
-      0
-    )
-    rotate(calc(var(--tr) * var(--spread)))
-    scale(calc(0.42 + (var(--ts) - 0.42) * var(--spread)));
-  opacity: calc(0.15 + 0.85 * var(--spread));
-  will-change: transform, opacity;
+.pass[data-country='kr'] {
+  --pass-bg: #f2f2ef;
+  --pass-ink: #a81f28;
+  --flag-bar: linear-gradient(90deg, #cd2e3a 0 33.3%, #0047a0 33.3% 66.6%, #111111 66.6%);
 }
 
-.travel-piece img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  border-radius: 1px;
+.pass[data-country='us'] {
+  --pass-bg: #0a3161;
+  --pass-ink: #ffffff;
+  --flag-bar: linear-gradient(90deg, #b31942 0 33.3%, #f4f5f0 33.3% 66.6%, #0a3161 66.6%);
 }
 
-/* --------------------------------------------------------- the film strip */
-
-.travel-strip {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 2;
-  width: min(58%, 620px);
-  transform: translate(-50%, -50%) scale(calc(0.82 + 0.18 * var(--spread)));
-  background: var(--cherry-deep);
-  padding: 14px 10px;
-  border-radius: 3px;
-  box-shadow: 0 22px 48px -20px rgba(30, 2, 9, 0.8);
+.pass[data-country='cn'] {
+  --pass-bg: #9e0f14;
+  --pass-ink: #ffde00;
+  --flag-bar: linear-gradient(90deg, #ee1c25 0 60%, #ffde00 60%);
 }
 
-/* The sprocket holes, drawn rather than shipped as an image. */
-.travel-strip::before,
-.travel-strip::after {
+.pass[data-country='hk'] {
+  --pass-bg: #faf3f1;
+  --pass-ink: #b0180e;
+  --flag-bar: linear-gradient(90deg, #de2910 0 70%, #f4f5f0 70%);
+}
+
+.pass[data-country='mo'] {
+  --pass-bg: #00614b;
+  --pass-ink: #ffffff;
+  --flag-bar: linear-gradient(90deg, #00785e 0 60%, #f4f5f0 60% 82%, #ffd700 82%);
+}
+
+.pass[data-country='ae'] {
+  --pass-bg: #1c1c1a;
+  --pass-ink: #ffffff;
+  --flag-bar: linear-gradient(90deg, #ce1126 0 25%, #00732f 25% 50%, #f4f5f0 50% 75%, #111111 75%);
+}
+
+/* The rest of the flag, across the head of the ticket. */
+.pass::before {
   content: '';
   position: absolute;
-  left: 10px;
-  right: 10px;
-  height: 8px;
-  background-image: repeating-linear-gradient(
-    to right,
-    var(--cream) 0 9px,
-    transparent 9px 20px
-  );
-  opacity: 0.9;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--flag-bar, none);
 }
 
-.travel-strip::before {
-  top: 3px;
+/*
+ * The dark fills sit close to the section's own cherry, so the ticket
+ * silhouette needs drawing. A dropped shadow does nothing here, being dark on
+ * dark; a pale hairline is what cuts the card out of the ground. The navy is
+ * the worst of them: it lands at 1.0:1 against cherry, an exact luminance match.
+ */
+.pass[data-country='it'],
+.pass[data-country='us'],
+.pass[data-country='cn'],
+.pass[data-country='mo'],
+.pass[data-country='ae'] {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22), 0 10px 26px -18px rgba(30, 2, 9, 0.7);
 }
 
-.travel-strip::after {
-  bottom: 3px;
+button.pass {
+  cursor: pointer;
 }
 
-.travel-strip-frames {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+button.pass:hover,
+button.pass:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.32), 0 18px 34px -18px rgba(30, 2, 9, 0.85);
 }
 
-.travel-frame img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+/*
+ * Flown, but with nothing to show yet. Held back rather than hidden: the point
+ * of the wall is the whole itinerary, not only the parts with an album.
+ */
+.pass-quiet {
+  opacity: 0.78;
+}
+
+/* ---------------------------------------------------------- ticket rows */
+
+.pass-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.pass-id {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* One long name, United Arab Emirates, would otherwise push the SJ mark out. */
+.pass-id > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+.pass-flag {
+  width: 20px;
+  height: 13.5px;
+  flex: 0 0 auto;
+  border-radius: 1.5px;
+  /* A hairline in the card's own ink, so a white stripe cannot bleed into a pale fill. */
+  box-shadow: 0 0 0 0.5px currentColor;
+}
+
+.pass-tag {
+  flex: 0 0 auto;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  opacity: 0.6;
+}
+
+/*
+ * One line, always. Left to wrap, a pairing like HONG KONG <> MACAU broke over
+ * two or three lines and every card in the grid came out a different height.
+ * The type shrinks to fit instead, measured in container units so it answers to
+ * the card's own width rather than the viewport's.
+ */
+.pass-route {
+  display: flex;
+  align-items: baseline;
+  align-self: center;
+  flex-wrap: nowrap;
+  gap: 0.42rem;
+  padding: 0.5rem 0;
+  white-space: nowrap;
+}
+
+.pass-code {
+  font-size: clamp(15px, 7.4cqw, 30px);
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  /* Never let a long name be squeezed into the next one by flex. */
+  flex-shrink: 0;
+}
+
+.pass-swap {
+  font-size: clamp(11px, 4.7cqw, 19px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+/*
+ * The stub, torn off along the foot. It used to be a vertical dashed line at
+ * 22% from the right, which on a card this size ran straight through the route
+ * and the country name rather than beside them.
+ */
+.pass-stub {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+  margin: 0 -1.15rem;
+  padding: 0.62rem 1.15rem 0.7rem;
+  border-top: 1px dashed currentColor;
+  border-top-color: color-mix(in srgb, currentColor 34%, transparent);
+}
+
+.pass-cell {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  min-width: 0;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.pass-cell-end {
+  text-align: right;
+}
+
+/*
+ * The two punch holes at the ends of the perforation. They are full circles
+ * straddling the card's edge; the card clips them, so what shows is the bite
+ * out of each side that makes the shape read as a ticket rather than a box.
+ * Filled in the section's own colour, since that is what sits behind them.
+ */
+.pass-stub::before,
+.pass-stub::after {
+  content: '';
+  position: absolute;
+  top: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--cherry);
+}
+
+.pass-stub::before {
+  left: -7px;
+}
+
+.pass-stub::after {
+  right: -7px;
+}
+
+.pass-cell em {
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.72;
 }
 
 .travel-link {
@@ -1138,18 +1290,44 @@
   backdrop-filter: blur(3px);
 }
 
+/*
+ * A fixed height, because the passes hold anywhere from one photograph to seven
+ * and sizing to the content made the panel jump from a letterbox to a full
+ * column between one card and the next. Both halves scroll inside it instead.
+ */
 .travel-story[open] {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  height: min(74vh, 660px);
 }
 
-.travel-story-img {
+.travel-story-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--cherry-black);
+  scrollbar-width: thin;
+}
+
+/*
+ * A single photograph fills the panel; a set of them keeps a consistent frame
+ * and scrolls, so the column reads as a roll of film rather than a ragged stack.
+ */
+.travel-story-gallery img {
   width: 100%;
   height: 100%;
-  max-height: 88vh;
-  object-fit: cover;
+  min-height: 0;
+  flex: 1 0 auto;
   display: block;
+  object-fit: cover;
 }
+
+.travel-story-text {
+  overflow-y: auto;
+}
+
 
 .travel-story-text {
   padding: clamp(1.5rem, 3vw, 2.5rem);
@@ -1157,6 +1335,15 @@
   flex-direction: column;
   justify-content: center;
   gap: 0.85rem;
+}
+
+/* Says how many photographs are behind the panel, so the scroll is discoverable. */
+.travel-story-count {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.55;
 }
 
 .travel-story-place {
@@ -1197,13 +1384,20 @@
 }
 
 @media (max-width: 700px) {
+  /*
+   * Stacked, and both rows sized in fractions rather than auto: the gallery is a
+   * flex column of full-height photographs, so on an auto row it claimed the
+   * whole panel and left the write-up a zero-height strip.
+   */
   .travel-story[open] {
     grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1.35fr) minmax(0, 1fr);
+    height: min(82vh, 720px);
   }
 
-  .travel-story-img {
-    height: 40vh;
+  .travel-story-text {
+    padding: 1.15rem 1.25rem 1.35rem;
+    justify-content: flex-start;
   }
 }
 
@@ -1549,128 +1743,62 @@
   }
 
   /*
-   * Cover-fit crops a 16:9 hero down to a narrow middle band on a phone, and
-   * that band is the bright half of the picture. The photograph's own dark
-   * left column is off-screen here, so the scrim has to run top-down instead,
-   * under the headline.
+   * One pass per row below 900px. auto-fill at 268px would fit two on a 640px
+   * tablet, but the route codes then shrink to the point where the card stops
+   * reading as a ticket, which is the whole idea.
    */
-  .hero-overlay {
-    background: linear-gradient(
-      to bottom,
-      rgba(30, 2, 9, 0.82),
-      rgba(30, 2, 9, 0.45) 46%,
-      rgba(30, 2, 9, 0.58)
-    );
+  .pass-grid {
+    grid-template-columns: 1fr;
   }
 
-  /* Shorter hold on phones: 200vh is a long way to thumb through. */
-  .travel-runway {
-    height: 170vh;
-    margin-inline: -1.5rem;
+  .pass {
+    min-height: 158px;
   }
 
   /*
-   * Pull the scatter in on phones. The pieces are a much larger share of a
-   * narrow stage, so the full desktop throw carried them off both edges.
+   * The ticket's small print was set for a desktop card an arm's length away.
+   * A phone is held closer but the type is not, so it comes up a shade.
    */
-  .travel-band {
-    --fly: 0.62;
+  .pass-cell em {
+    font-size: 9.5px;
   }
 
-  /*
-   * Both sit under the 44px minimum once the collage shrinks on a phone: the
-   * frames measured 36x36 and the scattered polaroids 33x44. Padding the hit
-   * area rather than the artwork keeps the collage's proportions.
-   */
-  .travel-frame {
-    min-width: 44px;
-    min-height: 44px;
+  .pass-id {
+    font-size: 12.5px;
   }
 
-  .travel-piece {
-    min-width: 44px;
-  }
-
+  /* Was a 24px tall target, well under the 44px minimum. */
   .travel-link {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
   }
 
-  /* Every other section sits at 24px here; the footer was alone at 56px. */
-  .meta-section {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+  /*
+   * Cover-fit crops a 16:9 hero down to a narrow middle band on a phone, so the
+   * photograph's own dark left column is off-screen and the scrim has to run
+   * top-down instead, under the headline.
+   */
+  .hero-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(30, 2, 9, 0.78),
+      rgba(30, 2, 9, 0.28) 42%,
+      rgba(30, 2, 9, 0) 72%
+    );
   }
 
-  .recs-section {
-    padding: 88px 1.5rem;
-  }
-
-  .profile-top {
-    grid-template-columns: 1fr;
-    align-items: start;
-    /* Stacked here, so the deep right inset that positions the divider is off. */
-    padding-right: clamp(1.25rem, 2.25vw, 3rem);
-  }
-
-  .profile-columns {
-    grid-template-columns: 1fr;
-  }
-
-  .profile-image-wrap {
-    max-width: 420px;
-  }
-
-  .profile-journal-lines {
-    display: none;
-  }
-
-  .profile-phone-journal-lines {
-    display: flex;
-    position: absolute;
-    top: var(--journal-top, 0);
-    left: var(--journal-left, 40vw);
-    width: var(--journal-line-width, calc(40vw + 5px));
-    height: var(--journal-line-height, 25vh);
-    gap: var(--journal-gap, 10vw);
-    justify-content: flex-start;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .profile-phone-journal-lines__line {
-    width: 1px;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(74, 4, 25, 0.3), rgba(74, 4, 25, 0.18) 85%, transparent);
-  }
-
-  .skills-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  /* Fewer columns here than the span rules assume, so let the cards flow. */
-  .skill-card,
-  .skill-card:nth-child(4):nth-last-child(2),
-  .skill-card:nth-child(5):nth-last-child(1) {
-    grid-column: auto;
-  }
-
-  .clients-stats {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-inner {
-    grid-template-columns: 1fr;
-  }
-
-  .meta-inner {
-    flex-direction: column;
-    gap: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
+  /* Shorter hold on phones: 200vh is a long way to thumb through. */
+  /*
+   * Pull the scatter in on phones. The pieces are a much larger share of a
+   * narrow stage, so the full desktop throw carried them off both edges.
+   */
+  /*
+   * Both sit under the 44px minimum once the collage shrinks on a phone: the
+   * frames measured 36x36 and the scattered polaroids 33x44. Padding the hit
+   * area rather than the artwork keeps the collage's proportions.
+   */
+  @media (max-width: 768px) {
   .art-masonry-list {
     --masonry-gap: 12px;
   }
@@ -1678,16 +1806,17 @@
 
 @media (max-width: 700px) {
   /*
-   * Deeper than it used to be, and it no longer fades to transparent: the hero
-   * photographs are bright through the middle band a phone actually shows, so
-   * the old gradient left the tagline sitting on a lit background.
+   * Top-weighted and fully clear by the foot, which is what the reference does.
+   * Holding 0.58 all the way down put a permanent wash over the bottom two
+   * thirds of the screen, and since that part is nothing but the photograph,
+   * the whole hero read muddy.
    */
   .hero-overlay {
     background: linear-gradient(
       to bottom,
-      rgba(30, 2, 9, 0.82),
-      rgba(30, 2, 9, 0.45) 46%,
-      rgba(30, 2, 9, 0.58)
+      rgba(30, 2, 9, 0.78),
+      rgba(30, 2, 9, 0.28) 42%,
+      rgba(30, 2, 9, 0) 72%
     );
   }
 
@@ -1698,10 +1827,15 @@
     padding-left: 1.5rem;
   }
 
+  /*
+   * Measured off the reference rather than guessed: it holds 38px from 320
+   * through 375, hits 43px at 430 and caps at 52px, which is a 38px floor on
+   * 10vw. The 8.6vw here resolved to 32px on a phone and the headline came out
+   * a fifth smaller than the site it is copying.
+   */
   .hero-heading-line {
-    /* 32px at 375, matching the reference, rather than the 38px it was. */
-    font-size: clamp(32px, 8.6vw, 52px);
-    line-height: 1.05;
+    font-size: clamp(38px, 10vw, 52px);
+    line-height: 1.03;
   }
 
   .hero-tagline {
@@ -1788,8 +1922,12 @@
     min-height: 44px;
   }
 
-  /* The pill left only 6px beside the logotype on a 320px screen. */
-  @media (max-width: 380px) {
+  /*
+   * The pill left only 6px beside the logotype on a 320px screen. Held at 380px
+   * this also caught the 375px iPhone, where the nav now has 95px of slack and
+   * the pill was rendering a size smaller than the reference for no reason.
+   */
+  @media (max-width: 344px) {
     .nav-resume {
       padding-inline: 0.7rem;
       font-size: 13px;

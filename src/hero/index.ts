@@ -46,8 +46,6 @@ const PARAMS = {
   maskRTScale: 0.75,
 };
 
-const SWIPE_VELOCITY_THRESHOLD = 1200;
-
 let canvas: HTMLCanvasElement | null = null;
 let renderer: WebGLRenderer | null = null;
 let camera: OrthographicCamera;
@@ -66,9 +64,6 @@ let pointerTarget = { x: -1, y: -1 };
 let pointerSmoothed = { x: 0.5, y: 0.5 };
 let lastPointer = { x: 0.5, y: 0.5 };
 let pointerOver = false;
-let lastPointerTime = 0;
-let lastClientX = 0;
-let lastClientY = 0;
 
 let resetRequested = false;
 let lastTime = 0;
@@ -76,9 +71,13 @@ let running = false;
 let heroInView = true;
 let externallyPaused = false;
 
-/* Phones pay for the fluid sim in battery and heat, so cap them below desktop. */
-const getPixelRatio = () =>
-  Math.min(window.innerWidth <= 900 ? 1.5 : 2, window.devicePixelRatio || 1);
+/*
+ * Full ratio on a phone, same as the reference, which renders its hero at the
+ * device's own 2x. Capping this at 1.5 was saving very little (the simulation
+ * grids are sized separately, below) and cost the one thing a phone shows most
+ * of: the edge of the brush stroke, which went visibly stepped.
+ */
+const getPixelRatio = () => Math.min(2, window.devicePixelRatio || 1);
 
 /* ------------------------------------------------------------------ setup */
 
@@ -154,34 +153,24 @@ function uvFromPointer(clientX: number, clientY: number) {
 
 function onPointerDown(e: PointerEvent) {
   pointerOver = true;
-  lastClientX = e.clientX;
-  lastClientY = e.clientY;
   const uv = uvFromPointer(e.clientX, e.clientY);
   pointerTarget = uv;
   pointerSmoothed = { ...uv };
   lastPointer = { ...uv };
-  lastPointerTime = performance.now() / 1000;
 }
 
+/*
+ * The brush follows a finger but never takes the gesture. This used to call
+ * preventDefault on any touch-move that was not a fast upward flick, which meant
+ * an ordinary drag painted instead of scrolling and the hero felt stuck: the
+ * page only moved if you swiped hard enough, and the stroke stuttered while the
+ * browser waited to find out whether the listener would cancel the scroll.
+ * Letting the gesture through costs nothing, since the stroke is painted from
+ * the coordinates either way.
+ */
 function onPointerMove(e: PointerEvent) {
   pointerOver = true;
-  const now = performance.now() / 1000;
-  const dt = Math.min(0.1, now - lastPointerTime);
-
-  // On touch, only let the page scroll through when the gesture is a decisive
-  // upward swipe, otherwise the canvas keeps the gesture and paints with it.
-  if (e.pointerType === 'touch' && dt > 0) {
-    const dx = e.clientX - lastClientX;
-    const dy = e.clientY - lastClientY;
-    const speed = Math.hypot(dx, dy) / dt;
-    const upward = dy < 0;
-    if (!(speed >= SWIPE_VELOCITY_THRESHOLD && upward)) e.preventDefault();
-  }
-
-  lastClientX = e.clientX;
-  lastClientY = e.clientY;
   pointerTarget = uvFromPointer(e.clientX, e.clientY);
-  lastPointerTime = now;
 }
 
 function onPointerLeave() {
@@ -459,7 +448,7 @@ export async function initHero() {
   canvas.addEventListener('pointerup', (e) => {
     if (e.pointerType === 'touch') onPointerLeave();
   });
-  canvas.addEventListener('pointermove', onPointerMove, { passive: false });
+  canvas.addEventListener('pointermove', onPointerMove, { passive: true });
   canvas.addEventListener('pointerleave', onPointerLeave);
   canvas.addEventListener('pointercancel', onPointerLeave);
 
@@ -494,10 +483,15 @@ export function initHeadingStroke() {
     const lineRect = line.getBoundingClientRect();
     const heroRect = hero.getBoundingClientRect();
 
-    stroke.style.left = `${lineRect.left - heroRect.left}px`;
-    stroke.style.width = `${wordRect.right - lineRect.left}px`;
-    stroke.style.top = `${lineRect.top - heroRect.top + lineRect.height * 0.6}px`;
-    stroke.style.height = `${lineRect.height * 0.4}px`;
+    /*
+     * Anchored to the hero's own left edge, not the text's, so the bar runs off
+     * the side of the screen instead of starting neatly inside the margin. That
+     * bleed is what makes it read as a marker stroke rather than an underline.
+     */
+    stroke.style.left = '0px';
+    stroke.style.width = `${wordRect.right - heroRect.left}px`;
+    stroke.style.top = `${lineRect.top - heroRect.top + lineRect.height * 0.59}px`;
+    stroke.style.height = `${lineRect.height * 0.41}px`;
   };
 
   requestAnimationFrame(update);

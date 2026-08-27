@@ -152,7 +152,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 1rem clamp(1.25rem, 4vw, 2.5rem);
+  padding: 0.75rem clamp(1rem, 4vw, 2.5rem);
   background: transparent;
   transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
   font-family: var(--font-display);
@@ -229,16 +229,15 @@ a {
 
 .nav-resume {
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
   text-decoration: none;
   /* Solid pill, as on the reference: it stays readable over any section. */
   background: var(--matcha);
   color: var(--cherry);
   padding: 0.6rem 1.05rem;
-  border-radius: 8px;
+  border-radius: 4px;
   line-height: 1;
 }
 
@@ -251,7 +250,8 @@ a {
   height: 3rem;
   padding: 0.5rem 0.6rem;
   border: 1px solid rgba(255, 255, 255, 0.85);
-  background: rgba(255, 255, 255, 0.24);
+  border-radius: 4px;
+  background: transparent;
   color: #fff;
   cursor: pointer;
 }
@@ -481,9 +481,19 @@ a {
 
 .hero-heading-line {
   display: block;
-  font-size: clamp(32px, 5.5vw, 80px);
+  /*
+   * 38px at the floor, matching the reference on a 375px screen. At 32px the
+   * headline read as body copy on a phone rather than as the first thing on
+   * the page.
+   */
+  font-size: clamp(38px, 5.5vw, 80px);
   letter-spacing: -0.01em;
   font-weight: 300;
+}
+
+/* The one word carrying the stress. Without this it inherited the line's 300. */
+.resilient-word {
+  font-weight: 500;
 }
 
 .hero-heading-line.hero-heading-second {
@@ -497,17 +507,13 @@ a {
   position: absolute;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(
-    100deg,
-    rgba(186, 215, 151, 0) 0%,
-    rgba(186, 215, 151, 0.42) 12%,
-    rgba(186, 215, 151, 0.72) 50%,
-    rgba(186, 215, 151, 0.4) 88%,
-    rgba(186, 215, 151, 0) 100%
-  );
-  border-radius: 40% 60% 55% 45% / 60% 40% 60% 40%;
-  mix-blend-mode: screen;
-  opacity: 0.85;
+  /*
+   * Solid, and squared off at the left because it runs off the edge of the
+   * screen. It replaces a soft gradient blob set to mix-blend-mode: screen,
+   * which over a dark photograph resolved to almost nothing.
+   */
+  background: var(--matcha-deep);
+  border-radius: 0 3px 3px 0;
 }
 
 .hero-tagline {

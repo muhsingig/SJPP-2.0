@@ -613,58 +613,224 @@
             travels to its own --tx/--ty at full progress, so the collage opens out as
             you scroll. Driven by initTravelScatter.
           -->
-          <!-- Tall runway + sticky band: the section holds still while the
-               collage opens, instead of drifting past as it scrolls. -->
-          <div class="travel-runway">
-            <div class="travel-band" data-travel-stage>
-                <div class="travel-scatter">
-                <button class="travel-piece" type="button" style="--tx: -42; --ty: -30; --tr: -9deg; --ts: 0.92;" data-place="Duomo di Milano, Italy" data-story="The first thing nobody tells you about the Duomo is how long you stand in front of it doing nothing. I had a list of things to see that afternoon and got through none of them." data-full="/travel-1-full.jpg" aria-label="Open the story from Duomo di Milano, Italy">
-                  <img src="/travel-1.jpg" alt="" loading="lazy" decoding="async" />
-                </button>
-                <button class="travel-piece" type="button" style="--tx: -30; --ty: 12; --tr: 6deg; --ts: 1.0;" data-place="Alberobello, Puglia" data-story="A whole town of conical stone roofs, built dry without mortar so they could be pulled down when the tax inspector came. I liked that the cleverness was the point." data-full="/travel-2-full.jpg" aria-label="Open the story from Alberobello, Puglia">
-                  <img src="/travel-2.jpg" alt="" loading="lazy" decoding="async" />
-                </button>
-                <button class="travel-piece" type="button" style="--tx: -44; --ty: 30; --tr: -5deg; --ts: 0.86;" data-place="The National Gallery, London" data-story="I went in to kill an hour before a train and stayed until closing. There is a particular quiet in a room like this that I have never managed to find anywhere else." data-full="/travel-3-full.jpg" aria-label="Open the story from The National Gallery, London">
-                  <img src="/travel-3.jpg" alt="" loading="lazy" decoding="async" />
-                </button>
-                <button class="travel-piece" type="button" style="--tx: -18; --ty: -34; --tr: 8deg; --ts: 0.8;" data-place="Bath, England" data-story="Honey-coloured stone and a river running under the bridge. I walked the same half mile three times because I kept noticing something I had missed." data-full="/travel-4-full.jpg" aria-label="Open the story from Bath, England">
-                  <img src="/travel-4.jpg" alt="" loading="lazy" decoding="async" />
-                </button>
-                <button class="travel-piece" type="button" style="--tx: -16; --ty: 34; --tr: -7deg; --ts: 0.88;" data-place="Piazza del Duomo, Milan" data-story="Back in the same square on a colder morning. The light was different and so, somehow, was the building." data-full="/travel-5-full.jpg" aria-label="Open the story from Piazza del Duomo, Milan">
-                  <img src="/travel-5.jpg" alt="" loading="lazy" decoding="async" />
-                </button>
-                <button class="travel-piece" type="button" style="--tx: 44; --ty: -28; --tr: 7deg; --ts: 0.94;" data-place="A place worth writing about" data-story="Story to come. Replace this with what happened here." data-full="/travel-6.jpg" aria-label="Open the story from A place worth writing about">
-                  <img src="/travel-6.jpg" alt="" loading="lazy" decoding="async" />
-                </button>
-                <button class="travel-piece" type="button" style="--tx: 31; --ty: 10; --tr: -6deg; --ts: 1.0;" data-place="A place worth writing about" data-story="Story to come. Replace this with what happened here." data-full="/travel-7.jpg" aria-label="Open the story from A place worth writing about">
-                  <img src="/travel-7.jpg" alt="" loading="lazy" decoding="async" />
-                </button>
-                <button class="travel-piece" type="button" style="--tx: 45; --ty: 31; --tr: 5deg; --ts: 0.86;" data-place="A place worth writing about" data-story="Story to come. Replace this with what happened here." data-full="/travel-8.jpg" aria-label="Open the story from A place worth writing about">
-                  <img src="/travel-8.jpg" alt="" loading="lazy" decoding="async" />
-                </button>
-                <button class="travel-piece" type="button" style="--tx: 19; --ty: -35; --tr: -8deg; --ts: 0.82;" data-place="A place worth writing about" data-story="Story to come. Replace this with what happened here." data-full="/travel-9.jpg" aria-label="Open the story from A place worth writing about">
-                  <img src="/travel-9.jpg" alt="" loading="lazy" decoding="async" />
-                </button>
-                <button class="travel-piece" type="button" style="--tx: 17; --ty: 35; --tr: 6deg; --ts: 0.9;" data-place="A place worth writing about" data-story="Story to come. Replace this with what happened here." data-full="/travel-10.jpg" aria-label="Open the story from A place worth writing about">
-                  <img src="/travel-10.jpg" alt="" loading="lazy" decoding="async" />
-                </button>
-                <button class="travel-piece" type="button" style="--tx: -37; --ty: -6; --tr: 4deg; --ts: 0.78;" data-place="A place worth writing about" data-story="Story to come. Replace this with what happened here." data-full="/travel-11.jpg" aria-label="Open the story from A place worth writing about">
-                  <img src="/travel-11.jpg" alt="" loading="lazy" decoding="async" />
-                </button>
-                <button class="travel-piece" type="button" style="--tx: 38; --ty: -6; --tr: -4deg; --ts: 0.78;" data-place="A place worth writing about" data-story="Story to come. Replace this with what happened here." data-full="/travel-12.jpg" aria-label="Open the story from A place worth writing about">
-                  <img src="/travel-12.jpg" alt="" loading="lazy" decoding="async" />
-                </button>
-                </div>
+          <div class="pass-grid">
+            <button class="pass" type="button" data-country="it"
+                    data-photos="travel-1,travel-5" data-title="Duomo di Milano"
+                    data-story="The first thing nobody tells you about the Duomo is how long you stand in front of it doing nothing. I had a list of things to see that afternoon and got through none of them."
+                    aria-label="Open photographs from Duomo di Milano">
+              <span class="pass-top">
+                <span class="pass-id"><svg class="pass-flag" viewBox="0 0 21 14" aria-hidden="true" focusable="false"><rect width="7" height="14" fill="#008C45"/><rect x="7" width="7" height="14" fill="#F4F5F0"/><rect x="14" width="7" height="14" fill="#CD212A"/></svg><span>Italy</span></span>
+                <span class="pass-tag">SJ</span>
+              </span>
+              <span class="pass-route">
+                <span class="pass-code">BOM</span>
+                <span class="pass-swap" aria-hidden="true">&lt;&gt;</span>
+                <span class="pass-code">MILAN</span>
+              </span>
+              <span class="pass-stub">
+                <span class="pass-cell"><em>Leg</em>1 of 5</span>
+                <span class="pass-cell pass-cell-end"><em>Album</em>2 photos</span>
+              </span>
+            </button>
 
-                <div class="travel-strip">
-                  <div class="travel-strip-frames">
-                    <button class="travel-frame" type="button" data-place="Duomo di Milano, Italy" data-story="The first thing nobody tells you about the Duomo is how long you stand in front of it doing nothing. I had a list of things to see that afternoon and got through none of them." data-full="/travel-1-full.jpg" aria-label="Open the story from Duomo di Milano, Italy"><img src="/travel-1.jpg" alt="" loading="lazy" decoding="async" /></button>
-                    <button class="travel-frame" type="button" data-place="Alberobello, Puglia" data-story="A whole town of conical stone roofs, built dry without mortar so they could be pulled down when the tax inspector came. I liked that the cleverness was the point." data-full="/travel-2-full.jpg" aria-label="Open the story from Alberobello, Puglia"><img src="/travel-2.jpg" alt="" loading="lazy" decoding="async" /></button>
-                    <button class="travel-frame" type="button" data-place="The National Gallery, London" data-story="I went in to kill an hour before a train and stayed until closing. There is a particular quiet in a room like this that I have never managed to find anywhere else." data-full="/travel-3-full.jpg" aria-label="Open the story from The National Gallery, London"><img src="/travel-3.jpg" alt="" loading="lazy" decoding="async" /></button>
-                    <button class="travel-frame" type="button" data-place="Bath, England" data-story="Honey-coloured stone and a river running under the bridge. I walked the same half mile three times because I kept noticing something I had missed." data-full="/travel-4-full.jpg" aria-label="Open the story from Bath, England"><img src="/travel-4.jpg" alt="" loading="lazy" decoding="async" /></button>
-                  </div>
-                </div>
-            </div>
+            <span class="pass pass-quiet" data-country="it">
+              <span class="pass-top">
+                <span class="pass-id"><svg class="pass-flag" viewBox="0 0 21 14" aria-hidden="true" focusable="false"><rect width="7" height="14" fill="#008C45"/><rect x="7" width="7" height="14" fill="#F4F5F0"/><rect x="14" width="7" height="14" fill="#CD212A"/></svg><span>Italy</span></span>
+                <span class="pass-tag">SJ</span>
+              </span>
+              <span class="pass-route">
+                <span class="pass-code">MILAN</span>
+                <span class="pass-swap" aria-hidden="true">&lt;&gt;</span>
+                <span class="pass-code">FLORENCE</span>
+              </span>
+              <span class="pass-stub">
+                <span class="pass-cell"><em>Leg</em>2 of 5</span>
+              </span>
+            </span>
+
+            <span class="pass pass-quiet" data-country="it">
+              <span class="pass-top">
+                <span class="pass-id"><svg class="pass-flag" viewBox="0 0 21 14" aria-hidden="true" focusable="false"><rect width="7" height="14" fill="#008C45"/><rect x="7" width="7" height="14" fill="#F4F5F0"/><rect x="14" width="7" height="14" fill="#CD212A"/></svg><span>Italy</span></span>
+                <span class="pass-tag">SJ</span>
+              </span>
+              <span class="pass-route">
+                <span class="pass-code">FLORENCE</span>
+                <span class="pass-swap" aria-hidden="true">&lt;&gt;</span>
+                <span class="pass-code">ROME</span>
+              </span>
+              <span class="pass-stub">
+                <span class="pass-cell"><em>Leg</em>3 of 5</span>
+              </span>
+            </span>
+
+            <span class="pass pass-quiet" data-country="it">
+              <span class="pass-top">
+                <span class="pass-id"><svg class="pass-flag" viewBox="0 0 21 14" aria-hidden="true" focusable="false"><rect width="7" height="14" fill="#008C45"/><rect x="7" width="7" height="14" fill="#F4F5F0"/><rect x="14" width="7" height="14" fill="#CD212A"/></svg><span>Italy</span></span>
+                <span class="pass-tag">SJ</span>
+              </span>
+              <span class="pass-route">
+                <span class="pass-code">ROME</span>
+                <span class="pass-swap" aria-hidden="true">&lt;&gt;</span>
+                <span class="pass-code">NAPLES</span>
+              </span>
+              <span class="pass-stub">
+                <span class="pass-cell"><em>Leg</em>4 of 5</span>
+              </span>
+            </span>
+
+            <button class="pass" type="button" data-country="it"
+                    data-photos="travel-2" data-title="Alberobello, Puglia"
+                    data-story="A whole town of conical stone roofs, built dry without mortar so they could be pulled down when the tax inspector came. I liked that the cleverness was the point."
+                    aria-label="Open photographs from Alberobello, Puglia">
+              <span class="pass-top">
+                <span class="pass-id"><svg class="pass-flag" viewBox="0 0 21 14" aria-hidden="true" focusable="false"><rect width="7" height="14" fill="#008C45"/><rect x="7" width="7" height="14" fill="#F4F5F0"/><rect x="14" width="7" height="14" fill="#CD212A"/></svg><span>Italy</span></span>
+                <span class="pass-tag">SJ</span>
+              </span>
+              <span class="pass-route">
+                <span class="pass-code">NAPLES</span>
+                <span class="pass-swap" aria-hidden="true">&lt;&gt;</span>
+                <span class="pass-code">BARI</span>
+              </span>
+              <span class="pass-stub">
+                <span class="pass-cell"><em>Leg</em>5 of 5</span>
+                <span class="pass-cell pass-cell-end"><em>Album</em>1 photo</span>
+              </span>
+            </button>
+
+            <span class="pass pass-quiet" data-country="kr">
+              <span class="pass-top">
+                <span class="pass-id"><svg class="pass-flag" viewBox="0 0 21 14" aria-hidden="true" focusable="false"><rect width="21" height="14" fill="#F4F5F0"/><path d="M10.5 4a3 3 0 010 6 3 3 0 000-6z" fill="#CD2E3A"/><path d="M10.5 4a3 3 0 000 6 3 3 0 010-6z" fill="#0047A0"/><g fill="#111"><rect x="2" y="3" width="3.4" height="0.7"/><rect x="2" y="10.3" width="3.4" height="0.7"/><rect x="15.6" y="3" width="3.4" height="0.7"/><rect x="15.6" y="10.3" width="3.4" height="0.7"/></g></svg><span>South Korea</span></span>
+                <span class="pass-tag">SJ</span>
+              </span>
+              <span class="pass-route">
+                <span class="pass-code">BOM</span>
+                <span class="pass-swap" aria-hidden="true">&lt;&gt;</span>
+                <span class="pass-code">SEOUL</span>
+              </span>
+              <span class="pass-stub">
+                <span class="pass-cell"><em>Leg</em>1 of 3</span>
+              </span>
+            </span>
+
+            <span class="pass pass-quiet" data-country="kr">
+              <span class="pass-top">
+                <span class="pass-id"><svg class="pass-flag" viewBox="0 0 21 14" aria-hidden="true" focusable="false"><rect width="21" height="14" fill="#F4F5F0"/><path d="M10.5 4a3 3 0 010 6 3 3 0 000-6z" fill="#CD2E3A"/><path d="M10.5 4a3 3 0 000 6 3 3 0 010-6z" fill="#0047A0"/><g fill="#111"><rect x="2" y="3" width="3.4" height="0.7"/><rect x="2" y="10.3" width="3.4" height="0.7"/><rect x="15.6" y="3" width="3.4" height="0.7"/><rect x="15.6" y="10.3" width="3.4" height="0.7"/></g></svg><span>South Korea</span></span>
+                <span class="pass-tag">SJ</span>
+              </span>
+              <span class="pass-route">
+                <span class="pass-code">SEOUL</span>
+                <span class="pass-swap" aria-hidden="true">&lt;&gt;</span>
+                <span class="pass-code">BUSAN</span>
+              </span>
+              <span class="pass-stub">
+                <span class="pass-cell"><em>Leg</em>2 of 3</span>
+              </span>
+            </span>
+
+            <span class="pass pass-quiet" data-country="kr">
+              <span class="pass-top">
+                <span class="pass-id"><svg class="pass-flag" viewBox="0 0 21 14" aria-hidden="true" focusable="false"><rect width="21" height="14" fill="#F4F5F0"/><path d="M10.5 4a3 3 0 010 6 3 3 0 000-6z" fill="#CD2E3A"/><path d="M10.5 4a3 3 0 000 6 3 3 0 010-6z" fill="#0047A0"/><g fill="#111"><rect x="2" y="3" width="3.4" height="0.7"/><rect x="2" y="10.3" width="3.4" height="0.7"/><rect x="15.6" y="3" width="3.4" height="0.7"/><rect x="15.6" y="10.3" width="3.4" height="0.7"/></g></svg><span>South Korea</span></span>
+                <span class="pass-tag">SJ</span>
+              </span>
+              <span class="pass-route">
+                <span class="pass-code">BUSAN</span>
+                <span class="pass-swap" aria-hidden="true">&lt;&gt;</span>
+                <span class="pass-code">JEJU</span>
+              </span>
+              <span class="pass-stub">
+                <span class="pass-cell"><em>Leg</em>3 of 3</span>
+              </span>
+            </span>
+
+            <span class="pass pass-quiet" data-country="us">
+              <span class="pass-top">
+                <span class="pass-id"><svg class="pass-flag" viewBox="0 0 21 14" aria-hidden="true" focusable="false"><rect width="21" height="14" fill="#F4F5F0"/><g fill="#B31942"><rect y="0" width="21" height="1.08"/><rect y="2.15" width="21" height="1.08"/><rect y="4.31" width="21" height="1.08"/><rect y="6.46" width="21" height="1.08"/><rect y="8.62" width="21" height="1.08"/><rect y="10.77" width="21" height="1.08"/><rect y="12.92" width="21" height="1.08"/></g><rect width="9" height="7.54" fill="#0A3161"/></svg><span>United States</span></span>
+                <span class="pass-tag">SJ</span>
+              </span>
+              <span class="pass-route">
+                <span class="pass-code">BOM</span>
+                <span class="pass-swap" aria-hidden="true">&lt;&gt;</span>
+                <span class="pass-code">NYC</span>
+              </span>
+              <span class="pass-stub">
+                <span class="pass-cell"><em>Leg</em>1 of 1</span>
+              </span>
+            </span>
+
+            <span class="pass pass-quiet" data-country="cn">
+              <span class="pass-top">
+                <span class="pass-id"><svg class="pass-flag" viewBox="0 0 21 14" aria-hidden="true" focusable="false"><rect width="21" height="14" fill="#EE1C25"/><g fill="#FFDE00"><circle cx="4" cy="4" r="2.1"/><circle cx="8" cy="1.9" r="0.7"/><circle cx="9.6" cy="3.6" r="0.7"/><circle cx="9.4" cy="5.9" r="0.7"/><circle cx="7.6" cy="7.3" r="0.7"/></g></svg><span>China</span></span>
+                <span class="pass-tag">SJ</span>
+              </span>
+              <span class="pass-route">
+                <span class="pass-code">BOM</span>
+                <span class="pass-swap" aria-hidden="true">&lt;&gt;</span>
+                <span class="pass-code">CHINA</span>
+              </span>
+              <span class="pass-stub">
+                <span class="pass-cell"><em>Leg</em>1 of 3</span>
+              </span>
+            </span>
+
+            <span class="pass pass-quiet" data-country="hk">
+              <span class="pass-top">
+                <span class="pass-id"><svg class="pass-flag" viewBox="0 0 21 14" aria-hidden="true" focusable="false"><rect width="21" height="14" fill="#DE2910"/><g fill="#F4F5F0"><ellipse cx="10.5" cy="4.1" rx="1" ry="2.2"/><ellipse cx="13.4" cy="6.2" rx="1" ry="2.2" transform="rotate(72 13.4 6.2)"/><ellipse cx="12.3" cy="9.6" rx="1" ry="2.2" transform="rotate(144 12.3 9.6)"/><ellipse cx="8.7" cy="9.6" rx="1" ry="2.2" transform="rotate(216 8.7 9.6)"/><ellipse cx="7.6" cy="6.2" rx="1" ry="2.2" transform="rotate(288 7.6 6.2)"/></g></svg><span>Hong Kong</span></span>
+                <span class="pass-tag">SJ</span>
+              </span>
+              <span class="pass-route">
+                <span class="pass-code">CHINA</span>
+                <span class="pass-swap" aria-hidden="true">&lt;&gt;</span>
+                <span class="pass-code">HONG KONG</span>
+              </span>
+              <span class="pass-stub">
+                <span class="pass-cell"><em>Leg</em>2 of 3</span>
+              </span>
+            </span>
+
+            <span class="pass pass-quiet" data-country="mo">
+              <span class="pass-top">
+                <span class="pass-id"><svg class="pass-flag" viewBox="0 0 21 14" aria-hidden="true" focusable="false"><rect width="21" height="14" fill="#00785E"/><g fill="#F4F5F0"><ellipse cx="10.5" cy="6.4" rx="1.1" ry="2.4"/><ellipse cx="8.3" cy="7.2" rx="0.9" ry="2.1" transform="rotate(-38 8.3 7.2)"/><ellipse cx="12.7" cy="7.2" rx="0.9" ry="2.1" transform="rotate(38 12.7 7.2)"/><path d="M7 10.4q3.5 1.9 7 0" stroke="#F4F5F0" stroke-width="0.8" fill="none"/></g><g fill="#FFD700"><circle cx="10.5" cy="2.1" r="0.8"/><circle cx="7.2" cy="3" r="0.55"/><circle cx="13.8" cy="3" r="0.55"/></g></svg><span>Macau</span></span>
+                <span class="pass-tag">SJ</span>
+              </span>
+              <span class="pass-route">
+                <span class="pass-code">HONG KONG</span>
+                <span class="pass-swap" aria-hidden="true">&lt;&gt;</span>
+                <span class="pass-code">MACAU</span>
+              </span>
+              <span class="pass-stub">
+                <span class="pass-cell"><em>Leg</em>3 of 3</span>
+              </span>
+            </span>
+
+            <span class="pass pass-quiet" data-country="ae">
+              <span class="pass-top">
+                <span class="pass-id"><svg class="pass-flag" viewBox="0 0 21 14" aria-hidden="true" focusable="false"><rect width="21" height="14" fill="#00732F"/><rect y="4.67" width="21" height="4.67" fill="#F4F5F0"/><rect y="9.34" width="21" height="4.66" fill="#111"/><rect width="5.25" height="14" fill="#CE1126"/></svg><span>United Arab Emirates</span></span>
+                <span class="pass-tag">SJ</span>
+              </span>
+              <span class="pass-route">
+                <span class="pass-code">BOM</span>
+                <span class="pass-swap" aria-hidden="true">&lt;&gt;</span>
+                <span class="pass-code">DUBAI</span>
+              </span>
+              <span class="pass-stub">
+                <span class="pass-cell"><em>Leg</em>1 of 2</span>
+              </span>
+            </span>
+
+            <span class="pass pass-quiet" data-country="ae">
+              <span class="pass-top">
+                <span class="pass-id"><svg class="pass-flag" viewBox="0 0 21 14" aria-hidden="true" focusable="false"><rect width="21" height="14" fill="#00732F"/><rect y="4.67" width="21" height="4.67" fill="#F4F5F0"/><rect y="9.34" width="21" height="4.66" fill="#111"/><rect width="5.25" height="14" fill="#CE1126"/></svg><span>United Arab Emirates</span></span>
+                <span class="pass-tag">SJ</span>
+              </span>
+              <span class="pass-route">
+                <span class="pass-code">DUBAI</span>
+                <span class="pass-swap" aria-hidden="true">&lt;&gt;</span>
+                <span class="pass-code">ABU DHABI</span>
+              </span>
+              <span class="pass-stub">
+                <span class="pass-cell"><em>Leg</em>2 of 2</span>
+              </span>
+            </span>
           </div>
 
           <a class="travel-link" href="mailto:joshi.sanika3@gmail.com?subject=Travel%20writing%20commission">
@@ -763,7 +929,7 @@
         </div>
       </section>
 
-    <!-- Story panel for the travel collage, opened by initTravel. -->
+    <!-- Opened by initTravel when a boarding pass is clicked. -->
     <dialog class="travel-story" id="travel-story">
       <button class="travel-story-close" type="button" aria-label="Close">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -771,8 +937,9 @@
                 stroke-width="1.8" stroke-linecap="round" />
         </svg>
       </button>
-      <img class="travel-story-img" src="" alt="" />
+      <div class="travel-story-gallery"></div>
       <div class="travel-story-text">
+        <p class="travel-story-count"></p>
         <h3 class="travel-story-place"></h3>
         <p class="travel-story-body"></p>
       </div>

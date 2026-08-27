@@ -1,41 +1,49 @@
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-
-import { getScroller, prefersReducedMotion } from '../lib/utils';
 import { revealTitleByLetter } from './skills';
 
-gsap.registerPlugin(ScrollTrigger);
-
 /**
- * Scroll-driven scatter. Every piece is positioned by a single custom property,
- * --spread, running 0 to 1: at 0 they sit stacked and small over the film strip,
- * at 1 they have travelled out to their own --tx/--ty near the edges. Driving one
- * variable rather than tweening twelve transforms keeps the whole collage in step
- * and leaves the geometry in CSS where it is easy to retune.
- */
-/**
- * Opens the story panel for whichever photograph was clicked. Uses a native
- * <dialog>, so focus trapping, Escape and the backdrop come from the platform
- * rather than being reimplemented.
+ * Boarding passes. Each card carries its own destination in data attributes and
+ * opens a gallery of that place's photographs plus a short note.
+ *
+ * A native <dialog> does the work: focus trapping, Escape and the backdrop all
+ * come from the platform rather than being reimplemented here.
  */
 function initTravelStories(section: HTMLElement) {
   const dialog = document.querySelector<HTMLDialogElement>('.travel-story');
   if (!dialog || typeof dialog.showModal !== 'function') return;
 
-  const img = dialog.querySelector<HTMLImageElement>('.travel-story-img');
+  const gallery = dialog.querySelector<HTMLElement>('.travel-story-gallery');
   const place = dialog.querySelector<HTMLElement>('.travel-story-place');
   const body = dialog.querySelector<HTMLElement>('.travel-story-body');
+  const count = dialog.querySelector<HTMLElement>('.travel-story-count');
   const close = dialog.querySelector<HTMLButtonElement>('.travel-story-close');
-  if (!img || !place || !body) return;
+  if (!gallery || !place || !body) return;
 
-  section.querySelectorAll<HTMLElement>('.travel-piece, .travel-frame').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const full = btn.dataset.full ?? '';
-      const name = btn.dataset.place ?? '';
-      img.src = full;
-      img.alt = name;
-      place.textContent = name;
-      body.textContent = btn.dataset.story ?? '';
+  /*
+   * Only the first five photographs were re-exported at full size. The rest fall
+   * back to the grid-sized file, which is still large enough to fill the panel.
+   */
+  const FULL_SIZED = new Set(['travel-1', 'travel-2', 'travel-3', 'travel-4', 'travel-5']);
+
+  section.querySelectorAll<HTMLButtonElement>('button.pass').forEach((pass) => {
+    pass.addEventListener('click', () => {
+      const title = pass.dataset.title ?? '';
+      const names = (pass.dataset.photos ?? '').split(',').filter(Boolean);
+
+      gallery.textContent = '';
+      names.forEach((name, i) => {
+        const img = document.createElement('img');
+        img.src = FULL_SIZED.has(name) ? `/${name}-full.jpg` : `/${name}.jpg`;
+        img.alt = names.length > 1 ? `${title}, photograph ${i + 1}` : title;
+        // The first is on screen the moment the panel opens; the rest can wait.
+        img.loading = i === 0 ? 'eager' : 'lazy';
+        img.decoding = 'async';
+        gallery.appendChild(img);
+      });
+
+      if (count) count.textContent = names.length > 1 ? `${names.length} photographs` : '1 photograph';
+      place.textContent = title;
+      body.textContent = pass.dataset.story ?? '';
+      gallery.scrollTop = 0;
       dialog.showModal();
     });
   });
@@ -46,6 +54,11 @@ function initTravelStories(section: HTMLElement) {
   dialog.addEventListener('click', (e) => {
     if (e.target === dialog) dialog.close();
   });
+
+  // Drop the images once it is shut, so seven photographs are not held in memory.
+  dialog.addEventListener('close', () => {
+    gallery.textContent = '';
+  });
 }
 
 export function initTravel() {
@@ -54,41 +67,4 @@ export function initTravel() {
 
   revealTitleByLetter(section.querySelector('.travel-title'), section, 'art-title-letter');
   initTravelStories(section);
-
-  const band = section.querySelector<HTMLElement>('[data-travel-stage]');
-  const runway = section.querySelector<HTMLElement>('.travel-runway');
-  if (!band || !runway) return;
-
-  // Reduced motion gets the opened-out collage with no scrubbing.
-  if (prefersReducedMotion()) {
-    band.style.setProperty('--spread', '1');
-    return;
-  }
-
-  const spread = { value: -1 };
-
-  /*
-   * Measured on the runway, not the band: the band is sticky, so its own box
-   * stops moving once it pins and would report no progress. The runway keeps
-   * scrolling underneath it and is what actually defines how long the hold runs.
-   */
-  ScrollTrigger.create({
-    trigger: runway,
-    scroller: getScroller(),
-    start: 'top top',
-    end: 'bottom bottom',
-    scrub: 0.5,
-    onUpdate: (self) => {
-      /*
-       * Linear, deliberately. power2.out put the collage 87% open by the halfway
-       * point, so it snapped apart at the top of the hold and then sat still for
-       * the rest of it, which read as the effect not running at all. Scrubbed
-       * motion wants to track the scroll one to one.
-       */
-      const p = self.progress;
-      if (Math.abs(p - spread.value) < 0.001) return;
-      spread.value = p;
-      band.style.setProperty('--spread', p.toFixed(4));
-    },
-  });
 }
