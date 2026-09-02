@@ -2254,3 +2254,21 @@ button.pass:focus-visible {
     line-height: 1.3;
   }
 }
+
+
+/*
+ * Narrow phones. The landing sentence is 104 characters, and in the 264px
+ * measure a 320px screen leaves it runs to five lines, which pushes the copy
+ * down onto the figure's face faster than the hero zoom can pull her clear.
+ * A little less type and a little less indent brings it back to four.
+ */
+@media (max-width: 360px) {
+  .hero-headlines {
+    padding-left: 1rem;
+  }
+
+  .hero-tagline {
+    font-size: 18px;
+    line-height: 1.32;
+  }
+}

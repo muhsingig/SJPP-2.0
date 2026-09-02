@@ -537,6 +537,25 @@ a {
   font-weight: 500;
 }
 
+/*
+ * The flowing variant. The block it replaced was four hand-set lines because it
+ * was a parallel construction; a sentence has to be free to break wherever the
+ * measure runs out, or it sets its own line lengths and fights every viewport.
+ */
+/*
+ * No text-wrap: pretty here. Balancing a five-line sentence pulled every line
+ * in to 178px of the 288 available and cost an extra line, which on a 320px
+ * screen pushed the copy down onto the figure's face. It wraps on the measure.
+ */
+.hero-tagline-flow {
+  font-weight: 300;
+  max-width: 30ch;
+}
+
+.hero-tagline-flow .tagline-em {
+  font-weight: 500;
+}
+
 .hero-swipe-hint {
   display: flex;
   position: absolute;
