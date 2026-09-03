@@ -194,8 +194,29 @@ uniform float uMouseGapRadius;
 uniform float uMouseGapStrength;
 uniform float uCentreGapRadius;
 uniform float uCentreGapStrength;
+uniform float uCentreRevealRadius;
+uniform float uCentreRevealStrength;
 uniform float uAspect;
+uniform float uTime;
 uniform float uReset;
+
+/* Value noise, used to churn the standing reveal's edge so it never sits still. */
+float maskHash(vec2 p) {
+  p = fract(p * vec2(443.897, 441.423));
+  p += dot(p, p.yx + 19.19);
+  return fract((p.x + p.y) * p.x);
+}
+
+float maskNoise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  return mix(
+    mix(maskHash(i), maskHash(i + vec2(1.0, 0.0)), f.x),
+    mix(maskHash(i + vec2(0.0, 1.0)), maskHash(i + vec2(1.0, 1.0)), f.x),
+    f.y
+  );
+}
 
 /* 9-tap blur standing in for a wide box blur, cheap and visually equivalent here. */
 float blurredPrev(vec2 uv, vec2 off) {
@@ -221,6 +242,25 @@ void main() {
   float trail = texture2D(uTrail, vUv).r * uTrailMaskStrength;
 
   float m = prev + add + trail;
+
+  /*
+   * A standing reveal through the middle of the frame, so the second photograph
+   * is always breathing through whether or not anyone is touching the screen.
+   * This is the piece that was missing: without it nothing moves until a pointer
+   * arrives, and on a phone that means it never moves at all.
+   *
+   * Its radius is churned by noise on angle and time, which is what keeps the
+   * edge alive rather than a clean circle sitting there. Combined with max()
+   * rather than addition, so it holds its shape instead of accumulating into a
+   * saturated disc the way the trail would.
+   */
+  vec2 fromCentre = vUv - 0.5;
+  float dCentre = length(fromCentre);
+  float angle = atan(fromCentre.y, fromCentre.x);
+  float wobble = maskNoise(vec2(angle * 3.0 + uTime * 2.2, uTime * 1.4)) * 0.5 + 0.5;
+  float revealRadius = uCentreRevealRadius * (0.72 + 0.5 * wobble);
+  float centre = uCentreRevealStrength * (1.0 - smoothstep(0.0, revealRadius, dCentre));
+  m = max(m, centre);
 
   // Fade the mask out towards the frame edges so the reveal never floods the canvas.
   float dc = distance(vUv, vec2(0.5)) / 0.7071;

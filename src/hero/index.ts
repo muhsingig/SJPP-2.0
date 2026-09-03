@@ -29,17 +29,38 @@ const PARAMS = {
   fluidDt: 0.014,
   fluidResolution: 0.6,
   fluidFilmNoiseStrength: 0.72,
-  decay: 0.915,
+  /*
+   * Was 0.915. The mask carries 91.5% of itself forward every frame while the
+   * trail keeps adding 0.75 at the core, so it saturated to 1 across a wide
+   * area within a few frames and the stroke fattened into a round blob instead
+   * of following the pointer.
+   */
+  decay: 0.83,
   velocityStrength: 0.58,
   velocityThreshold: 0.038,
   maskSmoothRadius: 48,
   centreGapRadius: 0.88,
   centreGapStrength: 0.96,
-  revealThresholdLow: 0.02,
-  revealThresholdHigh: 0.08,
+  /*
+   * The standing reveal through the middle of the frame. Measured off the
+   * reference, which holds one permanently and lets the fluid disturb its edge;
+   * that is what makes its hero move with nobody touching it.
+   */
+  centreRevealRadius: 0.46,
+  centreRevealStrength: 0.8,
+  /*
+   * The composite reveals on smoothstep(low, high, mask). At 0.02 to 0.08 that
+   * band is narrower than the trail's own falloff, so every value above 0.08
+   * resolved to fully revealed and the stroke came out with a hard cut edge,
+   * like a hole punched in the photograph rather than something painted. The
+   * wider band lets the Gaussian's shoulder read as a soft edge.
+   */
+  revealThresholdLow: 0.06,
+  revealThresholdHigh: 0.62,
   mouseGapRadius: 0.055,
   mouseGapStrength: 0.88,
-  trailDecay: 0.87,
+  /* A little longer than the mask's, so the stroke keeps a tail behind the head. */
+  trailDecay: 0.9,
   trailRadius: 0.042,
   trailStrength: 0.85,
   trailMaskStrength: 0.88,
@@ -213,11 +234,11 @@ function resize() {
   }
 
   /*
-   * A finger is not a cursor. The stroke is tuned to a mouse pointer, and at
-   * 4% of the screen it reads on a phone as a smudge under your thumb rather
-   * than as a brush, which is why the effect looked like it was not running.
+   * A finger is wider than a cursor, but only a little. 2.1 was chosen by
+   * arithmetic and rendered a stroke covering 29% of the screen; 1.3 gives
+   * about 13%, which is a brush rather than a wipe.
    */
-  const touch = width <= 700 ? 2.1 : 1;
+  const touch = width <= 700 ? 1.3 : 1;
   trailMaterial.uniforms.uTrailRadius.value = PARAMS.trailRadius * touch;
   maskMaterial.uniforms.uMouseGapRadius.value = PARAMS.mouseGapRadius * touch;
 
@@ -295,9 +316,14 @@ function frame(now: number) {
    * Ease toward the pointer, but normalised against dt. A fixed per-frame lerp
    * ran twice as fast on a 120Hz screen as on a 60Hz one, so the brush lagged
    * by a different amount depending on the display.
+   *
+   * The base sets how much of the remaining distance is closed each second.
+   * 0.001 moved only a tenth of the way per frame at 60Hz, about a 100ms lag,
+   * which on a finger drag is far enough behind to look like the stroke is
+   * struggling to keep up. This closes roughly a quarter per frame.
    */
   if (pointerTarget.x >= 0) {
-    const ease = 1 - Math.pow(0.001, dt);
+    const ease = 1 - Math.pow(1e-7, dt);
     pointerSmoothed.x += (pointerTarget.x - pointerSmoothed.x) * ease;
     pointerSmoothed.y += (pointerTarget.y - pointerSmoothed.y) * ease;
 
@@ -343,6 +369,8 @@ function frame(now: number) {
   maskMaterial.uniforms.uPrevMask.value = maskA.texture;
   maskMaterial.uniforms.uTrail.value = trailB.texture;
   maskMaterial.uniforms.uMouseUV.value.copy(trailMaterial.uniforms.uMouseUV.value);
+  // Drives the standing reveal's churn, so the hero is never a still frame.
+  maskMaterial.uniforms.uTime.value = time;
   maskMaterial.uniforms.uReset.value = reset;
   quad.material = maskMaterial;
   renderer.setRenderTarget(maskB);
@@ -494,7 +522,10 @@ export async function initHero() {
       uMouseGapStrength: { value: PARAMS.mouseGapStrength },
       uCentreGapRadius: { value: PARAMS.centreGapRadius },
       uCentreGapStrength: { value: PARAMS.centreGapStrength },
+      uCentreRevealRadius: { value: PARAMS.centreRevealRadius },
+      uCentreRevealStrength: { value: PARAMS.centreRevealStrength },
       uAspect: { value: 1 },
+      uTime: { value: 0 },
       uReset: { value: 0 },
     },
     depthTest: false,
