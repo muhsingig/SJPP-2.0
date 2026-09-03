@@ -586,6 +586,12 @@
   grid-auto-flow: column;
   /* One testimonial at a time; swiping brings the next. */
   grid-auto-columns: 100%;
+  /*
+   * Each card at its own height. Grid stretches a row to its tallest member, so
+   * one long testimonial was padding the three short ones out by 270px each.
+   * Only one is ever on screen, so there is nothing to line them up against.
+   */
+  align-items: start;
   gap: var(--recs-gap);
   /* A single quote reads badly at full desktop width, so cap and centre it. */
   max-width: 760px;
@@ -712,6 +718,32 @@
 
 .rec-quote::before {
   content: '\201C';
+  color: var(--matcha);
+  font-size: 2.4em;
+  line-height: 0;
+  vertical-align: -0.32em;
+  margin-right: 0.12em;
+}
+
+/*
+ * The longer testimonials come as several paragraphs. The opening quote mark is
+ * a ::before on the blockquote, which in front of a block-level paragraph would
+ * sit on a line of its own, so it moves to the first paragraph instead.
+ */
+.rec-quote-multi::before {
+  content: none;
+}
+
+.rec-quote-multi p {
+  margin: 0 0 0.85em;
+}
+
+.rec-quote-multi p:last-child {
+  margin-bottom: 0;
+}
+
+.rec-quote-multi p:first-child::before {
+  content: 'C';
   color: var(--matcha);
   font-size: 2.4em;
   line-height: 0;
