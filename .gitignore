@@ -3,3 +3,7 @@ dist
 .vite
 *.local
 .DS_Store
+
+# Raw client screenshots the work tiles are built from. Local source only:
+# the finished tiles ship in public/, these do not need to be in the repo.
+samples
