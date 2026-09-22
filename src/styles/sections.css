@@ -65,8 +65,18 @@
   margin-top: clamp(-5.5rem, -5.5vw, -3.25rem);
 }
 
+/*
+ * Five cards split three and two, so the columns cannot end level. Dropping the
+ * right column by exactly half a card makes the stagger symmetric instead: it
+ * starts half a card lower and the left ends half a card lower, which reads as
+ * a deliberate masonry rather than one column running out early.
+ *
+ * Half a card is the card's height (its width x 1240/900) plus half the row gap,
+ * then less the left column's own negative lift. A grid item's percentage
+ * margin resolves against its grid area, so 100% here is the card's width.
+ */
 .work-col-right {
-  margin-top: clamp(3rem, 5.5vw, 5.5rem);
+  margin-top: calc(100% * 0.6889 + clamp(1rem, 2.5vw, 2rem) + clamp(-5.5rem, -5.5vw, -3.25rem));
 }
 
 .work-col .work-card:first-child {
@@ -82,6 +92,15 @@
   position: relative;
   overflow: hidden;
   border-radius: var(--ui-radius);
+  /*
+   * The section is cream and so are some of the tiles, which left those cards
+   * with no edge at all: the headline and artwork floated on the page instead
+   * of reading as a card. A hairline and a soft lift give every tile the same
+   * boundary, whatever its ground.
+   */
+  box-shadow:
+    0 0 0 1px rgba(103, 6, 38, 0.08),
+    0 18px 40px -24px rgba(30, 2, 9, 0.45);
 }
 
 .work-card img {

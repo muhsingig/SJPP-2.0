@@ -132,11 +132,8 @@ function createRenderTargets(pixelWidth: number, pixelHeight: number) {
   trailB = makeRT(w, h);
 }
 
-/*
- * Where her eyes sit in the source frame, measured down from the top. Both hero
- * photographs put her at very nearly the same height.
- */
-const FACE_V = 0.30;
+/* Where her eyes sit in the laptop photograph, measured down from the top. */
+const FACE_V = 0.33;
 
 /*
  * Cover-fit on a portrait viewport matches the image's height, so the whole
@@ -224,7 +221,11 @@ function resize() {
      * instead, which pushed her face up off the screen and filled the hero with
      * her lap.
      */
-    compositeMaterial.uniforms.uPan.value.set(0.19, 0.5 - 0.5 / zoom);
+    /*
+     * 0.10 across rather than 0.19: in this photograph her face is at 66% and the
+     * laptop runs from 40 to 62, so the window centres at 60% to keep both.
+     */
+    compositeMaterial.uniforms.uPan.value.set(0.1, 0.5 - 0.5 / zoom);
   } else if (width <= 1200) {
     compositeMaterial.uniforms.uZoom.value = 1;
     compositeMaterial.uniforms.uPan.value.set(0.11, 0);
@@ -289,7 +290,8 @@ function showStaticHeroFallback() {
   running = false;
   if (!canvas) return;
   const img = document.createElement('img');
-  img.src = '/front.jpg';
+  // Full colour here: with no brush to reveal it, the duotone would be all anyone saw.
+  img.src = '/back.jpg';
   img.alt = '';
   img.className = 'hero-static-fallback';
   canvas.replaceWith(img);
@@ -471,7 +473,13 @@ export async function initHero() {
 
   let texA: Texture, texB: Texture;
   try {
-    [texA, texB] = await Promise.all([load('/front.jpg'), load('/back.jpg')]);
+    /*
+     * One photograph, two treatments. The base is the laptop photo mapped to a
+     * muted cherry duotone; the brush and the standing reveal uncover the same
+     * frame in full colour, so what moves is the colour coming through rather
+     * than a second picture.
+     */
+    [texA, texB] = await Promise.all([load('/hero-base.jpg'), load('/back.jpg')]);
   } catch {
     showStaticHeroFallback();
     hideLoader(loading);
