@@ -135,7 +135,7 @@ type Options = {
 export function initStrands(host: HTMLElement | null, opts: Options = {}) {
   if (!host) return;
 
-  const colors = opts.colors ?? ['#BAD797', '#FBF8F1', '#8FA96A', '#8A1839'];
+  const colors = opts.colors ?? ['#D7CDCC', '#FFFFFF', '#9C528B', '#59656F'];
 
   const canvas = document.createElement('canvas');
   canvas.className = 'strands-canvas';

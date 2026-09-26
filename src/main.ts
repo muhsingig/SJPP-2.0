@@ -63,12 +63,12 @@ function boot() {
   initProfileLayout();
 
   /*
-   * Reference settings, with cherry standing in for its electric cyan. chaos at
+   * Reference settings, with navy standing in for its electric cyan. chaos at
    * 0.01 rather than 0.12 is the one that matters: it keeps the line hugging the
    * edge as a crisp filament instead of throwing it out into a loose scribble.
    */
   initElectricBorder(document.querySelector('.profile-image-wrap'), {
-    color: '#670626',
+    color: '#1D1E2C',
     speed: 1.2,
     chaos: 0.01,
     borderRadius: 0,
@@ -86,7 +86,7 @@ function boot() {
    * knocks it back further. Loud enough to notice, quiet enough to read over.
    */
   initStrands(document.querySelector('.skills-section'), {
-    colors: ['#BAD797', '#FBF8F1', '#8FA96A', '#8A1839'],
+    colors: ['#D7CDCC', '#FFFFFF', '#9C528B', '#59656F'],
     count: 3,
     glow: 1.9,
     intensity: 0.5,
@@ -102,19 +102,19 @@ function boot() {
   void initContactForm();
 
   /*
-   * The wave body must not be the section's own colour. It was matcha on a
-   * matcha ground, so the mid-tone vanished and only the crests showed at all.
+   * The wave body must not be the section's own colour. It was stone on a
+   * stone ground, so the mid-tone vanished and only the crests showed at all.
    * Now the troughs run darker than the ground and the crests lighter, which is
-   * what makes the swell read, while cherry type still passes on both.
+   * what makes the swell read, while navy type still passes on both.
    */
   initGradientWaves(document.querySelector('.contact-section'), {
-    horizonColor: '#670626',
-    waveColor: '#8FA96A',
-    crestColor: '#FBF8F1',
+    horizonColor: '#1D1E2C',
+    waveColor: '#9C528B',
+    crestColor: '#FFFFFF',
     speed: 0.32,
     /*
      * Blended toward the ground rather than veiled over. At full strength the
-     * troughs dropped cherry type to 3.43 contrast, under the 4.5 minimum; a
+     * troughs dropped navy type to 3.43 contrast, under the 4.5 minimum; a
      * scrim on top fixed that by erasing the waves entirely. Scaling the shader's
      * own alpha keeps the swell shapes and lifts the darkest trough instead.
      */

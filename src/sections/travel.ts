@@ -18,12 +18,6 @@ function initTravelStories(section: HTMLElement) {
   const close = dialog.querySelector<HTMLButtonElement>('.travel-story-close');
   if (!gallery || !place || !body) return;
 
-  /*
-   * Only the first five photographs were re-exported at full size. The rest fall
-   * back to the grid-sized file, which is still large enough to fill the panel.
-   */
-  const FULL_SIZED = new Set(['travel-1', 'travel-2', 'travel-3', 'travel-4', 'travel-5']);
-
   section.querySelectorAll<HTMLButtonElement>('button.pass').forEach((pass) => {
     pass.addEventListener('click', () => {
       const title = pass.dataset.title ?? '';
@@ -32,7 +26,8 @@ function initTravelStories(section: HTMLElement) {
       gallery.textContent = '';
       names.forEach((name, i) => {
         const img = document.createElement('img');
-        img.src = FULL_SIZED.has(name) ? `/${name}-full.jpg` : `/${name}.jpg`;
+        // every photograph is one web-sized file under public/travel/
+        img.src = `/${name}.jpg`;
         img.alt = names.length > 1 ? `${title}, photograph ${i + 1}` : title;
         // The first is on screen the moment the panel opens; the rest can wait.
         img.loading = i === 0 ? 'eager' : 'lazy';
@@ -42,7 +37,9 @@ function initTravelStories(section: HTMLElement) {
 
       if (count) count.textContent = names.length > 1 ? `${names.length} photographs` : '1 photograph';
       place.textContent = title;
+      // only shown when a pass carries a note; empty otherwise
       body.textContent = pass.dataset.story ?? '';
+      body.hidden = !body.textContent;
       gallery.scrollTop = 0;
       dialog.showModal();
     });

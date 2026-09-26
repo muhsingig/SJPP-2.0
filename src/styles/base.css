@@ -1,17 +1,17 @@
 /* ============================================================ design tokens */
 
 :root {
-  --cherry: #670626;
-  --cherry-deep: #4a0419;
-  --cherry-black: #1e0209;
-  --cherry-soft: #8a1839;
-  --matcha: #bad797;
-  --matcha-pale: #e8f0d8;
-  --matcha-deep: #8fa96a;
-  --cream: #fbf8f1;
-  --ink: #2e0710;
-  --alert: #9c3d0e;
-  --alert-soft: #c4692f;
+  --navy: #1d1e2c;
+  --navy-deep: #161723;
+  --navy-black: #0f1018;
+  --slate: #59656f;
+  --stone: #d7cdcc;
+  --stone-pale: #ede7e6;
+  --plum: #9c528b;
+  --paper: #ffffff;
+  --ink: #24263a;
+  --alert: #7d3a6e;
+  --alert-soft: #b06ea0;
 
   --ui-radius: 4px;
   --font-display: 'General Sans', system-ui, sans-serif;
@@ -33,8 +33,8 @@ body {
 }
 
 body {
-  background: var(--cherry-black);
-  color: var(--cream);
+  background: var(--navy-black);
+  color: var(--paper);
   font-family: var(--font-display);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -66,8 +66,8 @@ a {
 }
 
 ::selection {
-  background: var(--matcha);
-  color: var(--cherry);
+  background: var(--stone);
+  color: var(--navy);
 }
 
 .weight-medium {
@@ -107,7 +107,7 @@ a {
 .loading-screen {
   position: fixed;
   inset: 0;
-  background: var(--cherry-deep);
+  background: var(--navy-deep);
   z-index: 9999;
   display: flex;
   flex-direction: column;
@@ -127,7 +127,7 @@ a {
   font-size: clamp(80px, 20vw, 240px);
   font-weight: 500;
   line-height: 0.9;
-  color: var(--matcha);
+  color: var(--stone);
   letter-spacing: -0.04em;
   opacity: 0;
   transform: translateY(20px);
@@ -167,7 +167,7 @@ a {
   font-family: var(--font-logo);
   font-size: 28px;
   line-height: 1;
-  color: var(--cream);
+  color: var(--paper);
   letter-spacing: 0.04em;
   font-weight: 400;
 }
@@ -187,7 +187,7 @@ a {
 }
 
 .site-mark-accent {
-  fill: var(--matcha);
+  fill: var(--stone);
 }
 
 .site-title-btn {
@@ -214,17 +214,17 @@ a {
 }
 
 /*
- * Frosted rather than a solid colour: the sections behind it run cream, matcha
- * and cherry, so one opaque fill could never sit right on all three.
+ * Frosted rather than a solid colour: the sections behind it run paper, stone
+ * and navy, so one opaque fill could never sit right on all three.
  */
 .site-nav.is-stuck {
-  background: rgba(74, 4, 25, 0.62);
+  background: rgba(22, 23, 35, 0.62);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
 
 .site-nav.is-stuck.on-light {
-  background: rgba(251, 248, 241, 0.72);
+  background: rgba(255, 255, 255, 0.72);
 }
 
 .nav-resume {
@@ -234,8 +234,8 @@ a {
   letter-spacing: 0.02em;
   text-decoration: none;
   /* Solid pill, as on the reference: it stays readable over any section. */
-  background: var(--matcha);
-  color: var(--cherry);
+  background: var(--stone);
+  color: var(--navy);
   padding: 0.6rem 1.05rem;
   border-radius: 4px;
   line-height: 1;
@@ -266,11 +266,11 @@ a {
 
 .site-nav.on-light .site-title,
 .site-nav.on-light .nav-resume {
-  color: var(--cherry);
+  color: var(--navy);
 }
 
 /*
- * Matcha would disappear against the matcha and cream sections, so the accent
+ * Stone would disappear against the stone and paper sections, so the accent
  * book drops to a lighter weight of the ink colour instead of a fourth hue.
  */
 .site-nav.on-light .site-mark-accent {
@@ -279,13 +279,13 @@ a {
 }
 
 .site-nav.on-light .site-title-btn:focus-visible {
-  outline-color: rgba(103, 6, 38, 0.75);
+  outline-color: rgba(29, 30, 44, 0.75);
 }
 
 .site-nav.on-light .nav-hamburger {
-  color: var(--cherry);
-  border-color: var(--cherry);
-  background: rgba(103, 6, 38, 0.06);
+  color: var(--navy);
+  border-color: var(--navy);
+  background: rgba(29, 30, 44, 0.06);
 }
 
 /* ------------------------------------------------------------- nav menu */
@@ -293,7 +293,7 @@ a {
 .nav-menu-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(30, 2, 9, 0.46);
+  background: rgba(15, 16, 24, 0.46);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   z-index: 105;
@@ -305,7 +305,7 @@ a {
   right: clamp(1.25rem, 4vw, 2.5rem);
   width: min(560px, calc(100vw - 2.5rem));
   border-radius: 16px;
-  box-shadow: 0 24px 52px rgba(30, 2, 9, 0.42);
+  box-shadow: 0 24px 52px rgba(15, 16, 24, 0.42);
   background: transparent;
   overflow: hidden;
   transform-origin: right top;
@@ -347,13 +347,13 @@ a {
 }
 
 .nav-menu-prelayer-1 {
-  background: var(--matcha);
+  background: var(--stone);
 }
 .nav-menu-prelayer-2 {
-  background: var(--matcha-deep);
+  background: var(--plum);
 }
 .nav-menu-prelayer-3 {
-  background: var(--cherry);
+  background: var(--navy);
 }
 
 .nav-menu-list {
@@ -362,7 +362,7 @@ a {
   display: grid;
   gap: var(--nav-menu-gap);
   padding: var(--nav-menu-pad);
-  background: linear-gradient(155deg, rgba(74, 4, 25, 0.97), rgba(30, 2, 9, 0.98));
+  background: linear-gradient(155deg, rgba(22, 23, 35, 0.97), rgba(15, 16, 24, 0.98));
   counter-reset: nav-item 0;
 }
 
@@ -371,7 +371,7 @@ a {
   border: 0;
   border-radius: 10px;
   background: transparent;
-  color: var(--cream);
+  color: var(--paper);
   text-align: left;
   padding: var(--nav-item-pad-y) var(--nav-item-pad-x) var(--nav-item-pad-y) var(--nav-item-left-pad);
   font-family: var(--font-display);
@@ -389,7 +389,7 @@ a {
   left: var(--nav-marker-left);
   top: 50%;
   transform: translateY(-50%);
-  color: rgba(186, 215, 151, 0.94);
+  color: rgba(215, 205, 204, 0.94);
   font-family: var(--font-display);
   font-size: var(--nav-marker-size);
   font-weight: 500;
@@ -404,7 +404,7 @@ a {
   right: var(--nav-rule-inset);
   bottom: 0;
   height: 1px;
-  background: rgba(251, 248, 241, 0.16);
+  background: rgba(255, 255, 255, 0.16);
 }
 
 .nav-menu-item:last-child::after {
@@ -413,8 +413,8 @@ a {
 
 .nav-menu-item:hover,
 .nav-menu-item:focus-visible {
-  background: rgba(186, 215, 151, 0.17);
-  color: var(--matcha);
+  background: rgba(215, 205, 204, 0.17);
+  color: var(--stone);
   outline: none;
 }
 
@@ -426,7 +426,7 @@ a {
   height: 100vh;
   height: var(--vvh, 100svh);
   overflow: hidden;
-  background: var(--cherry-black);
+  background: var(--navy-black);
 }
 
 #hero-canvas {
@@ -457,8 +457,8 @@ a {
    */
   background: linear-gradient(
     to right,
-    rgba(30, 2, 9, 0.5),
-    rgba(30, 2, 9, 0.18) 34%,
+    rgba(15, 16, 24, 0.5),
+    rgba(15, 16, 24, 0.18) 34%,
     transparent 56%
   );
 }
@@ -512,7 +512,7 @@ a {
    * screen. It replaces a soft gradient blob set to mix-blend-mode: screen,
    * which over a dark photograph resolved to almost nothing.
    */
-  background: var(--matcha-deep);
+  background: var(--plum);
   border-radius: 0 3px 3px 0;
 }
 
@@ -606,8 +606,8 @@ a {
 
 .profile-section {
   position: relative;
-  background: var(--matcha);
-  color: var(--cherry-deep);
+  background: var(--stone);
+  color: var(--navy-deep);
   /* Floor raised to 5.75rem so the greeting always clears the fixed nav. */
   padding: clamp(5.75rem, 9vh, 96px) 0 clamp(4rem, 12vh, 128px);
   font-family: var(--font-display);
@@ -696,8 +696,8 @@ a {
 /* ------------------------------------------------------- electric border */
 
 /*
- * Cherry rather than the original's electric purple. The portrait sits on the
- * matcha panel, so the outline needs to read as ink on a light ground: the glow
+ * Navy rather than the original's electric purple. The portrait sits on the
+ * stone panel, so the outline needs to read as ink on a light ground: the glow
  * layers are kept low, since a bright halo on a pale background just muddies
  * into a shadow instead of looking charged.
  */
@@ -742,20 +742,20 @@ a {
 
 .eb-glow-1 {
   box-shadow:
-    0 0 4px -1px var(--electric-border-color, #670626),
-    inset 0 0 4px -1px var(--electric-border-color, #670626);
+    0 0 4px -1px var(--electric-border-color, #1d1e2c),
+    inset 0 0 4px -1px var(--electric-border-color, #1d1e2c);
   opacity: 0.55;
 }
 
 .eb-glow-2 {
-  box-shadow: 0 0 18px -4px var(--electric-border-color, #670626);
+  box-shadow: 0 0 18px -4px var(--electric-border-color, #1d1e2c);
   opacity: 0.35;
 }
 
 .eb-background-glow {
   background: radial-gradient(
     ellipse at center,
-    color-mix(in srgb, var(--electric-border-color, #670626) 22%, transparent),
+    color-mix(in srgb, var(--electric-border-color, #1d1e2c) 22%, transparent),
     transparent 72%
   );
   filter: blur(14px);
@@ -803,7 +803,7 @@ a {
 .profile-journal-lines span {
   width: 1px;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(74, 4, 25, 0.3), rgba(74, 4, 25, 0.2) 85%, transparent);
+  background: linear-gradient(to bottom, rgba(22, 23, 35, 0.3), rgba(22, 23, 35, 0.2) 85%, transparent);
 }
 
 .profile-phone-journal-lines {
@@ -827,7 +827,7 @@ a {
 
 .profile-divider-segment {
   height: 1px;
-  background: rgba(74, 4, 25, 0.35);
+  background: rgba(22, 23, 35, 0.35);
 }
 
 .profile-divider-gap {

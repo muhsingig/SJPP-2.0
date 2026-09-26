@@ -172,9 +172,9 @@ export function initGradientWaves(host: HTMLElement | null, opts: Options = {}) 
     uParallax: { value: 0.5 },
     uMouse: { value: new Vector2(0.5, 0.5) },
     uEnableMouse: { value: true },
-    uHorizonColor: { value: rgb(opts.horizonColor ?? '#1E0209') },
-    uWaveColor: { value: rgb(opts.waveColor ?? '#670626') },
-    uCrestColor: { value: rgb(opts.crestColor ?? '#BAD797') },
+    uHorizonColor: { value: rgb(opts.horizonColor ?? '#0F1018') },
+    uWaveColor: { value: rgb(opts.waveColor ?? '#1D1E2C') },
+    uCrestColor: { value: rgb(opts.crestColor ?? '#D7CDCC') },
   };
 
   const geometry = new BufferGeometry();

@@ -2,8 +2,8 @@
 
 .work-section {
   position: relative;
-  background: var(--cream);
-  color: var(--cherry);
+  background: var(--paper);
+  color: var(--navy);
   padding: 96px clamp(24px, 15vw, 224px) 104px;
   font-family: var(--font-display);
   overflow: hidden;
@@ -39,10 +39,10 @@
   height: 100%;
   background: linear-gradient(
     to bottom,
-    rgba(103, 6, 38, 0),
-    rgba(103, 6, 38, 0.15) 35%,
-    rgba(103, 6, 38, 0.22) 55%,
-    rgba(103, 6, 38, 0)
+    rgba(29, 30, 44, 0),
+    rgba(29, 30, 44, 0.15) 35%,
+    rgba(29, 30, 44, 0.22) 55%,
+    rgba(29, 30, 44, 0)
   );
 }
 
@@ -66,171 +66,222 @@
 }
 
 /*
- * Five cards split three and two, so the columns cannot end level. Dropping the
- * right column by exactly half a card makes the stagger symmetric instead: it
- * starts half a card lower and the left ends half a card lower, which reads as
- * a deliberate masonry rather than one column running out early.
- *
- * Half a card is the card's height (its width x 1240/900) plus half the row gap,
- * then less the left column's own negative lift. A grid item's percentage
- * margin resolves against its grid area, so 100% here is the card's width.
+ * A starting stagger only. initWorkStagger measures both columns and sets the
+ * exact drop, since captions of different lengths make any fixed fraction of a
+ * card width wrong at one end or the other.
  */
 .work-col-right {
-  margin-top: calc(100% * 0.6889 + clamp(1rem, 2.5vw, 2rem) + clamp(-5.5rem, -5.5vw, -3.25rem));
+  margin-top: clamp(8rem, 18vw, 18rem);
 }
 
 .work-col .work-card:first-child {
   z-index: 5;
 }
 
+/*
+ * Image on top, caption underneath. The headings run to seven words and the
+ * subheadings are full sentences, which cannot sit over the artwork; as real
+ * text they also stay readable at any size, where copy baked into a JPEG
+ * shrank with the tile.
+ */
 .work-card {
+  position: relative;
   width: 100%;
-  cursor: pointer;
 }
 
 .work-card-media {
   position: relative;
+  display: block;
   overflow: hidden;
   border-radius: var(--ui-radius);
-  /*
-   * The section is cream and so are some of the tiles, which left those cards
-   * with no edge at all: the headline and artwork floated on the page instead
-   * of reading as a card. A hairline and a soft lift give every tile the same
-   * boundary, whatever its ground.
-   */
+  cursor: pointer;
   box-shadow:
-    0 0 0 1px rgba(103, 6, 38, 0.08),
-    0 18px 40px -24px rgba(30, 2, 9, 0.45);
+    0 0 0 1px rgba(29, 30, 44, 0.08),
+    0 18px 40px -24px rgba(15, 16, 24, 0.45);
 }
 
-.work-card img {
+.work-card-media img {
   display: block;
   width: 100%;
   height: auto;
 }
 
+/* The second image rises over the first on hover, and on touch as it scrolls in. */
 .work-card-hover {
   position: absolute;
   inset: 0;
   transform: translateY(100%);
-  transition: transform 0.5s linear;
+  transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
   will-change: transform;
-  z-index: 1;
-  pointer-events: none;
 }
 
 .work-card-hover-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-}
-
-.work-card-text {
-  position: absolute;
-  top: 6.25%;
-  left: 7.5%;
-  right: 7.5%;
-  font-family: var(--font-display);
-  font-size: 36px;
-  font-weight: 300;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.work-card-text-line {
-  display: block;
-  white-space: nowrap;
-}
-
-.work-card-text strong {
-  font-weight: 500;
-}
-
-.work-card-text-layer {
-  position: relative;
-}
-
-.work-card-text-hover {
-  position: absolute;
-  inset: 0;
-}
-
-.work-card-text.swap-black-white .work-card-text-base {
-  color: var(--cherry);
-}
-
-.work-card-text.swap-black-white .work-card-text-hover {
-  color: var(--cream);
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path var(--text-reveal-duration, 0.5s) linear;
-  transition-delay: var(--text-reveal-delay-out, 0s);
-}
-
-.work-card-text.swap-white-black .work-card-text-base {
-  color: var(--cream);
-}
-
-.work-card-text.swap-white-black .work-card-text-hover {
-  color: var(--cherry);
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path var(--text-reveal-duration, 0.5s) linear;
-  transition-delay: var(--text-reveal-delay-out, 0s);
-}
-
-.work-card:hover .work-card-text.swap-black-white .work-card-text-hover,
-.work-card:hover .work-card-text.swap-white-black .work-card-text-hover,
-.work-card.is-touch-reveal .work-card-text.swap-black-white .work-card-text-hover,
-.work-card.is-touch-reveal .work-card-text.swap-white-black .work-card-text-hover {
-  clip-path: inset(0 0 0 0);
-  transition-delay: var(--text-reveal-delay-in, 0s);
 }
 
 .work-card:hover .work-card-hover,
+.work-card:focus-within .work-card-hover,
 .work-card.is-touch-reveal .work-card-hover {
   transform: translateY(0);
 }
 
-.work-card-hover-arrow {
+/* A paper chip, so the arrow reads on any artwork without per-card colours. */
+.work-card-arrow {
   position: absolute;
-  right: 10%;
-  bottom: 7.5%;
-  color: var(--cherry);
+  right: 18px;
+  bottom: 18px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--navy);
+  box-shadow: 0 8px 20px -10px rgba(15, 16, 24, 0.55);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.work-card-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+.work-card:hover .work-card-arrow,
+.work-card:focus-within .work-card-arrow,
+.work-card.is-touch-reveal .work-card-arrow {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ------------------------------------------------------------- caption */
+
+.work-card-caption {
+  padding: 22px 2px 0;
+}
+
+.work-card-tag {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--plum);
+}
+
+.work-card-title {
+  margin-bottom: 10px;
+  font-size: clamp(22px, 1.9vw, 29px);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  color: var(--navy);
+  text-wrap: balance;
+}
+
+/* The underline draws in on hover, which says "this opens" without a button. */
+.work-card-title a {
+  color: inherit;
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.35s ease;
+}
+
+.work-card:hover .work-card-title a,
+.work-card-title a:focus-visible {
+  background-size: 100% 1px;
+}
+
+.work-card-sub {
+  max-width: 48ch;
+  font-size: clamp(15px, 1.1vw, 17px);
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--slate);
+}
+
+/* Links to the individual pieces, folded away so every caption stays compact. */
+.work-card-more {
+  margin-top: 14px;
+}
+
+.work-card-more summary {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  pointer-events: none;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--navy);
+  cursor: pointer;
+  list-style: none;
 }
 
-.work-card-hover-arrow.is-white {
-  color: var(--cream);
+.work-card-more summary::-webkit-details-marker {
+  display: none;
 }
 
-.work-card-hover-arrow svg {
-  width: 28px;
-  height: 28px;
-  animation: work-arrow-slide 1.6s ease-in-out infinite;
+.work-card-more summary::after {
+  content: '+';
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(29, 30, 44, 0.3);
+  font-size: 15px;
+  line-height: 1;
+  transition: transform 0.25s ease;
 }
 
-@keyframes work-arrow-slide {
-  0% {
-    transform: translateX(-4px);
-  }
-  50% {
-    transform: translateX(6px);
-  }
-  100% {
-    transform: translateX(-4px);
-  }
+.work-card-more[open] summary::after {
+  transform: rotate(45deg);
 }
 
-.work-reveal {
-  opacity: 0;
-  transform: translateX(0);
-  transition: opacity 0.55s, transform 0.55s;
-  will-change: opacity, transform;
+.work-card-more ul {
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(29, 30, 44, 0.12);
+}
+
+.work-card-more li {
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(29, 30, 44, 0.12);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.work-card-who {
+  display: block;
+  padding-top: 6px;
+  font-size: 12px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+.work-card-more li a {
+  display: inline-block;
+  /* 44px tall: these are tapped on a phone as often as clicked. */
+  padding: 11px 0;
+  color: var(--navy);
+  text-decoration: underline;
+  text-decoration-color: rgba(156, 82, 139, 0.55);
+  text-underline-offset: 3px;
+}
+
+.work-card-more li a:hover {
+  color: var(--plum);
+}
+
+.work-card-more li a + a {
+  margin-left: 22px;
 }
 
 .work-reveal[data-reveal='left'] {
@@ -250,14 +301,14 @@
 
 /*
  * Dark, so the strands behind it can actually glow. The shader is additive, so
- * on the cream this section used to be it could only tint the background: the
+ * on the paper this section used to be it could only tint the background: the
  * filaments went milky and the glow could not exist at all.
  */
 .skills-section {
   position: relative;
   isolation: isolate;
-  background: var(--cherry-black);
-  color: var(--cream);
+  background: var(--navy-black);
+  color: var(--paper);
   padding: 96px 12vw 112px;
   font-family: var(--font-display);
   overflow: hidden;
@@ -294,10 +345,10 @@
   pointer-events: none;
   background: linear-gradient(
     to bottom,
-    rgba(30, 2, 9, 0.55),
-    rgba(30, 2, 9, 0.82) 38%,
-    rgba(30, 2, 9, 0.82) 72%,
-    rgba(30, 2, 9, 0.55)
+    rgba(15, 16, 24, 0.55),
+    rgba(15, 16, 24, 0.82) 38%,
+    rgba(15, 16, 24, 0.82) 72%,
+    rgba(15, 16, 24, 0.55)
   );
 }
 
@@ -366,7 +417,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 0.4rem;
-  color: var(--matcha);
+  color: var(--stone);
 }
 
 .skill-icon svg {
@@ -390,14 +441,14 @@
   font-size: clamp(14px, 1.05vw, 16px);
   font-weight: 300;
   line-height: 1.5;
-  /* Cream at 0.8 on near-black is thinner than cherry at 0.8 on cream was. */
+  /* Paper at 0.8 on near-black is thinner than navy at 0.8 on paper was. */
   opacity: 0.72;
 }
 
 /* =============================================================== experience */
 
 .clients-section {
-  background: var(--matcha-pale);
+  background: var(--stone-pale);
   color: var(--ink);
   padding: 112px 10vw;
   font-family: var(--font-display);
@@ -454,8 +505,8 @@
 }
 
 .clients-card {
-  background: var(--cherry);
-  color: var(--matcha);
+  background: var(--navy);
+  color: var(--stone);
   border-radius: 18px;
   padding: clamp(2rem, 4vw, 2.75rem);
   /* Reference cards run ~13.7vw tall with the number and label bottom-weighted. */
@@ -485,8 +536,8 @@
 
 /*
  * The cursor halo. The original blends this with mix-blend-mode: screen, which
- * needs a near-black page to show at all; this section is cream, so it paints
- * with plain alpha in cherry and reads as light pooling on paper.
+ * needs a near-black page to show at all; this section is paper, so it paints
+ * with plain alpha in navy and reads as light pooling on paper.
  */
 .bento-spotlight {
   position: fixed;
@@ -499,10 +550,10 @@
   transform: translate(-50%, -50%);
   background: radial-gradient(
     circle,
-    rgba(103, 6, 38, 0.22) 0%,
-    rgba(103, 6, 38, 0.14) 15%,
-    rgba(103, 6, 38, 0.08) 25%,
-    rgba(103, 6, 38, 0.04) 40%,
+    rgba(29, 30, 44, 0.22) 0%,
+    rgba(29, 30, 44, 0.14) 15%,
+    rgba(29, 30, 44, 0.08) 25%,
+    rgba(29, 30, 44, 0.04) 40%,
     transparent 70%
   );
 }
@@ -523,7 +574,7 @@
    */
   filter: drop-shadow(
     0 0 calc(var(--glow-intensity) * 22px)
-    rgba(103, 6, 38, calc(var(--glow-intensity) * 0.5))
+    rgba(29, 30, 44, calc(var(--glow-intensity) * 0.5))
   );
   transition: filter 0.25s ease;
 }
@@ -540,8 +591,8 @@
   padding: 2.5px;
   background: radial-gradient(
     var(--glow-radius) circle at var(--glow-x) var(--glow-y),
-    rgba(103, 6, 38, 1) 0%,
-    rgba(103, 6, 38, 0.5) 35%,
+    rgba(29, 30, 44, 1) 0%,
+    rgba(29, 30, 44, 0.5) 35%,
     transparent 70%
   );
   -webkit-mask:
@@ -567,12 +618,12 @@
 /* ============================================================ recommendations */
 
 /*
- * A cherry band between the pale experience section and the cream writing one,
+ * A navy band between the pale experience section and the paper writing one,
  * so three light sections don't run together.
  */
 .recs-section {
-  background: var(--cherry);
-  color: var(--cream);
+  background: var(--navy);
+  color: var(--paper);
   padding: 112px 10vw;
   font-family: var(--font-display);
 }
@@ -648,10 +699,10 @@
   display: grid;
   place-items: center;
   padding: 0;
-  border: 1px solid rgba(186, 215, 151, 0.34);
+  border: 1px solid rgba(215, 205, 204, 0.34);
   border-radius: 50%;
   background: transparent;
-  color: var(--matcha);
+  color: var(--stone);
   cursor: pointer;
   transition: background-color 0.22s ease, opacity 0.22s ease, border-color 0.22s ease;
 }
@@ -662,8 +713,8 @@
 }
 
 .recs-arrow:hover:not(:disabled) {
-  background: rgba(186, 215, 151, 0.14);
-  border-color: rgba(186, 215, 151, 0.6);
+  background: rgba(215, 205, 204, 0.14);
+  border-color: rgba(215, 205, 204, 0.6);
 }
 
 /* Kept in place rather than hidden, so the row does not shift at the ends. */
@@ -699,7 +750,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--matcha);
+  background: var(--stone);
   opacity: 0.34;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
@@ -713,8 +764,8 @@
   margin: 0;
   padding: clamp(1.75rem, 3vw, 2.4rem);
   border-radius: 16px;
-  background: rgba(251, 248, 241, 0.07);
-  box-shadow: inset 0 0 0 1px rgba(186, 215, 151, 0.22);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(215, 205, 204, 0.22);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -737,7 +788,7 @@
 
 .rec-quote::before {
   content: '\201C';
-  color: var(--matcha);
+  color: var(--stone);
   font-size: 2.4em;
   line-height: 0;
   vertical-align: -0.32em;
@@ -763,7 +814,7 @@
 
 .rec-quote-multi p:first-child::before {
   content: '\201C';
-  color: var(--matcha);
+  color: var(--stone);
   font-size: 2.4em;
   line-height: 0;
   vertical-align: -0.32em;
@@ -777,7 +828,7 @@
   gap: 0.8rem;
   margin-top: auto;
   padding-top: 1.1rem;
-  border-top: 1px solid rgba(186, 215, 151, 0.28);
+  border-top: 1px solid rgba(215, 205, 204, 0.28);
 }
 
 .rec-by-text {
@@ -799,13 +850,13 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  box-shadow: 0 0 0 3px rgba(186, 215, 151, 0.18);
+  box-shadow: 0 0 0 3px rgba(215, 205, 204, 0.18);
 }
 
 .rec-name {
   font-size: 15px;
   font-weight: 500;
-  color: var(--matcha);
+  color: var(--stone);
 }
 
 .rec-role {
@@ -827,20 +878,20 @@
   display: inline-block;
   font-size: 15px;
   letter-spacing: 0.02em;
-  color: var(--matcha);
+  color: var(--stone);
   text-decoration: none;
-  border-bottom: 1px solid rgba(186, 215, 151, 0.45);
+  border-bottom: 1px solid rgba(215, 205, 204, 0.45);
   padding-bottom: 2px;
   transition: border-color 0.25s ease;
 }
 
 .recs-link:hover {
-  border-bottom-color: var(--matcha);
+  border-bottom-color: var(--stone);
 }
 
 .art-section {
-  background: var(--cream);
-  color: var(--cherry);
+  background: var(--paper);
+  color: var(--navy);
   padding: 112px clamp(24px, 4.5vw, 64px) 128px;
   font-family: var(--font-display);
   --art-edge: clamp(0px, 1vw, 12px);
@@ -904,7 +955,7 @@
   width: 100%;
   height: 100%;
   border-radius: 12px;
-  box-shadow: 0 12px 36px -18px rgba(30, 2, 9, 0.25);
+  box-shadow: 0 12px 36px -18px rgba(15, 16, 24, 0.25);
   background-size: cover;
   background-position: center;
   overflow: hidden;
@@ -922,23 +973,23 @@
 /*
  * Real essays carry their own Substack cover art. The photographs are busy and
  * unpredictable, so the flat theme colour cannot be relied on for contrast:
- * force the text to cream and lay a scrim under it at both ends of the tile.
+ * force the text to paper and lay a scrim under it at both ends of the tile.
  */
 /* Outspecifies the [data-theme] rules below, which would otherwise win. */
 .art-item[data-theme] .art-item-img.has-thumb {
   background-size: cover;
   background-position: center;
-  color: var(--cream);
-  box-shadow: 0 12px 36px -18px rgba(30, 2, 9, 0.35);
+  color: var(--paper);
+  box-shadow: 0 12px 36px -18px rgba(15, 16, 24, 0.35);
 }
 
 .art-item-img.has-thumb .art-item-text-content {
   background: linear-gradient(
     to bottom,
-    rgba(30, 2, 9, 0.62) 0%,
-    rgba(30, 2, 9, 0.28) 38%,
-    rgba(30, 2, 9, 0.34) 72%,
-    rgba(30, 2, 9, 0.68) 100%
+    rgba(15, 16, 24, 0.62) 0%,
+    rgba(15, 16, 24, 0.28) 38%,
+    rgba(15, 16, 24, 0.34) 72%,
+    rgba(15, 16, 24, 0.68) 100%
   );
 }
 
@@ -961,27 +1012,27 @@
   opacity: 0.72;
 }
 
-.art-item[data-theme='cherry'] .art-item-img {
-  background: var(--cherry);
-  color: var(--matcha);
+.art-item[data-theme='navy'] .art-item-img {
+  background: var(--navy);
+  color: var(--stone);
 }
-.art-item[data-theme='matcha'] .art-item-img {
-  background: var(--matcha);
-  color: var(--cherry);
+.art-item[data-theme='stone'] .art-item-img {
+  background: var(--stone);
+  color: var(--navy);
 }
 .art-item[data-theme='pale'] .art-item-img {
-  background: var(--matcha-pale);
-  color: var(--cherry);
+  background: var(--stone-pale);
+  color: var(--navy);
 }
-.art-item[data-theme='cream'] .art-item-img {
-  background: var(--cream);
-  color: var(--cherry);
-  box-shadow: inset 0 0 0 1px rgba(103, 6, 38, 0.22), 0 12px 36px -18px rgba(30, 2, 9, 0.2);
+.art-item[data-theme='paper'] .art-item-img {
+  background: var(--paper);
+  color: var(--navy);
+  box-shadow: inset 0 0 0 1px rgba(29, 30, 44, 0.22), 0 12px 36px -18px rgba(15, 16, 24, 0.2);
 }
 
 .art-item-cta .art-item-img {
-  background: var(--cherry-deep);
-  color: var(--matcha);
+  background: var(--navy-deep);
+  color: var(--stone);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -995,8 +1046,8 @@
 
 .travel-section {
   position: relative;
-  background: var(--cherry);
-  color: var(--matcha);
+  background: var(--navy);
+  color: var(--stone);
   padding: 104px 8vw 128px;
   font-family: var(--font-display);
   /*
@@ -1063,7 +1114,7 @@
   overflow: hidden;
   container-type: inline-size;
   transition: transform 0.28s ease, box-shadow 0.28s ease;
-  box-shadow: 0 10px 26px -18px rgba(30, 2, 9, 0.7);
+  box-shadow: 0 10px 26px -18px rgba(15, 16, 24, 0.7);
 }
 
 /*
@@ -1114,6 +1165,12 @@
   --flag-bar: linear-gradient(90deg, #00785e 0 60%, #f4f5f0 60% 82%, #ffd700 82%);
 }
 
+.pass[data-country='gb'] {
+  --pass-bg: #012169;
+  --pass-ink: #ffffff;
+  --flag-bar: linear-gradient(90deg, #c8102e 0 33.3%, #f4f5f0 33.3% 66.6%, #012169 66.6%);
+}
+
 .pass[data-country='ae'] {
   --pass-bg: #1c1c1a;
   --pass-ink: #ffffff;
@@ -1132,17 +1189,18 @@
 }
 
 /*
- * The dark fills sit close to the section's own cherry, so the ticket
+ * The dark fills sit close to the section's own navy, so the ticket
  * silhouette needs drawing. A dropped shadow does nothing here, being dark on
  * dark; a pale hairline is what cuts the card out of the ground. The navy is
- * the worst of them: it lands at 1.0:1 against cherry, an exact luminance match.
+ * the worst of them: it lands at 1.0:1 against navy, an exact luminance match.
  */
 .pass[data-country='it'],
+.pass[data-country='gb'],
 .pass[data-country='us'],
 .pass[data-country='cn'],
 .pass[data-country='mo'],
 .pass[data-country='ae'] {
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22), 0 10px 26px -18px rgba(30, 2, 9, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22), 0 10px 26px -18px rgba(15, 16, 24, 0.7);
 }
 
 button.pass {
@@ -1152,7 +1210,7 @@ button.pass {
 button.pass:hover,
 button.pass:focus-visible {
   transform: translateY(-3px);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.32), 0 18px 34px -18px rgba(30, 2, 9, 0.85);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.32), 0 18px 34px -18px rgba(15, 16, 24, 0.85);
 }
 
 /*
@@ -1209,43 +1267,23 @@ button.pass:focus-visible {
 }
 
 /*
- * One line, always. Left to wrap, a pairing like HONG KONG <> MACAU broke over
- * two or three lines and every card in the grid came out a different height.
- * The type shrinks to fit instead, measured in container units so it answers to
- * the card's own width rather than the viewport's.
+ * The place, set large where the route line used to be. One line always, sized
+ * in container units so it answers to the card's own width: SEVEN SISTERS, the
+ * longest, has to fit a two-up phone card as well as a three-up desktop one.
  */
-.pass-route {
-  display: flex;
-  align-items: baseline;
+.pass-city {
   align-self: center;
-  flex-wrap: nowrap;
-  gap: 0.42rem;
-  padding: 0.5rem 0;
-  white-space: nowrap;
-}
-
-.pass-code {
-  font-size: clamp(15px, 7.4cqw, 30px);
+  padding: 0.35rem 0;
+  font-size: clamp(16px, 10.5cqw, 40px);
   font-weight: 300;
-  letter-spacing: -0.015em;
   line-height: 1.05;
-  /* Never let a long name be squeezed into the next one by flex. */
-  flex-shrink: 0;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.pass-swap {
-  font-size: clamp(11px, 4.7cqw, 19px);
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  opacity: 0.5;
-  flex-shrink: 0;
-}
-
-/*
- * The stub, torn off along the foot. It used to be a vertical dashed line at
- * 22% from the right, which on a card this size ran straight through the route
- * and the country name rather than beside them.
- */
 .pass-stub {
   position: relative;
   display: flex;
@@ -1269,6 +1307,17 @@ button.pass:focus-visible {
   white-space: nowrap;
 }
 
+.pass-arrow {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.25s ease;
+}
+
+button.pass:hover .pass-arrow,
+button.pass:focus-visible .pass-arrow {
+  transform: translate(2px, -2px);
+}
+
 .pass-cell-end {
   text-align: right;
 }
@@ -1287,7 +1336,7 @@ button.pass:focus-visible {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--cherry);
+  background: var(--navy);
 }
 
 .pass-stub::before {
@@ -1311,15 +1360,15 @@ button.pass:focus-visible {
   margin-top: clamp(1.5rem, 3vw, 2.25rem);
   font-size: 15px;
   letter-spacing: 0.02em;
-  color: var(--matcha);
+  color: var(--stone);
   text-decoration: none;
-  border-bottom: 1px solid rgba(186, 215, 151, 0.45);
+  border-bottom: 1px solid rgba(215, 205, 204, 0.45);
   padding-bottom: 2px;
   transition: border-color 0.25s ease;
 }
 
 .travel-link:hover {
-  border-color: var(--matcha);
+  border-color: var(--stone);
 }
 
 
@@ -1331,13 +1380,13 @@ button.pass:focus-visible {
   padding: 0;
   border: 0;
   border-radius: 14px;
-  background: var(--cream);
-  color: var(--cherry);
+  background: var(--paper);
+  color: var(--navy);
   overflow: hidden;
 }
 
 .travel-story::backdrop {
-  background: rgba(30, 2, 9, 0.72);
+  background: rgba(15, 16, 24, 0.72);
   backdrop-filter: blur(3px);
 }
 
@@ -1358,7 +1407,7 @@ button.pass:focus-visible {
   gap: 6px;
   overflow-y: auto;
   overscroll-behavior: contain;
-  background: var(--cherry-black);
+  background: var(--navy-black);
   scrollbar-width: thin;
 }
 
@@ -1424,8 +1473,8 @@ button.pass:focus-visible {
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: rgba(251, 248, 241, 0.9);
-  color: var(--cherry);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--navy);
   cursor: pointer;
 }
 
@@ -1456,11 +1505,11 @@ button.pass:focus-visible {
 
 .contact-section {
   /* position/isolation/overflow only, so the wave canvas can sit behind. The
-     matcha and cherry scheme is unchanged. */
+     stone and navy scheme is unchanged. */
   position: relative;
   isolation: isolate;
-  background: var(--matcha);
-  color: var(--cherry);
+  background: var(--stone);
+  color: var(--navy);
   padding: 112px 9vw;
   font-family: var(--font-display);
   overflow: hidden;
@@ -1546,7 +1595,7 @@ button.pass:focus-visible {
   border-radius: var(--ui-radius);
   border: 0;
   background: transparent;
-  color: var(--cherry);
+  color: var(--navy);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1570,8 +1619,8 @@ button.pass:focus-visible {
   height: var(--contact-control-size);
   border-radius: var(--ui-radius);
   border: 0;
-  background: var(--cherry);
-  color: var(--cream);
+  background: var(--navy);
+  color: var(--paper);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1631,9 +1680,9 @@ button.pass:focus-visible {
 .contact-field input {
   width: 100%;
   border: none;
-  border-bottom: 2px solid rgba(103, 6, 38, 0.62);
+  border-bottom: 2px solid rgba(29, 30, 44, 0.62);
   background: transparent;
-  color: var(--cherry);
+  color: var(--navy);
   font-family: var(--font-display);
   font-size: clamp(17px, 1.4vw, 20px);
   line-height: 1.2;
@@ -1642,7 +1691,7 @@ button.pass:focus-visible {
 }
 
 .contact-field input:focus-visible {
-  border-bottom-color: var(--cherry);
+  border-bottom-color: var(--navy);
 }
 
 .contact-field .iti {
@@ -1690,15 +1739,15 @@ button.pass:focus-visible {
 .contact-form-message.is-error {
   display: block;
   color: var(--alert);
-  border-color: rgba(156, 61, 14, 0.35);
-  background: rgba(251, 248, 241, 0.72);
+  border-color: rgba(125, 58, 110, 0.35);
+  background: rgba(255, 255, 255, 0.72);
 }
 
 .contact-form-message.is-success {
   display: block;
-  color: var(--matcha);
-  border-color: rgba(103, 6, 38, 0.45);
-  background: rgba(103, 6, 38, 0.9);
+  color: var(--stone);
+  border-color: rgba(29, 30, 44, 0.45);
+  background: rgba(29, 30, 44, 0.9);
 }
 
 .contact-submit-btn {
@@ -1715,8 +1764,8 @@ button.pass:focus-visible {
 /* ===================================================================== meta */
 
 .meta-section {
-  background: var(--cherry-deep);
-  color: var(--matcha-pale);
+  background: var(--navy-deep);
+  color: var(--stone-pale);
   font-family: var(--font-display);
   padding: clamp(3.5rem, 7vw, 5.2rem) clamp(3.5rem, 9vw, 10rem) clamp(4rem, 8vw, 5.7rem);
 }
@@ -1733,7 +1782,7 @@ button.pass:focus-visible {
   display: block;
   width: 82.4px;
   height: 0.8px;
-  background: rgba(232, 240, 216, 0.92);
+  background: rgba(237, 231, 230, 0.92);
   margin-bottom: 1.5rem;
 }
 
@@ -1794,16 +1843,42 @@ button.pass:focus-visible {
   }
 
   /*
-   * One pass per row below 900px. auto-fill at 268px would fit two on a 640px
-   * tablet, but the route codes then shrink to the point where the card stops
-   * reading as a ticket, which is the whole idea.
+   * Two passes a row below 900px. One a row suited a route line that had to
+   * fit two city names; a single place name fits half the width, and twenty
+   * passes one above the other made the section eleven screens long.
    */
   .pass-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
 
   .pass {
-    min-height: 158px;
+    min-height: 142px;
+    padding: 1rem 0.85rem 0;
+  }
+
+  .pass-stub {
+    margin: 0 -0.85rem;
+    padding: 0.55rem 0.85rem 0.6rem;
+  }
+
+  /*
+   * Held to one line, the longest name set every card's size, and on a 166px
+   * card that pinned them all at 16px. Letting the two-word places break
+   * (SEVEN / SISTERS, NAMI / ISLAND) buys the rest a size worth reading.
+   */
+  .pass-city {
+    font-size: 21px;
+    white-space: normal;
+    line-height: 1.02;
+  }
+
+  .pass-cell {
+    font-size: 12px;
+  }
+
+  .pass-cell em {
+    font-size: 10px;
   }
 
   /*
@@ -1839,9 +1914,9 @@ button.pass:focus-visible {
   .hero-overlay {
     background: linear-gradient(
       to bottom,
-      rgba(30, 2, 9, 0.7),
-      rgba(30, 2, 9, 0.2) 50%,
-      rgba(30, 2, 9, 0) 100%
+      rgba(15, 16, 24, 0.7),
+      rgba(15, 16, 24, 0.2) 50%,
+      rgba(15, 16, 24, 0) 100%
     );
   }
 
@@ -1938,10 +2013,6 @@ button.pass:focus-visible {
     grid-column: auto;
   }
 
-  .work-card-text {
-    font-size: 24px;
-  }
-
   .contact-actions {
     gap: 10px;
   }
@@ -2000,7 +2071,7 @@ button.pass:focus-visible {
   }
 
   .work-card-hover,
-  .work-card-hover-arrow svg,
+  .work-card-arrow,
   .hero-swipe-arrow,
   .loading-counter {
     transition: none;

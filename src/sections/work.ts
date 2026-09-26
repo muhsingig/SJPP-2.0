@@ -30,58 +30,41 @@ function initWorkJournalLines() {
 }
 
 /**
- * Captions are set nowrap on purpose, so they have to be shrunk to fit rather
- * than allowed to wrap. Binary-free: step down until both lines clear the box.
+ * Five cards split three and two, so the columns can never end level. The right
+ * one is dropped so the stagger mirrors itself: it starts T lower than the left
+ * and the left ends T lower than it. Solving for that gives T = (L - R) / 2.
+ *
+ * Measured rather than set in CSS, because the captions differ in length and so
+ * do the cards: no fixed fraction of a card width gets both ends to agree.
  */
-function fitWorkCardText() {
-  const cards = document.querySelectorAll<HTMLElement>('.work-card');
-  cards.forEach((card) => {
-    const media = card.querySelector<HTMLElement>('.work-card-media');
-    const text = card.querySelector<HTMLElement>('.work-card-text');
-    if (!media || !text) return;
+function initWorkStagger() {
+  const left = document.querySelector<HTMLElement>('.work-col-left');
+  const right = document.querySelector<HTMLElement>('.work-col-right');
+  if (!left || !right) return;
 
-    const available = media.clientWidth * 0.85;
-    if (available <= 0) return;
+  const twoColumns = window.matchMedia('(min-width: 1101px)');
 
-    let size = window.innerWidth <= 700 ? 24 : 36;
-    text.style.fontSize = `${size}px`;
-
-    /*
-     * The lines are block-level, so scrollWidth reports the container width and
-     * stays put as the font shrinks. That made the loop below run to its floor
-     * every time and pin every caption at 11px. A Range measures the actual
-     * inline extent of the text instead.
-     */
-    const lines = Array.from(
-      text.querySelectorAll<HTMLElement>('.work-card-text-base .work-card-text-line')
-    );
-    const widest = () =>
-      Math.max(
-        ...lines.map((line) => {
-          const range = document.createRange();
-          range.selectNodeContents(line);
-          return range.getBoundingClientRect().width;
-        })
-      );
-
-    let guard = 0;
-    while (widest() > available && size > 11 && guard < 40) {
-      size -= 1;
-      text.style.fontSize = `${size}px`;
-      guard += 1;
+  const update = () => {
+    if (!twoColumns.matches) {
+      right.style.marginTop = '';
+      return;
     }
+    const lift = parseFloat(getComputedStyle(left).marginTop) || 0;
+    const offset = (left.offsetHeight - right.offsetHeight) / 2;
+    right.style.marginTop = `${Math.round(lift + Math.max(0, offset))}px`;
+  };
 
-    // Time the colour swap to the rising panel: the caption sits near the top of
-    // the card, so the panel edge reaches it late on the way in and early on the
-    // way out.
-    const cardHeight = media.clientHeight || 1;
-    const textTop = text.offsetTop;
-    const fraction = Math.min(0.95, Math.max(0.05, textTop / cardHeight));
-    const duration = 0.5;
-    text.style.setProperty('--text-reveal-duration', `${(duration * 0.42).toFixed(3)}s`);
-    text.style.setProperty('--text-reveal-delay-in', `${(duration * (1 - fraction) * 0.72).toFixed(3)}s`);
-    text.style.setProperty('--text-reveal-delay-out', `${(duration * fraction * 0.28).toFixed(3)}s`);
-  });
+  update();
+  // sizes change with fonts, lazy images and the "read the pieces" toggles
+  const ro = new ResizeObserver(update);
+  ro.observe(left);
+  ro.observe(right);
+  twoColumns.addEventListener('change', update);
+  // backstops for anything that settles without a resize callback
+  window.addEventListener('resize', update);
+  window.addEventListener('load', update);
+  document.fonts?.ready.then(update);
+  document.querySelectorAll('.work-card-more').forEach((d) => d.addEventListener('toggle', update));
 }
 
 function initWorkReveal() {
@@ -132,38 +115,9 @@ function initWorkTouchReveal() {
   cards.forEach((card) => observer.observe(card));
 }
 
-function initWorkCardLinks() {
-  const mobile = window.matchMedia('(max-width: 768px)');
-  document.querySelectorAll<HTMLElement>('.work-card').forEach((card) => {
-    const activate = () => {
-      const url = mobile.matches
-        ? card.getAttribute('data-mobile-url')
-        : card.getAttribute('data-desktop-url');
-      if (!url || url === '#') return;
-      window.open(url, '_blank', 'noopener,noreferrer');
-    };
-
-    card.addEventListener('click', activate);
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('role', 'link');
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        activate();
-      }
-    });
-  });
-}
-
 export function initWork() {
   initWorkJournalLines();
   initWorkReveal();
   initWorkTouchReveal();
-  initWorkCardLinks();
-
-  const refit = rafThrottle(fitWorkCardText);
-  refit();
-  window.addEventListener('resize', refit);
-  document.fonts?.ready.then(() => fitWorkCardText());
-  window.addEventListener('load', () => fitWorkCardText());
+  initWorkStagger();
 }

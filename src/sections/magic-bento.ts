@@ -11,8 +11,8 @@ import { prefersReducedMotion } from '../lib/utils';
  * Two things differ from the original, both forced by where it lives:
  *
  * 1. The original blends its spotlight with mix-blend-mode: screen, which is
- *    built for a near-black page. This section is cream, where screen blending
- *    against a light ground does nothing at all. The halo is cherry over plain
+ *    built for a near-black page. This section is paper, where screen blending
+ *    against a light ground does nothing at all. The halo is navy over plain
  *    alpha instead, so it reads as light pooling on paper.
  * 2. Magnetism moves .art-item-img, never .art-item. The masonry owns a
  *    translate3d on the tile itself, and animating x/y there would fight the

@@ -475,7 +475,7 @@ export async function initHero() {
   try {
     /*
      * One photograph, two treatments. The base is the laptop photo mapped to a
-     * muted cherry duotone; the brush and the standing reveal uncover the same
+     * muted navy duotone; the brush and the standing reveal uncover the same
      * frame in full colour, so what moves is the colour coming through rather
      * than a second picture.
      */
