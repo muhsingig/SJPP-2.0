@@ -1852,6 +1852,11 @@ button.pass:focus-visible .pass-arrow {
     gap: 12px;
   }
 
+  /* an odd pass out takes the full row rather than leaving a hole beside it */
+  .pass:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
   .pass {
     min-height: 142px;
     padding: 1rem 0.85rem 0;
