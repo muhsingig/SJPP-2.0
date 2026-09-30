@@ -101,17 +101,20 @@ export async function initContactForm() {
     if (!validate()) return;
 
     const data = new FormData(form);
-    if (iti) data.set('phone', iti.getNumber());
+    const phone = form.querySelector<HTMLInputElement>('input[type="tel"]');
+    if (iti && phone) data.set(phone.name, iti.getNumber());
 
     submit?.setAttribute('disabled', 'true');
 
     try {
-      const res = await fetch(form.action, {
+      // Google Forms is the backend. It sends no CORS headers, so the reply is
+      // opaque: a network failure still throws, but a delivered post can't be
+      // read back, and reaching Google is taken as sent.
+      await fetch(form.action, {
         method: 'POST',
-        body: data,
-        headers: { Accept: 'application/json' },
+        mode: 'no-cors',
+        body: new URLSearchParams(data as unknown as Record<string, string>),
       });
-      if (!res.ok) throw new Error(String(res.status));
 
       form.reset();
       if (message) {
