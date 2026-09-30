@@ -68,7 +68,7 @@ function boot() {
    * edge as a crisp filament instead of throwing it out into a loose scribble.
    */
   initElectricBorder(document.querySelector('.profile-image-wrap'), {
-    color: '#1D1E2C',
+    color: '#4A2E27',
     speed: 1.2,
     chaos: 0.01,
     borderRadius: 0,
@@ -86,7 +86,7 @@ function boot() {
    * knocks it back further. Loud enough to notice, quiet enough to read over.
    */
   initStrands(document.querySelector('.skills-section'), {
-    colors: ['#D7CDCC', '#FFFFFF', '#9C528B', '#59656F'],
+    colors: ['#F5EFC6', '#A5BCD6', '#F5EFC6'],
     count: 3,
     glow: 1.9,
     intensity: 0.5,
@@ -108,9 +108,9 @@ function boot() {
    * what makes the swell read, while navy type still passes on both.
    */
   initGradientWaves(document.querySelector('.contact-section'), {
-    horizonColor: '#1D1E2C',
-    waveColor: '#9C528B',
-    crestColor: '#FFFFFF',
+    horizonColor: '#4A2E27',
+    waveColor: '#A5BCD6',
+    crestColor: '#F5EFC6',
     speed: 0.32,
     /*
      * Blended toward the ground rather than veiled over. At full strength the

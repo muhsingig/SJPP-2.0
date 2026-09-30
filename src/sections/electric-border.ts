@@ -128,7 +128,7 @@ function roundedRectPoint(
 export function initElectricBorder(target: HTMLElement | null, opts: Options = {}) {
   if (!target) return;
 
-  const color = opts.color ?? '#1D1E2C';
+  const color = opts.color ?? '#4A2E27';
   const speed = opts.speed ?? 1;
   const chaos = opts.chaos ?? 0.12;
   const borderRadius = opts.borderRadius ?? 24;
