@@ -37,9 +37,8 @@ function initTravelStories(section: HTMLElement) {
 
       if (count) count.textContent = names.length > 1 ? `${names.length} photographs` : '1 photograph';
       place.textContent = title;
-      // only shown when a pass carries a note; empty otherwise
-      body.textContent = pass.dataset.story ?? '';
-      body.hidden = !body.textContent;
+      // the travel copy; with none written yet the space beside the photographs stays clear
+      body.textContent = (pass.dataset.story ?? '').trim();
       gallery.scrollTop = 0;
       dialog.showModal();
     });

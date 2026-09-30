@@ -1426,16 +1426,19 @@ button.pass:focus-visible .pass-arrow {
   object-fit: cover;
 }
 
+/*
+ * The place sits at the top and the travel copy runs beneath it, so the column
+ * reads as a page rather than a caption floating in the middle. Top padding
+ * clears the close button, which shares this corner. Long copy scrolls here
+ * while the photographs scroll on their own side.
+ */
 .travel-story-text {
   overflow-y: auto;
-}
-
-
-.travel-story-text {
-  padding: clamp(1.5rem, 3vw, 2.5rem);
+  overscroll-behavior: contain;
+  padding: clamp(3.75rem, 5vw, 4.5rem) clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 2.5rem);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.85rem;
 }
 
@@ -1455,11 +1458,21 @@ button.pass:focus-visible .pass-arrow {
   line-height: 1.2;
 }
 
+/*
+ * The travel copy. pre-line keeps the blank lines typed into data-story as
+ * paragraph breaks. The rule above it marks where the writing starts, and stays
+ * with an empty note so the space reads as kept for copy rather than missing.
+ */
 .travel-story-body {
+  margin-top: 0.35rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(74, 46, 39, 0.22);
+  min-height: 8rem;
   font-size: clamp(15px, 1.15vw, 17px);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.62;
-  opacity: 0.85;
+  opacity: 0.9;
+  white-space: pre-line;
   text-wrap: pretty;
 }
 
@@ -1497,9 +1510,13 @@ button.pass:focus-visible .pass-arrow {
     height: min(82vh, 720px);
   }
 
+  /* stacked here, so the close button sits over the photographs, not this column */
   .travel-story-text {
     padding: 1.15rem 1.25rem 1.35rem;
-    justify-content: flex-start;
+  }
+
+  .travel-story-body {
+    min-height: 0;
   }
 }
 
