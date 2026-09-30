@@ -599,36 +599,3 @@ export function setHeroInView(value: boolean) {
 export function setHeroPaused(value: boolean) {
   externallyPaused = value;
 }
-
-/**
- * Sizes the hand-drawn stroke that sits under the stressed word in the headline.
- * Measured from live rects so it survives font loading and every breakpoint.
- */
-export function initHeadingStroke() {
-  const word = document.querySelector<HTMLElement>('.resilient-word');
-  const stroke = document.querySelector<HTMLElement>('.cycling-stroke');
-  const line = document.querySelector<HTMLElement>('.hero-heading-second');
-  const hero = document.querySelector<HTMLElement>('.hero');
-  if (!word || !stroke || !line || !hero) return;
-
-  const update = () => {
-    const wordRect = word.getBoundingClientRect();
-    const lineRect = line.getBoundingClientRect();
-    const heroRect = hero.getBoundingClientRect();
-
-    /*
-     * Anchored to the hero's own left edge, not the text's, so the bar runs off
-     * the side of the screen instead of starting neatly inside the margin. That
-     * bleed is what makes it read as a marker stroke rather than an underline.
-     */
-    stroke.style.left = '0px';
-    stroke.style.width = `${wordRect.right - heroRect.left}px`;
-    stroke.style.top = `${lineRect.top - heroRect.top + lineRect.height * 0.59}px`;
-    stroke.style.height = `${lineRect.height * 0.41}px`;
-  };
-
-  requestAnimationFrame(update);
-  window.addEventListener('resize', update);
-  window.addEventListener('load', update);
-  document.fonts?.ready.then(update);
-}

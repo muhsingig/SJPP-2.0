@@ -1,7 +1,7 @@
 import './styles/base.css';
 import './styles/sections.css';
 
-import { initHeadingStroke, initHero } from './hero';
+import { initHero } from './hero';
 import { initNav, initNavToneObserver } from './sections/nav';
 import { initProfileLayout, initProfileScrollReveal, initSnapScroll } from './sections/snap';
 import { initWork } from './sections/work';
@@ -76,7 +76,6 @@ function boot() {
   initNav();
   initNavToneObserver();
 
-  initHeadingStroke();
   initWork();
   initSkills();
 

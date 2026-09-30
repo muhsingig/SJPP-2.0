@@ -503,19 +503,6 @@ a {
   position: relative;
 }
 
-.cycling-stroke {
-  position: absolute;
-  z-index: 1;
-  pointer-events: none;
-  /*
-   * Solid, and squared off at the left because it runs off the edge of the
-   * screen. It replaces a soft gradient blob set to mix-blend-mode: screen,
-   * which over a dark photograph resolved to almost nothing.
-   */
-  background: var(--blue);
-  border-radius: 0 3px 3px 0;
-}
-
 .hero-tagline {
   margin-top: clamp(2rem, 4vw, 3rem);
   font-family: var(--font-display);
