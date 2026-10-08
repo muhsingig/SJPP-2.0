@@ -1,7 +1,5 @@
 import { getScroller, prefersReducedMotion } from '../lib/utils';
 
-type Iti = { isValidNumber(): boolean; getNumber(): string; destroy(): void };
-
 /** Fade-and-rise for anything tagged [data-simple-reveal]. */
 export function initSimpleReveal() {
   const targets = document.querySelectorAll<HTMLElement>('[data-simple-reveal]');
@@ -27,37 +25,25 @@ export function initSimpleReveal() {
   targets.forEach((el) => observer.observe(el));
 }
 
-async function initPhoneInput(): Promise<Iti | null> {
-  const input = document.getElementById('contact-phone') as HTMLInputElement | null;
-  if (!input) return null;
+/** The Google Form entry id behind each field, keyed by field name. */
+const ENTRIES: Record<string, string> = {
+  name: 'entry.353397822',
+  email: 'entry.164598628',
+  phone: 'entry.374035030',
+  help: 'entry.1397449396',
+};
 
-  try {
-    const [{ default: intlTelInput }] = await Promise.all([
-      import('intl-tel-input'),
-      import('intl-tel-input/styles'),
-    ]);
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE = /^\+?[\d\s()-]{7,}$/;
 
-    return intlTelInput(input, {
-      initialCountry: 'in',
-      separateDialCode: true,
-      // Bundled with the package, avoids a runtime request to an external CDN.
-      loadUtilsOnInit: () => import('intl-tel-input/utils'),
-    }) as unknown as Iti;
-  } catch {
-    // The plain tel input still works; only the country picker is lost.
-    return null;
-  }
-}
-
-export async function initContactForm() {
+export function initContactForm() {
   const form = document.querySelector<HTMLFormElement>('.contact-form');
   if (!form) return;
 
-  const iti = await initPhoneInput();
   const message = form.querySelector<HTMLElement>('.contact-form-message');
   const submit = form.querySelector<HTMLButtonElement>('.contact-submit-btn');
 
-  const setError = (field: HTMLElement, text: string) => {
+  const setError = (field: Element, text: string) => {
     const wrapper = field.closest('.contact-field');
     const slot = wrapper?.querySelector<HTMLElement>('.contact-field-error');
     wrapper?.classList.toggle('is-invalid', Boolean(text));
@@ -67,30 +53,20 @@ export async function initContactForm() {
   const validate = () => {
     let valid = true;
 
-    form.querySelectorAll<HTMLInputElement>('input[required]').forEach((input) => {
-      if (input.type === 'tel') return;
-      const ok = input.value.trim().length > 0;
-      setError(input, ok ? '' : 'This field is required');
-      if (!ok) valid = false;
+    form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]').forEach((input) => {
+      const value = input.value.trim();
+      let error = '';
+      if (!value) error = 'This field is required';
+      else if (input.type === 'email' && !EMAIL.test(value)) error = 'Enter a valid email address';
+      else if (input.type === 'tel' && !PHONE.test(value)) error = 'Enter a valid phone number';
+      setError(input, error);
+      if (error) valid = false;
     });
-
-    const phone = form.querySelector<HTMLInputElement>('input[type="tel"]');
-    if (phone) {
-      const raw = phone.value.trim();
-      let phoneError = '';
-      if (!raw) phoneError = 'This field is required';
-      else if (iti && !iti.isValidNumber()) phoneError = 'Enter a valid phone number';
-      else if (!iti && !/^[\d\s+()-]{7,}$/.test(raw)) phoneError = 'Enter a valid phone number';
-      setError(phone, phoneError);
-      if (phoneError) valid = false;
-    }
 
     return valid;
   };
 
-  form.querySelectorAll<HTMLInputElement>('input').forEach((input) => {
-    input.addEventListener('input', () => setError(input, ''));
-  });
+  form.addEventListener('input', (e) => setError(e.target as Element, ''));
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -98,11 +74,16 @@ export async function initContactForm() {
       message.className = 'contact-form-message';
       message.textContent = '';
     }
-    if (!validate()) return;
+    if (!validate()) {
+      form.querySelector<HTMLElement>('.is-invalid input, .is-invalid textarea')?.focus();
+      return;
+    }
 
     const data = new FormData(form);
-    const phone = form.querySelector<HTMLInputElement>('input[type="tel"]');
-    if (iti && phone) data.set(phone.name, iti.getNumber());
+    const body = new URLSearchParams();
+    Object.entries(ENTRIES).forEach(([name, entry]) => {
+      body.set(entry, String(data.get(name) ?? '').trim());
+    });
 
     submit?.setAttribute('disabled', 'true');
 
@@ -110,16 +91,12 @@ export async function initContactForm() {
       // Google Forms is the backend. It sends no CORS headers, so the reply is
       // opaque: a network failure still throws, but a delivered post can't be
       // read back, and reaching Google is taken as sent.
-      await fetch(form.action, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: new URLSearchParams(data as unknown as Record<string, string>),
-      });
+      await fetch(form.action, { method: 'POST', mode: 'no-cors', body });
 
       form.reset();
       if (message) {
         message.className = 'contact-form-message is-success';
-        message.textContent = "Thank you, I'll be in touch shortly.";
+        message.textContent = "Thank you, I'll go through this and get back to you.";
       }
     } catch {
       if (message) {

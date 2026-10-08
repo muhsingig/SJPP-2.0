@@ -883,15 +883,20 @@
       <section id="contact" class="contact-section" data-nav-tone="dark">
         <div class="contact-inner">
           <div class="contact-left" data-simple-reveal>
-            <h2 class="contact-title">Let's work together</h2>
-            <p class="contact-subtext">
-              I'm open to freelance work across strategy, content and everything in between.<br />
-              Tell me what you're trying to say, and I'll help you say it.
-            </p>
-            <p class="contact-services">
-              Social media strategy · Content strategy · Content writing · LinkedIn personal branding ·
-              Ghostwriting · Brand &amp; content consulting · Publishing and editorial projects
-            </p>
+            <h2 class="contact-title">Let's Work Together</h2>
+            <p class="contact-subtext">A quick introduction before we create something great together.</p>
+            <div class="contact-body">
+              <p>Looking for someone to help with your content, social media, brand or growth?</p>
+              <p>
+                I work across writing, social media, client/account management, and brand &amp; growth
+                strategy, and I'm always open to interesting collaborations and projects.
+              </p>
+              <p>
+                If you think there could be a fit, tell me a little about yourself, your brand/business
+                and what you're looking for. I'll go through the responses and get back to you if I feel
+                I can add value.
+              </p>
+            </div>
             <div class="contact-actions">
               <a class="contact-icon-btn" href="https://www.linkedin.com/in/sanikasjoshi" target="_blank" rel="noreferrer" aria-label="LinkedIn">
                 <svg viewBox="2.4 2.4 19.2 19.2" fill="none" aria-hidden="true">
@@ -920,26 +925,36 @@
           </div>
 
           <div class="contact-right" data-simple-reveal>
-            <p class="contact-right-intro">Or leave your details and I'll come back to you.</p>
+            <p class="contact-right-intro">Leave your details and I'll come back to you.</p>
 
-            <!-- Posts to Sanika's Google Form ("Portfolio Form"); the input names are its entry ids. -->
+            <!--
+              Posts to Sanika's Google Form ("Portfolio Form"). Field names are
+              mapped to its entry ids in src/sections/contact.ts.
+            -->
             <form class="contact-form" action="https://docs.google.com/forms/d/e/1FAIpQLSdX3UiX_knoYFiP8ZuImX0w0gY2xcWlsYiN_P3V5N0CMxI5KQ/formResponse" method="post" novalidate>
 
               <label class="contact-field">
-                <span>Name*</span>
-                <input type="text" name="entry.353397822" autocomplete="name" required />
+                <span class="contact-field-label">Name<span class="contact-req" aria-hidden="true">*</span></span>
+                <input type="text" name="name" autocomplete="name" required />
                 <small class="contact-field-error" aria-live="polite"></small>
               </label>
 
               <label class="contact-field">
-                <span>Company / brand*</span>
-                <input type="text" name="entry.61724349" autocomplete="organization" required />
+                <span class="contact-field-label">Email address<span class="contact-req" aria-hidden="true">*</span></span>
+                <input type="email" name="email" autocomplete="email" required />
                 <small class="contact-field-error" aria-live="polite"></small>
               </label>
 
               <label class="contact-field">
-                <span>Phone number*</span>
-                <input type="tel" name="entry.374035030" id="contact-phone" autocomplete="tel" required />
+                <span class="contact-field-label">Contact number<span class="contact-req" aria-hidden="true">*</span></span>
+                <input type="tel" name="phone" autocomplete="tel" required />
+                <small class="contact-field-error" aria-live="polite"></small>
+              </label>
+
+              <label class="contact-field">
+                <span class="contact-field-label">What would you like help with right now?<span class="contact-req" aria-hidden="true">*</span></span>
+                <small class="contact-field-hint">Tell me about the problem you're trying to solve, what you'd like to build, or where you feel you need support.</small>
+                <textarea name="help" rows="5" required></textarea>
                 <small class="contact-field-error" aria-live="polite"></small>
               </label>
 

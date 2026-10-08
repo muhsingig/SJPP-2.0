@@ -98,7 +98,7 @@ function boot() {
   initMagicBento('.art-masonry-list', '.art-item');
   initTravel();
   initSimpleReveal();
-  void initContactForm();
+  initContactForm();
 
   /*
    * The wave body must not be the section's own colour. It was stone on a
