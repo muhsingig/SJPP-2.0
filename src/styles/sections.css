@@ -2000,9 +2000,9 @@ button.pass:focus-visible .pass-arrow {
    * 10vw. The 8.6vw here resolved to 32px on a phone and the headline came out
    * a fifth smaller than the site it is copying.
    */
-  .hero-heading-line {
-    font-size: clamp(38px, 10vw, 52px);
-    line-height: 1.03;
+  .hero-heading-flow {
+    font-size: clamp(30px, 8.4vw, 44px);
+    line-height: 1.06;
   }
 
   .hero-tagline {
@@ -2168,6 +2168,15 @@ button.pass:focus-visible .pass-arrow {
   /* Stacked above the form, the intro has nothing to ride alongside. */
   .contact-left {
     position: static;
+  }
+
+  /* Three columns of the about copy came out 230px wide here, at 14px. */
+  .profile-columns {
+    columns: 2;
+  }
+
+  .profile-col {
+    font-size: 16px;
   }
 
   /*
@@ -2393,14 +2402,13 @@ button.pass:focus-visible .pass-arrow {
    * a desktop column wants.
    */
   .profile-columns {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.5rem;
+    columns: 1;
     padding-left: 1rem;
     padding-right: 1rem;
   }
 
   .profile-col {
-    font-size: 19px;
+    font-size: 18px;
     line-height: 1.5;
   }
 }
@@ -2418,8 +2426,8 @@ button.pass:focus-visible .pass-arrow {
     top: 4.6rem;
   }
 
-  .hero-heading-line {
-    font-size: clamp(30px, 8.6vw, 40px);
+  .hero-heading-flow {
+    font-size: clamp(27px, 7.6vw, 36px);
   }
 
   .hero-tagline {

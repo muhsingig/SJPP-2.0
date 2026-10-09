@@ -479,28 +479,23 @@ a {
   font-weight: 500;
 }
 
-.hero-heading-line {
-  display: block;
-  /*
-   * 38px at the floor, matching the reference on a 375px screen. At 32px the
-   * headline read as body copy on a phone rather than as the first thing on
-   * the page.
-   */
-  font-size: clamp(38px, 5.5vw, 80px);
-  letter-spacing: -0.01em;
+/*
+ * A full sentence now, so it wraps on its measure instead of hand-set lines.
+ * Sized by width as well as viewport, so on desktop it stays in the dark left
+ * column and clear of the figure, and balanced so no line is left stranded.
+ */
+.hero-heading-flow {
+  font-size: clamp(38px, 4vw, 64px);
   font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+  max-width: 13.5em;
+  text-wrap: balance;
 }
 
-/* The one word carrying the stress. Without this it inherited the line's 300. */
+/* The phrase carrying the stress. Without this it inherited the line's 300. */
 .resilient-word {
   font-weight: 500;
-}
-
-.hero-heading-line.hero-heading-second {
-  display: flex;
-  align-items: baseline;
-  gap: 0.25em;
-  position: relative;
 }
 
 .hero-tagline {
@@ -541,6 +536,17 @@ a {
 
 .hero-tagline-flow .tagline-em {
   font-weight: 500;
+}
+
+/*
+ * The headline is a full sentence now and sits smaller than the old two-word
+ * one, so above phone width the tagline steps down to keep the two ranked.
+ */
+@media (min-width: 701px) {
+  .hero-tagline-flow {
+    font-size: clamp(22px, 1.9vw, 30px);
+    max-width: 32ch;
+  }
 }
 
 .hero-swipe-hint {
@@ -647,11 +653,11 @@ a {
 }
 
 .profile-heading {
-  font-size: clamp(26px, 2.9vw, 42px);
+  font-size: clamp(24px, 2.5vw, 38px);
   font-weight: 300;
   letter-spacing: -0.01em;
   line-height: 1.2;
-  max-width: 19ch;
+  max-width: 25ch;
 }
 
 .profile-image-wrap {
@@ -821,18 +827,30 @@ a {
   height: 1px;
 }
 
+/*
+ * One flow balanced over three columns. The paragraphs run to very different
+ * lengths, so a column each left the third one half empty.
+ */
 .profile-columns {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.5rem, 5vw, 5rem);
+  columns: 3;
+  column-gap: clamp(1.5rem, 4vw, 4.5rem);
   padding-left: clamp(1.25rem, 2.25vw, 3rem);
   padding-right: clamp(1.25rem, 5vw, 5.5rem);
 }
 
 .profile-col {
-  font-size: clamp(15px, 1.35vw, 21px);
+  font-size: clamp(14px, 1.12vw, 18px);
   font-weight: 400;
-  line-height: 1.56;
+  line-height: 1.55;
+}
+
+.profile-col + .profile-col {
+  margin-top: 0.9em;
+}
+
+.profile-signoff {
+  font-weight: 500;
+  font-style: italic;
 }
 
 /* word-by-word scrub reveal, driven entirely by --reveal-progress */
