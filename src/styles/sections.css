@@ -1085,6 +1085,10 @@
   text-wrap: pretty;
 }
 
+.travel-text + .travel-text {
+  margin-top: 1em;
+}
+
 /* ------------------------------------------------------- boarding passes */
 
 .pass-grid {

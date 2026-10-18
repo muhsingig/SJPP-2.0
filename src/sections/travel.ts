@@ -52,8 +52,10 @@ function initTravelStories(section: HTMLElement) {
   });
 
   // Drop the images once it is shut, so seven photographs are not held in memory.
+  // The close event is queued, so if another pass reopened the dialog first,
+  // leave that place's photographs alone.
   dialog.addEventListener('close', () => {
-    gallery.textContent = '';
+    if (!dialog.open) gallery.textContent = '';
   });
 }
 
